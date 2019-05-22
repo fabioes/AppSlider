@@ -1,0 +1,21 @@
+﻿{
+  "defaultAssembly": "AppSlider.Infrastructure",
+  "modules": [
+    {
+      "type": "AppSlider.Infrastructure.Modules.WebApiModule",
+      "properties": {
+      }
+    },
+    {
+      "type": "AppSlider.Infrastructure.Modules.ApplicationModule",
+      "properties": {
+      }
+    },
+    {
+      "type": "AppSlider.Infrastructure.EntityFrameworkDataAccess.Module",
+      "properties": {
+        "ConnectionString": "Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08"
+      }
+    }
+  ]
+}
