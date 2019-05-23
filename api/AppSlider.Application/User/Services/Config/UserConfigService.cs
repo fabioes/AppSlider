@@ -29,6 +29,8 @@ namespace AppSlider.Application.User.Services.Config
 
             var domainUser = new Domain.Users.User(user.Id, user.Name, user.Username, user.Password, user.Profile, user.Email, !user.Active);
 
+            userRepository.DetachUser(user);
+
             await userRepository.Update(domainUser);
 
             var returnUser = (UserResult)domainUser;
@@ -45,10 +47,11 @@ namespace AppSlider.Application.User.Services.Config
             if (user == null)
                 throw new BusinessException($"Erro na redefinição de senha do usuário", new List<string> { "Usuário Inexistente!" }, "UserConfigService - Validations");
 
+            userRepository.DetachUser(user);
 
-            await userRepository.Update(new Domain.Users.User(user.Id, user.Name, user.Username, user.Password, user.Profile, user.Email, !user.Active));
+            var updatedUser = await userRepository.Update(new Domain.Users.User(user.Id, user.Name, user.Username, command.Password, user.Profile, user.Email, !user.Active));
 
-            var returnUser = (UserResult)user;
+            var returnUser = (UserResult)updatedUser;
 
             return returnUser;
         }

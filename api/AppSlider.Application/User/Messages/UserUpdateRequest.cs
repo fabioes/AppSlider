@@ -12,7 +12,7 @@ namespace AppSlider.Application.User.Messages
         [JsonProperty("login")]
         public String Username { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("nome")]
         public String Name { get; set; }
 
         [JsonProperty("senha")]

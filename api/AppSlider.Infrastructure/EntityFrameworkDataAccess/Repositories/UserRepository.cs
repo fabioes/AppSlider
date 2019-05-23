@@ -17,16 +17,19 @@
         }
 
         public async Task<User> Add(User user)
-        {   
+        {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             return user;
         }
 
-        public bool Delete(User user)
+        public async Task<bool> Delete(User user)
         {
             _context.Users.Remove(user);
+
+            await _context.SaveChangesAsync();
+
             return true;
         }
 
@@ -46,10 +49,10 @@
 
         public async Task<User> GetByUsername(string username)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(f => f.Username ==username);
+            var user = await _context.Users.FirstOrDefaultAsync(f => f.Username == username);
             return user;
         }
-        
+
         public async Task<User> Update(User user)
         {
 
@@ -57,12 +60,18 @@
             {
                 var actualUser = await _context.Users.FindAsync(user.Id);
                 user.SetPassword(actualUser?.Password);
+                _context.Entry(actualUser).State = EntityState.Detached;
             }
 
             _context.Users.Update(user);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        public void DetachUser(User user)
+        {
+            _context.Entry(user).State = EntityState.Detached;
         }
     }
 }

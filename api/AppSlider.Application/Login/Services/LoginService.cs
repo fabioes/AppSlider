@@ -2,6 +2,7 @@
 using AppSlider.Application.User.Results;
 using AppSlider.Domain;
 using AppSlider.Domain.Repositories;
+using AppSlider.Utils.Cripto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace AppSlider.Application.Login.Services
                 throw new BusinessException("Usuario Inválido!", "LoginService", false);
             }
 
-            if (user.Password != command.Password)
+            if (user.Password != CriptoManager.CriptoSHA256(command.Password))
             {
                 throw new BusinessException("Senha Inválida!", "LoginService", false);
             }

@@ -11,7 +11,7 @@
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
 
-            optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=1234;Database=treinaweb");
+            optionsBuilder.UseMySql(ConnectionString);
             //optionsBuilder.UseSqlServer(ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging(true);
 

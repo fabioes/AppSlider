@@ -10,7 +10,10 @@ namespace AppSlider.Domain
         {
             get
             {
-                return _id ?? Guid.NewGuid();
+                if (!_id.HasValue)
+                    _id = Guid.NewGuid();
+
+                return _id.Value;
             }
             set
             {
