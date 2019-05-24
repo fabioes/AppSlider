@@ -32,7 +32,7 @@ namespace AppSlider.WebApi.Controllers.Users.Create
         {
             if(user == null) throw new BusinessException("Favor informar os dados do Usuário!");
 
-            var result = await _userCreateService.Process(new UserCreateCommand(user.Name, user.Username, user.Password, user.Email, user.Profile, user.Active.GetValueOrDefault(true)));
+            var result = await _userCreateService.Process(new UserCreateCommand(user.Name, user.Username, user.Password, user.Email, user.Profile, user.Franchises, user.Roles, user.Active.GetValueOrDefault(true)));
 
             return Ok(new ApiReturnItem<UserResult> { Item = result, Success = true });
         }

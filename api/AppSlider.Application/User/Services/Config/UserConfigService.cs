@@ -27,7 +27,7 @@ namespace AppSlider.Application.User.Services.Config
             if(user == null)
                 throw new BusinessException($"Erro na ativação / desativação do usuário", new List<string> {"Usuário Inexistente!"}, "UserConfigService - Validations");
 
-            var domainUser = new Domain.Users.User(user.Id, user.Name, user.Username, user.Password, user.Profile, user.Email, !user.Active);
+            var domainUser = new Domain.Users.User(user.Id, user.Name, user.Username, user.Password, user.Profile, user.Email, user.Franchises, user.Roles, !user.Active);
 
             userRepository.DetachUser(user);
 
@@ -49,7 +49,7 @@ namespace AppSlider.Application.User.Services.Config
 
             userRepository.DetachUser(user);
 
-            var updatedUser = await userRepository.Update(new Domain.Users.User(user.Id, user.Name, user.Username, command.Password, user.Profile, user.Email, !user.Active));
+            var updatedUser = await userRepository.Update(new Domain.Users.User(user.Id, user.Name, user.Username, command.Password, user.Profile, user.Email, user.Franchises, user.Roles, !user.Active));
 
             var returnUser = (UserResult)updatedUser;
 

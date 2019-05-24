@@ -1,7 +1,4 @@
-﻿using AppSlider.Domain.Contracts;
-using AppSlider.Domain.Roles;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace AppSlider.Domain.Users
 {
@@ -11,10 +8,12 @@ namespace AppSlider.Domain.Users
         public virtual String Username { get; protected set; }
         public virtual String Password { get; protected set; }
         public virtual String Profile { get; protected set; }
+        public virtual String Franchises { get; protected set; }
+        public virtual String Roles { get; protected set; }
         public virtual String Email { get; protected set; }
         public virtual Boolean Active { get; protected set; }
 
-        public User(String name, String username, String password, String profile, String email, Boolean active)
+        public User(String name, String username, String password, String profile, String email, String franchises, String roles, Boolean active)
             : this()
         {
             Name = name;
@@ -22,10 +21,12 @@ namespace AppSlider.Domain.Users
             Password = password;
             Profile = profile;
             Email = email;
+            Franchises = franchises;
+            Roles = roles;
             Active = active;
         }
 
-        public User(Guid id, String name, String username, String password, String profile, String email, Boolean active)
+        public User(Guid id, String name, String username, String password, String profile, String email, String franchises, String roles, Boolean active)
             : this()
         {
             Id = id;
@@ -34,10 +35,12 @@ namespace AppSlider.Domain.Users
             Password = password;
             Profile = profile;
             Email = email;
+            Franchises = franchises;
+            Roles = roles;
             Active = active;
         }
 
-        public User(Guid id, String name, String username, String profile, String email, Boolean active)
+        public User(Guid id, String name, String username, String profile, String email, String franchises, String roles, Boolean active)
             : this()
         {
             Id = id;
@@ -46,6 +49,8 @@ namespace AppSlider.Domain.Users
             Password = null;
             Profile = profile;
             Email = email;
+            Franchises = franchises;
+            Roles = roles;
             Active = active;
         }
 

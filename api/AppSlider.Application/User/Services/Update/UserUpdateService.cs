@@ -21,7 +21,7 @@ namespace AppSlider.Application.User.Services.Update
         {
             await UserUpdateValidationsAsync(command);
 
-            var user = new Domain.Users.User(command.Id,  command.Name, command.UserName, command.Profile, command.Email, command.Active);
+            var user = new Domain.Users.User(command.Id,  command.Name, command.UserName, command.Profile, command.Email, command.Franchises, command.Roles, command.Active);
 
             await userRepository.Update(user);
 

@@ -22,7 +22,7 @@ namespace AppSlider.Application.User.Services.Create
         {
             await UserCreateValidationsAsync(command);
 
-            var user = new Domain.Users.User(command.Name, command.UserName, command.Password, command.Profile, command.Email, command.Active);
+            var user = new Domain.Users.User(command.Name, command.UserName, command.Password, command.Profile, command.Email, command.Franchises, command.Roles, command.Active);
 
             await userRepository.Add(user);
 

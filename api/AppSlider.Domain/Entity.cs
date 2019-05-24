@@ -20,5 +20,22 @@ namespace AppSlider.Domain
                 _id = value;
             }
         }
+
+        private DateTime? _dataCreated { get; set; }
+
+        public virtual DateTime DataCreated
+        {
+            get
+            {
+                if (!_dataCreated.HasValue)
+                    _dataCreated = DateTime.Now;
+
+                return _dataCreated.Value;
+            }
+            set
+            {
+                _dataCreated = value;
+            }
+        }
     }
 }

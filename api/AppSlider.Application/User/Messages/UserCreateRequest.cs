@@ -21,8 +21,8 @@ namespace AppSlider.Application.User.Messages
         [JsonProperty("roles")]
         public String Roles { get; set; }
 
-        [JsonProperty("contratos")]
-        public String Contracts { get; set; }
+        [JsonProperty("franquias")]
+        public String Franchises { get; set; }
 
         [JsonProperty("perfil")]
         public String Profile { get; set; }

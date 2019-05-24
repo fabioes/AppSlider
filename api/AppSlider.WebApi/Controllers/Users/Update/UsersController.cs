@@ -29,7 +29,7 @@ namespace AtlasChatbotApi.WebApi.Controllers.Users.Update
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<UserResult>))]
         public async Task<IActionResult> Update([FromBody]UserUpdateRequest user)
         {
-            var result = await _userUpdateService.Process(new UserUpdateCommand(user.Id, user.Name, user.Username, user.Password, user.Email, user.Profile, user.Active.GetValueOrDefault(true)));
+            var result = await _userUpdateService.Process(new UserUpdateCommand(user.Id, user.Name, user.Username, user.Password, user.Email, user.Profile, user.Franchises, user.Roles, user.Active.GetValueOrDefault(true)));
 
             return Ok(new ApiReturnItem<UserResult> { Item = result, Success = true });
         }
