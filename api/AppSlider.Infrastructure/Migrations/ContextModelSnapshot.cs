@@ -17,7 +17,7 @@ namespace AppSlider.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AppSlider.Domain.Users.User", b =>
+            modelBuilder.Entity("AppSlider.Domain.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();

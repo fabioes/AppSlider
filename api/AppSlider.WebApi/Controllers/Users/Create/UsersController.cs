@@ -5,6 +5,8 @@ using AppSlider.Application.User.Messages;
 using AppSlider.Application.User.Results;
 using AppSlider.Application.User.Services.Create;
 using AppSlider.Domain;
+using AppSlider.Domain.Authentication;
+using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,7 @@ namespace AppSlider.WebApi.Controllers.Users.Create
         /// </summary>
         [HttpPost]
         [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WriteUser)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<UserResult>))]
         public async Task<IActionResult> Create([FromBody]UserCreateRequest user)
         {

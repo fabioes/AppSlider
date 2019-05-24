@@ -13,14 +13,17 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Options;
     using System;
+    using AppSlider.Application.User.Services.Get;
 
     public class Startup
     {
+        private IContainer _container { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        
+
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
@@ -56,13 +59,14 @@
                 options.OperationFilter<SwaggerAuthorizationHeaderParameterOperationFilter>();
             });
 
-            var loggedUserObject = new LoggedUser();
-            services.AddSingleton(loggedUserObject);
+            var loggedUser = new Domain.Entities.Users.User();
+            services.AddSingleton(loggedUser);
 
             services.AddMvc(options =>
             {
+                var userGetService = _container?.Resolve<IUserGetService>();
 
-                options.Filters.Add(new CustomAuthorizeFilter(loggedUserObject, new AuthorizationPolicyBuilder()
+                options.Filters.Add(new CustomAuthorizeFilter(loggedUser, userGetService, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser()
                     .Build()));
@@ -119,6 +123,11 @@
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterBuildCallback(_builder =>
+            {
+                _container = _builder;
+            });
+
             builder.RegisterModule(new ConfigurationModule(Configuration));
         }
 

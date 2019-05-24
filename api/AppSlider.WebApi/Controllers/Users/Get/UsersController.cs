@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AppSlider.Application.User.Commands;
 using AppSlider.Application.User.Results;
 using AppSlider.Application.User.Services.Get;
+using AppSlider.Domain.Authentication;
+using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +20,7 @@ namespace AppSlider.WebApi.Controllers.Users.Get
         
         public UsersController(IUserGetService userGetService)
         {
-            _userGetService = userGetService;
-        
+            _userGetService = userGetService;        
         }
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace AppSlider.WebApi.Controllers.Users.Get
         /// </summary>
         [HttpGet("{id?}")]
         [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadUser)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<UserResult>))]
         public async Task<IActionResult> Get(Guid? id)
         {

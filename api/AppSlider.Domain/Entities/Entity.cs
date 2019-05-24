@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppSlider.Domain
+namespace AppSlider.Domain.Entities
 {
     public class Entity : IEntity
     {

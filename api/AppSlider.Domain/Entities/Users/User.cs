@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppSlider.Domain.Users
+namespace AppSlider.Domain.Entities.Users
 {
     public class User : Entity, IAggregateRoot
     {

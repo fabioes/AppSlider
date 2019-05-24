@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using AppSlider.Domain.Repositories;
-    using AppSlider.Domain.Users;
+    using AppSlider.Domain.Entities.Users;
 
     public class UserRepository : IUserRepository
     {

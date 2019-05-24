@@ -9,11 +9,11 @@
 
         }
 
-        public DbSet<Domain.Users.User> Users { get; set; }
+        public DbSet<Domain.Entities.Users.User> Users { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Domain.Users.User>()
+            modelBuilder.Entity<Domain.Entities.Users.User>()
                 .ToTable("User");
         }
     }
