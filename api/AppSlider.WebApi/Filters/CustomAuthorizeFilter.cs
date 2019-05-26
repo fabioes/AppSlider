@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
@@ -103,11 +104,16 @@ namespace AppSlider.WebApi.Filters
 
         private bool ValidateUserRoutePermission(JwtSecurityToken token, AuthorizationFilterContext context)
         {
-            //Verify if the route has AuthorizeAttribute.
-            var customAuthorizeAttribute = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)context.ActionDescriptor).MethodInfo.CustomAttributes.FirstOrDefault(f => f.AttributeType == typeof(CustomAuthorizeAttribute));
-
-            if (_loggedUser.Profile.Contains("admin") || customAuthorizeAttribute == null)
+            if (_loggedUser.Profile == "admin")
                 return true;
+
+            //Verify if the route has CustomAuthorizeAttribute.
+            var customAuthorizeAttribute = ((ControllerActionDescriptor)context.ActionDescriptor).MethodInfo.CustomAttributes
+                .FirstOrDefault(f => f.AttributeType == typeof(CustomAuthorizeAttribute));
+
+            if (customAuthorizeAttribute == null)
+                return true;
+            
 
             var role = customAuthorizeAttribute.ConstructorArguments.FirstOrDefault();
             return role != null && (_loggedUser.Roles ?? "").Contains(role.Value?.ToString() ?? "_");
