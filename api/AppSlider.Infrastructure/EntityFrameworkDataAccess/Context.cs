@@ -50,6 +50,8 @@
 
             modelBuilder.Entity<Domain.Entities.BusinessPlayLists.BusinessPlayList>()
                .ToTable("BusinessPlaylists");
+
+            modelBuilder.Seed();
         }
     }
 }

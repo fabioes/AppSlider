@@ -35,7 +35,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active)
+        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -52,7 +52,7 @@ namespace AppSlider.Domain.Entities.Business
             Active = active;
         }
 
-        public BusinessEntity(Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active)
+        public BusinessEntity(Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
         {
             IdFather = idFather;
             IdType = idType;
@@ -66,6 +66,10 @@ namespace AppSlider.Domain.Entities.Business
             ContactAddress = contactAddress;
             ExpirationDate = expirationDate;
             Active = active;
+        }
+
+        public BusinessEntity()
+        {
         }
     }
 }

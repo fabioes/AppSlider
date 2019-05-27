@@ -12,7 +12,7 @@
         Task<User> GetByUsername(String username);
         Task<User> Add(User user);
         Task<User> Update(User user);
-        Task<Boolean> Delete(User id);
+        Task<Boolean> Delete(User user);
         void DetachUser(User user);
     }
 }
