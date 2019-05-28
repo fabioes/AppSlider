@@ -18,46 +18,46 @@ namespace AppSlider.Application.Business.Services.Create
             this.businessRepository = businessRepository;
         }
 
-        public async Task<BusinessResult> Process(BusinessCreateCommand command)
+        public async Task<BusinessResult> Process(BusinessCreateRequestCommand command)
         {
-            await UserCreateValidationsAsync(command);
+            UserCreateValidations(command);
 
-            var user = new BusinessEntity(command.IdFather, command.UserName, command.Password, command.Profile, command.Email, command.Franchises, command.Roles, command.Active);
+            var business = new BusinessEntity(command.IdFather, command.IdType, command.IdCategory, command.Name, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active);
 
-            await businessRepository.Add(user);
+            await businessRepository.Add(business);
 
-            var returnUser = (UserResult)user;
+            var returnBusiness = (BusinessResult)business;
 
-            return returnUser;
+            return returnBusiness;
         }
 
 
-        private async Task UserCreateValidationsAsync(BusinessCreateCommand command)
+        private void UserCreateValidations(BusinessCreateRequestCommand command)
         {
             var messageValidations = new List<String>();
 
             if (command == null)
             {
-                messageValidations.Add("Favor informar os dados do Usuário!");
+                messageValidations.Add("Favor informar os dados do Negócio!");
             }
             else
             {
-                if (String.IsNullOrWhiteSpace(command.UserName))
-                    messageValidations.Add("Na criação de um Usuário o 'Login' é obrigatorio!");
+                //if (String.IsNullOrWhiteSpace(command.UserName))
+                //    messageValidations.Add("Na criação de um Usuário o 'Login' é obrigatorio!");
 
-                if (String.IsNullOrWhiteSpace(command.Password))
-                    messageValidations.Add("Na criação de um Usuário a 'Senha' é obrigatoria!");
+                //if (String.IsNullOrWhiteSpace(command.Password))
+                //    messageValidations.Add("Na criação de um Usuário a 'Senha' é obrigatoria!");
 
-                //Business Validations
-                if ((await businessRepository.GetByUsername(command.UserName)) != null)
-                {
-                    messageValidations.Add("Login já Existente!");
-                }
+                ////Business Validations
+                //if ((await businessRepository.GetByUsername(command.UserName)) != null)
+                //{
+                //    messageValidations.Add("Login já Existente!");
+                //}
             }
-            
+
             if (messageValidations.Count > 0)
             {
-                throw new BusinessException($"Erro na criação do usuário {command?.UserName ?? ""}", messageValidations, "UserCreateService - Validations");
+                throw new BusinessException($"Erro na criação do Negócio {command?.Name ?? ""}", messageValidations, "BusinessCreateService - Validations");
             }
         }
     }

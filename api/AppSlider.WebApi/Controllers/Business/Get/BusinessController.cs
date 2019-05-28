@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Results;
+using AppSlider.Application.Business.Services.Get;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
@@ -31,8 +33,7 @@ namespace AppSlider.WebApi.Controllers.Users.Get
         {
             if (id.HasValue && id.Value != new Guid())
             {
-                var command = new BusinessGetCommand(id.Value);
-                var result = await _businessGetService.Get(command);
+                var result = await _businessGetService.Get(id.Value);
 
                 return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
             }

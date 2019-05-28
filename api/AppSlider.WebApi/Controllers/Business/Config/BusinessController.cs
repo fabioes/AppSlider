@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Results;
+using AppSlider.Application.Business.Services.Config;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
@@ -29,7 +31,7 @@ namespace AppSlider.WebApi.Controllers.Business.Config
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
         public async Task<IActionResult> SwitchActive(Guid id)
         {
-            var result = await _businessConfigService.SwitchActive( new BusinessConfigCommand(id));
+            var result = await _businessConfigService.SwitchActive(id);
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
         }
