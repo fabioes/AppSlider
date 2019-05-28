@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Services.Delete;
 using AppSlider.Domain;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
@@ -32,7 +33,7 @@ namespace AppSlider.WebApi.Controllers.Business.Delete
         {
             if (!id.HasValue || id.Value == new Guid()) throw new BusinessException("Favor informar o Id do Negócio!");
 
-            var result = await _businessDeleteService.Process(new BusinessDeleteCommand(id));
+            var result = await _businessDeleteService.Process(id);
 
             return Ok(new ApiReturnItem<object> { Item = result ? "Negócio deletado com sucesso!" : "Falha ao deletar Negócio!", Success = result });
         }

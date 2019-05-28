@@ -1,5 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Commands;
+using AppSlider.Application.Business.Results;
+using AppSlider.Application.Business.Services.Create;
 using AppSlider.Domain;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
@@ -27,11 +30,11 @@ namespace AppSlider.WebApi.Controllers.Business.Create
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.WriteBusiness)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
-        public async Task<IActionResult> Create([FromBody]BusinessCreateRequest user)
+        public async Task<IActionResult> Create([FromBody]BusinessCreateRequestCommand request)
         {
-            if(user == null) throw new BusinessException("Favor informar os dados do Negócio!");
+            if(request== null) throw new BusinessException("Favor informar os dados do Negócio!");
 
-            var result = await _businessCreateService.Process(new BusinessCreateCommand(user.Name, user.Username, user.Password, user.Email, user.Profile, user.Franchises, user.Roles, user.Active.GetValueOrDefault(true)));
+            var result = await _businessCreateService.Process(request);
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
         }

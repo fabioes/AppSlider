@@ -1,5 +1,8 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Commands;
+using AppSlider.Application.Business.Results;
+using AppSlider.Application.Business.Services.Update;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
@@ -26,9 +29,9 @@ namespace AtlasChatbotApi.WebApi.Controllers.Users.Update
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.WriteBusiness)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
-        public async Task<IActionResult> Update([FromBody]BusinessUpdateRequest user)
+        public async Task<IActionResult> Update([FromBody]BusinessUpdateRequestCommand request)
         {
-            var result = await _userUpdateService.Process(new BusinessUpdateCommand(user.Id, user.Name, user.Username, user.Password, user.Email, user.Profile, user.Franchises, user.Roles, user.Active.GetValueOrDefault(true)));
+            var result = await _businessUpdateService.Process(request);
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
         }

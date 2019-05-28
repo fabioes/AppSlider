@@ -6,6 +6,6 @@ namespace AppSlider.Application.Business.Services.Create
 {
     public interface IBusinessCreateService
     {
-        Task<BusinessResult> Process(BusinessCreateCommand command);
+        Task<BusinessResult> Process(BusinessCreateRequestCommand command);
     }
 }
