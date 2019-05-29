@@ -26,7 +26,13 @@ namespace AppSlider.Application.User.Results
         [JsonProperty("email")]
         public String Email { get; private set; }
 
-        public static explicit operator UserResult(Domain.Users.User u)
+        [JsonProperty("franquias")]
+        public String Franchises { get; private set; }
+
+        [JsonProperty("roles")]
+        public String Roles { get; private set; }
+
+        public static explicit operator UserResult(Domain.Entities.Users.User u)
         {
             return new UserResult
             {
@@ -37,7 +43,24 @@ namespace AppSlider.Application.User.Results
                 Username = u.Username,
                 Email = u.Email,
                 Name = u.Name,
+                Franchises = u.Franchises,
+                Roles = u.Roles
             };
+        }
+
+        public static explicit operator Domain.Entities.Users.User(UserResult u)
+        {
+            return new Domain.Entities.Users.User(
+                u.Id,
+                u.Name,
+                u.Username,
+                u.Password,
+                u.Profile,
+                u.Email,
+                u.Franchises,
+                u.Roles,
+                u.Active
+            );
         }
     }
 }

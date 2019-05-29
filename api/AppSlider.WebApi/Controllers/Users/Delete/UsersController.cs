@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AppSlider.Application.User.Commands;
 using AppSlider.Application.User.Services.Delete;
 using AppSlider.Domain;
+using AppSlider.Domain.Authentication;
+using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace AppSlider.WebApi.Controllers.Users.Delete
         /// </summary>
         [HttpDelete("{id}")]
         [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WriteUser)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<Object>))]
         public async Task<IActionResult> Delete(Guid? id)
         {

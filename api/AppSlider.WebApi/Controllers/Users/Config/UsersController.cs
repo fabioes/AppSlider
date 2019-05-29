@@ -5,6 +5,8 @@ using AppSlider.Application.User.Commands;
 using AppSlider.Application.User.Messages;
 using AppSlider.Application.User.Results;
 using AppSlider.Application.User.Services.Config;
+using AppSlider.Domain.Authentication;
+using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,7 @@ namespace AppSlider.WebApi.Controllers.Users.Config
         /// </summary>
         [HttpPatch("switch_active/{id}")]
         [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WriteUser)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<UserResult>))]
         public async Task<IActionResult> SwitchActive(Guid id)
         {
@@ -40,6 +43,7 @@ namespace AppSlider.WebApi.Controllers.Users.Config
         /// </summary>
         [HttpPatch("reset_password")]
         [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WriteUser)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<UserResult>))]
         public async Task<IActionResult> ResetPassword([FromBody]UserResetPasswordRequest user)
         {

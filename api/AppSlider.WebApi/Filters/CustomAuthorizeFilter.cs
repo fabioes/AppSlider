@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using AppSlider.Application.User.Services.Get;
 using AppSlider.Domain;
-using AppSlider.Domain.Authentication;
+using AppSlider.Domain.CustomAttributes;
+using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
@@ -20,12 +23,17 @@ namespace AppSlider.WebApi.Filters
 {
     public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
     {
-        private LoggedUser _loggedUser { get; set; }
+        private User _loggedUser { get; set; }
         public AuthorizationPolicy Policy { get; }
 
-        public CustomAuthorizeFilter([FromServices] LoggedUser loggedUser, AuthorizationPolicy policy)
+        private readonly IUserGetService _userGetService;
+
+        public CustomAuthorizeFilter([FromServices] User loggedUser,
+            IUserGetService userGetService,
+            AuthorizationPolicy policy)
         {
             _loggedUser = loggedUser;
+            _userGetService = userGetService;
             Policy = policy ?? throw new ArgumentNullException(nameof(policy));
         }
 
@@ -41,7 +49,7 @@ namespace AppSlider.WebApi.Filters
             {
                 return;
             }
-            
+
             var policyEvaluator = context.HttpContext.RequestServices.GetRequiredService<IPolicyEvaluator>();
             var authenticateResult = await policyEvaluator.AuthenticateAsync(Policy, context.HttpContext);
             var authorizeResult =
@@ -69,13 +77,17 @@ namespace AppSlider.WebApi.Filters
                     var decodedToken = handler.ReadToken(token) as JwtSecurityToken;
                     var userToken = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
                     var activeUserToken = decodedToken.Claims.First(claim => claim.Type == "unac").Value == "true";
-                    _loggedUser.User = userToken;
 
-                    if (!activeUserToken)
+                    _loggedUser = ((User)(await _userGetService.GetByUsername(userToken)));
+
+                    if (String.IsNullOrWhiteSpace(_loggedUser.Username))
+                        new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} inválido!");
+
+                    if (!activeUserToken || !_loggedUser?.Active != true)
                         context.Result = new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} está inativo!");
 
 
-                    if (!ValidateUserRoutePermission(decodedToken, context.HttpContext))
+                    if (!ValidateUserRoutePermission(decodedToken, context))
                     {
                         // Return custom 401 result
                         context.Result = new CustomUnauthorizedResultError("Permissão Negada - Rota liberada apenas para Administradores.");
@@ -90,23 +102,22 @@ namespace AppSlider.WebApi.Filters
             }
         }
 
-        private bool ValidateUserRoutePermission(JwtSecurityToken token, HttpContext httpContext)
+        private bool ValidateUserRoutePermission(JwtSecurityToken token, AuthorizationFilterContext context)
         {
-            var adminRoutes = new List<String>
-            {
-                "users",
-                "logs"
-            };
+            if (_loggedUser.Profile == "admin")
+                return true;
 
-            var profile = token.Payload["unpr"].ToString();
+            //Verify if the route has CustomAuthorizeAttribute.
+            var customAuthorizeAttribute = ((ControllerActionDescriptor)context.ActionDescriptor).MethodInfo.CustomAttributes
+                .FirstOrDefault(f => f.AttributeType == typeof(CustomAuthorizeAttribute));
 
-            if (String.IsNullOrWhiteSpace(profile)) return false;
+            if (customAuthorizeAttribute == null)
+                return true;
+            
 
-            var decodeProfile = CriptoManager.Base64Decode(profile);
+            var role = customAuthorizeAttribute.ConstructorArguments.FirstOrDefault();
+            return role != null && (_loggedUser.Roles ?? "").Contains(role.Value?.ToString() ?? "_");
 
-            if (decodeProfile != "admin" && adminRoutes.Contains((httpContext.Request.Path.Value ?? "").ToLower())) return false;
-
-            return true;
         }
     }
 }

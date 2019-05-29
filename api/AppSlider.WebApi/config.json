@@ -14,7 +14,7 @@
     {
       "type": "AppSlider.Infrastructure.EntityFrameworkDataAccess.Module",
       "properties": {
-        "ConnectionString": "Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08"
+        "ConnectionString": "Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08;Connection Reset=false"
       }
     }
   ]

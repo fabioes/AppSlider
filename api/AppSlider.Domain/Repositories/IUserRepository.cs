@@ -1,6 +1,6 @@
 ﻿namespace AppSlider.Domain.Repositories
 {
-    using AppSlider.Domain.Users;
+    using AppSlider.Domain.Entities.Users;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -12,6 +12,7 @@
         Task<User> GetByUsername(String username);
         Task<User> Add(User user);
         Task<User> Update(User user);
-        Boolean Delete(User id);
+        Task<Boolean> Delete(User user);
+        void DetachUser(User user);
     }
 }

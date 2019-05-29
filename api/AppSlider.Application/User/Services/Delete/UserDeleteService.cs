@@ -20,12 +20,12 @@ namespace AppSlider.Application.User.Services.Delete
         {
             UserDeleteValidations(command);
 
-            var user = (userRepository.Get(command.Id.GetValueOrDefault()))?.Result;
+            var user = await userRepository.Get(command.Id.GetValueOrDefault());
             
             if (user == null)
                 throw new BusinessException("Informe um Id de Usuário válido!");
 
-            userRepository.Delete(user);
+            await userRepository.Delete(user);
 
             return true;
         }

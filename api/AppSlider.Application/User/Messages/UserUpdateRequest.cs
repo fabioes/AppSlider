@@ -12,7 +12,7 @@ namespace AppSlider.Application.User.Messages
         [JsonProperty("login")]
         public String Username { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("nome")]
         public String Name { get; set; }
 
         [JsonProperty("senha")]
@@ -22,10 +22,10 @@ namespace AppSlider.Application.User.Messages
         public String Email { get; set; }
 
         [JsonProperty("roles")]
-        public List<Guid> Roles { get; set; }
+        public String Roles { get; set; }
 
-        [JsonProperty("contratos")]
-        public List<Guid> Contracts { get; set; }
+        [JsonProperty("franquias")]
+        public String Franchises { get; set; }
 
         [JsonProperty("perfil")]
         public String Profile { get; set; }

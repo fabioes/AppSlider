@@ -9,6 +9,7 @@ using AppSlider.Application.Login.Services;
 using AppSlider.Application.User.Results;
 using AppSlider.Domain;
 using AppSlider.Domain.Authentication;
+using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
 using AppSlider.WebApi.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,7 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
             [FromBody]LoginRequest login,
             [FromServices]SigningConfigurations signingConfigurations,
             [FromServices]TokenConfigurations tokenConfigurations,
-            [FromServices]LoggedUser loggedUser)
+            [FromServices]User loggedUser)
         {
             if (login != null)
             {
