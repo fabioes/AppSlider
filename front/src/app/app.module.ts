@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 
 import { AdminComponent } from './modules/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
+import { ExpiredSessionComponent } from './components/expired-session/expired-session.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,9 @@ import { LoginComponent } from './components/login/login.component';
   declarations: [
     AppComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    AccessDeniedComponent,
+    ExpiredSessionComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,5 +4,16 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiConfig: {
+    baseUrl: "http://localhost:65334",
+    urls:{
+      login: "/Login"
+    },
+    apiRoutes: {
+      channel: {
+        default: "/api/v1/Channel"
+      }
+    }
+  }
 };
