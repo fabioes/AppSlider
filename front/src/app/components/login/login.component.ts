@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { GlobalService } from '../../services/global/global.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginForm: FormGroup;
+  private formSubmitAttempt: boolean;
+  private notLogged: boolean;
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder,
+    private globalService: GlobalService,
+    private authService: AuthService,
+    private router: Router) {
+
+    authService.isLoggedIn.subscribe(item => {
+      debugger;
+      if (item)
+        this.router.navigate(['/adm/welcome']);
+      else
+        this.notLogged = true;
+    });
   }
 
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      login: ['', Validators.required],
+      senha: ['', Validators.required]
+    });
+  }
+
+  loginSubmit($event) {
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value);
+    }
+
+    this.formSubmitAttempt = true;
+  }
+
+  isFieldInvalid(field: string) {
+    return this.globalService.isFieldInvalid(field, this.loginForm, this.formSubmitAttempt);
+  }
 }

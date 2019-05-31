@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   apiConfig: {
-    baseUrl: "http://localhost:65334",
+    baseUrl: "http://localhost:65334/api",
     urls:{
       login: "/Login"
     },

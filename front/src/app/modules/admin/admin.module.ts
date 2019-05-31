@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminRoutes } from './admin.routing';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
 import { TypographyComponent } from './components/typography/typography.component';
@@ -26,6 +27,7 @@ import { UpgradeComponent } from './components/upgrade/upgrade.component';
   ],
   declarations: [
     DashboardComponent,
+    WelcomeComponent,
     UserProfileComponent,
     TableListComponent,
     UpgradeComponent,

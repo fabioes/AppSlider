@@ -142,7 +142,7 @@ export class HttpHelper {
     }
 
     private httpMapResponse<TResult>(res: any) {
-        if (!res.valido) {
+        if (!res.success) {
             let error = new HttpErrorResponse({
                 error: res
             });
@@ -163,17 +163,18 @@ export class HttpHelper {
 
     private handlingError(error: HttpErrorResponse) {
         if (error.status == 401) {
+            localStorage.removeItem('current_user');
             this.router.navigate(['/sessao-expirada']);
             return;
         }
 
-        if (error != null && error.error != null && error.error.hasOwnProperty('mensagens')) {
-            let errorMessages = error.error.mensagens;
+        if (error != null && error.error != null && error.error.hasOwnProperty('mensagem')) {
+            let errorMessage = error.error.mensagem.titulo;
 
-            if (errorMessages.length > 0) {
-                errorMessages = error.error.mensagens.map(item => `${item.codigo} - ${item.conteudo}`).join('\r\n\r\n')
+            if (error.error.mensagem.detalhes.length > 0) {
+                errorMessage = error.error.mensagem.detalhes.join('\r\n')
             }
-            this.showError(errorMessages);
+            this.showError(errorMessage);
         } else {
             this.showError(error.message);
         }

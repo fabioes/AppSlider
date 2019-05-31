@@ -1,0 +1,26 @@
+.main-panel{
+    
+    width: 100% !important;
+    background-color: black;
+    position: absolute;
+    height: 100%;
+
+    .main-content{
+
+        display: flex;
+        margin: auto;
+        align-items: center;
+        -ms-flex-align: center;
+        -ms-flex-pack: center;
+        -webkit-box-align: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+
+        .container{
+
+            .justify-content-center{
+                justify-content: center !important;
+            }
+        }
+    }
+}

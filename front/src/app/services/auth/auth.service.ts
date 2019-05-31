@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import * as jwtHelper from 'jwt-decode';
+import { HttpHelper } from '../../helpers/http.helper';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +11,7 @@ import * as jwtHelper from 'jwt-decode';
 export class AuthService {
     private loggedIn = new BehaviorSubject<boolean>(false);
     private roles = new BehaviorSubject<any>([]);
-    
+
     get isLoggedIn() {
         let login = localStorage.getItem("current_user");
         if (login) {
@@ -21,14 +23,27 @@ export class AuthService {
     }
 
     constructor(
-        private router: Router
+        private router: Router,
+        private httpHelper: HttpHelper
     ) { }
+
+    public login(loginRequest: Model.Core.LoginRequest) {
+        this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.Core.Login>>(environment.apiConfig.urls.login, loginRequest).subscribe((res) => {
+            if (res.item.perfil_usuario == 'admin') {
+                localStorage.setItem('current_user', JSON.stringify(res.item));
+                this.loggedIn.next(true);
+                this.router.navigate(['/adm/welcome']);
+            } else {
+                this.router.navigate(['/acesso-negado']);
+            }
+        });
+    }
 
     public logout() {
         localStorage.removeItem("current_user");
         setTimeout(() => {
             this.loggedIn.next(false);
-            this.router.navigate(['/login']);
+            this.router.navigate(['']);
         });
 
     }

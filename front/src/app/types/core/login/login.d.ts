@@ -12,4 +12,9 @@ declare namespace Model.Core{
         unique_name: string,
         roles: Array<string>
     }
+    
+    export interface LoginRequest{
+        login: string,
+        senha: string
+    }
 }
