@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3>{{!attendant?.id ? 'novo atendente?' : 'editando ' + attendant?.name}}</h3>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>preencha as informações relevantes do atendente {{attendant?.id ? attendant.name : ''}}</p>
+
+    <form [formGroup]="attendantForm">
+
+        <input formControlName="id" type="hidden">
+
+        <div class="form-group">
+            <label>Nome do atendente</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('name')}" formControlName="name"
+                placeholder="digite o nome do atendente" name="name" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+                Favor inserir o 'Nome do Atendente'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Username do atendente</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('userName')}" formControlName="userName"
+                placeholder="digite o usuário do atendente" name="userName" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('userName')">
+                Favor inserir o 'Usuário do Atendente'!
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label>Fila</label>
+            <p-accordion>
+                <p-accordionTab header="Lista de Filas">
+                    <p-table #queueTable [value]="queueList" [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th></th>
+                                <th>Nome</th>
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-queue>
+                            <tr>
+                                <td><p-checkbox name="queueList" value="{{queue?.id || ''}}" [formControl]="attendantForm.controls['queueStatus']"></p-checkbox></td>
+                                <td>{{queue?.name}}</td>
+                                <td></td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn bg-dark" [disabled]="!attendantForm.valid" (click)="saveAttendant()">{{attendant?.id
+        ? 'Salvar' : 'Cadastrar' }}</button>
+</div>

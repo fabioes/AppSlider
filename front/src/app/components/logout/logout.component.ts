@@ -8,7 +8,6 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class LogoutComponent {
 
-  
   constructor(private authService: AuthService) { 
     this.authService.logout();
   }

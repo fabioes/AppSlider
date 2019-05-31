@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (req.url.indexOf(environment.apiConfig.urls.login) >= 0) {
+        if (req.url.indexOf(environment.apiConfig.apiRoutes.login.default) >= 0) {
             return next.handle(req);
         }
 

@@ -28,7 +28,7 @@ export class AuthService {
     ) { }
 
     public login(loginRequest: Model.Core.LoginRequest) {
-        this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.Core.Login>>(environment.apiConfig.urls.login, loginRequest).subscribe((res) => {
+        this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.Core.Login>>(environment.apiConfig.apiRoutes.login.default, loginRequest).subscribe((res) => {
             if (res.item.perfil_usuario == 'admin') {
                 localStorage.setItem('current_user', JSON.stringify(res.item));
                 this.loggedIn.next(true);

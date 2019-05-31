@@ -7,12 +7,14 @@ export const environment = {
   production: false,
   apiConfig: {
     baseUrl: "http://localhost:65334/api",
-    urls:{
-      login: "/Login"
-    },
     apiRoutes: {
-      channel: {
-        default: "/api/v1/Channel"
+      login: {
+        default: "/login"
+      },
+      user: {
+        default: "/users",
+        switchActive: "/users/switch_active",
+        resetPassword: "/users/reset_password"
       }
     }
   }

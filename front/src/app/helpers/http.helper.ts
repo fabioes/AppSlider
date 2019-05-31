@@ -114,7 +114,7 @@ export class HttpHelper {
 
     public HttpDelete<TResult>(url: string,
         extraParams?: any[],
-        extraHeaders?: any): Observable<boolean> {
+        extraHeaders?: any): Observable<TResult> {
         let headers = new HttpHeaders({ 'Accept': 'application/json' });
 
         var params = extraParams || {};
@@ -131,8 +131,8 @@ export class HttpHelper {
                 headers: headers,
                 params: objParams
             }).pipe(
-                map((res: any) => {
-                    return true;
+                map((res: TResult) => {
+                    return res;
                 }),
                 catchError((res) => {
                     throw this.httpMapResponseError(res);
