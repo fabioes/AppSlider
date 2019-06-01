@@ -1,26 +1,26 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AttendantFormComponent } from './attendant-form/attendant-form.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { ConfirmModalService } from '../ui-shared/confirm-modal/confirm-modal.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user/user.service';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 
 @Component({
-  selector: 'app-attendant',
-  templateUrl: './attendant.component.html',
-  styleUrls: ['./attendant.component.scss']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class AttendantComponent implements OnInit {
+export class UserComponent implements OnInit {
 
   @ViewChild(Table) attendantTable: Table;
 
-  user: Model.App.User;
+  modalDialog: Model.App.User;
   users: Array<Model.App.User>;
-  userssGrid:Array<Model.App.User>;
+  usersGrid: Array<Model.App.User>;
   searchTerm: string;
+  showDialog: Boolean = false;
 
   constructor(private userService: UserService,
-    private confirmModalService: ConfirmModalService,
+    private confirmationService: ConfirmationService,
     private toastrService: ToastrService) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class AttendantComponent implements OnInit {
 
   private getAttendants() {
     //TODO: make retrive routines for Attendant by API request
-    
+
     return this.userService.getAllUsers().subscribe(res => {
 
       this.users = res;
@@ -37,7 +37,7 @@ export class AttendantComponent implements OnInit {
       if (this.searchTerm)
         this.searchSubmit(null);
       else
-        this.userssGrid = this.users;
+        this.usersGrid = this.users;
     });
   }
 
@@ -46,34 +46,35 @@ export class AttendantComponent implements OnInit {
     if (!this.searchTerm)
       this.getAttendants();
 
-    this.userssGrid = this.users.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.userName || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.usersGrid = this.users.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.login || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
-  showDialog(attendant: Model.App.User) {
-    const modalRef = this.modalService.open(AttendantFormComponent, {
-      backdrop: 'static'
-    });
+  // showDialog(attendant: Model.App.User) {
+  //   const modalRef = this.modalService.open(AttendantFormComponent, {
+  //     backdrop: 'static'
+  //   });
 
-    modalRef.componentInstance.name = 'Attendant';
+  //   modalRef.componentInstance.name = 'Attendant';
 
-    modalRef.componentInstance.attendant = attendant;
+  //   modalRef.componentInstance.attendant = attendant;
 
-    modalRef.result.then((res: Model.App.User) => {
-      if (res == null) return;
+  //   modalRef.result.then((res: Model.App.User) => {
+  //     if (res == null) return;
 
-      this.getAttendants();
+  //     this.getAttendants();
 
-    }).catch(err => {
-      console.log(err);
-    });
-  }
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // }
 
   deleteUser(user) {
-    this.confirmModalService.confirm(
-      'Confirma a deleção?',
-      'Tem certeza que deseja deletar o usuário ' + user.nome + '?'
-    ).then((res) => {
-      if (res) {
+
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja deletar o usuário ' + user.nome + '?',
+      header: 'Confirma a deleção?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
         this.userService.deleteUser(user.id).subscribe(() => {
           this.getAttendants();
           this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O Atendente <b> ' + user.nome + ' </b> foi deletado com sucesso.', '', {
@@ -85,11 +86,11 @@ export class AttendantComponent implements OnInit {
           });
         });
       }
-    }, () => {
-      return false;
-    }).catch(() => {
-      return false;
     });
+  }
+
+  public teste($event){
+    this.showDialog = false;
   }
 
 }

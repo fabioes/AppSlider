@@ -76,16 +76,20 @@ namespace AppSlider.WebApi.Filters
                     var handler = new JwtSecurityTokenHandler();
                     var decodedToken = handler.ReadToken(token) as JwtSecurityToken;
                     var userToken = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
-                    var activeUserToken = decodedToken.Claims.First(claim => claim.Type == "unac").Value == "true";
 
                     _loggedUser = ((User)(await _userGetService.GetByUsername(userToken)));
 
                     if (String.IsNullOrWhiteSpace(_loggedUser.Username))
+                    {
                         new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} inválido!");
+                        return;
+                    }
 
-                    if (!activeUserToken || !_loggedUser?.Active != true)
+                    if (_loggedUser?.Active != true)
+                    {
                         context.Result = new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} está inativo!");
-
+                        return;
+                    }
 
                     if (!ValidateUserRoutePermission(decodedToken, context))
                     {
@@ -113,7 +117,7 @@ namespace AppSlider.WebApi.Filters
 
             if (customAuthorizeAttribute == null)
                 return true;
-            
+
 
             var role = customAuthorizeAttribute.ConstructorArguments.FirstOrDefault();
             return role != null && (_loggedUser.Roles ?? "").Contains(role.Value?.ToString() ?? "_");

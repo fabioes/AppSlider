@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminRoutes } from './admin.routing';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UserComponent } from './components/user/user.component';
+import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
@@ -16,17 +18,37 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from './components/upgrade/upgrade.component';
 
+//primeng
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import {CheckboxModule} from 'primeng/checkbox';
+import {DialogModule} from 'primeng/dialog'
+import {ConfirmDialogModule} from 'primeng/confirmdialog'
+
+
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminRoutes),
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    //primeng
+    TableModule,
+    DropdownModule,
+    CheckboxModule,
+    FileUploadModule,
+    DialogModule,
+    ConfirmDialogModule
   ],
   declarations: [
     DashboardComponent,
+    UserComponent,
+    UserFormComponent,
     WelcomeComponent,
     UserProfileComponent,
     TableListComponent,

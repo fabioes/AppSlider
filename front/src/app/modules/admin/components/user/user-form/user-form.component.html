@@ -1,0 +1,33 @@
+<div class="modal-body">
+    <p>preencha as informações relevantes do usuario {{modalDialog?.id ? modalDialog.nome : ''}}</p>
+
+    <form [formGroup]="userForm">
+
+        <input formControlName="id" type="hidden">
+
+        <div class="form-group">
+            <label>Nome do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
+                placeholder="digite o nome do usuário" name="nome" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+                Favor inserir o 'Nome do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Login do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('login')}" formControlName="login"
+                placeholder="digite o login do atendente" name="login" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('login')">
+                Favor inserir o 'Login do Usuário'!
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn bg-dark" [disabled]="!userForm.valid" (click)="save()">{{modalDialog?.id
+        ? 'Salvar' : 'Cadastrar' }}</button>
+</div>

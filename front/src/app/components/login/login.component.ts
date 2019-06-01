@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
     private router: Router) {
 
     authService.isLoggedIn.subscribe(item => {
-      debugger;
       if (item)
         this.router.navigate(['/adm/welcome']);
       else

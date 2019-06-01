@@ -1,4 +1,6 @@
-import { Component} from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { AuthService } from './services/auth/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -7,5 +9,10 @@ import { Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  constructor(authService: AuthService, ngZone: NgZone, router: Router) {
+    authService.isLoggedIn.subscribe(res => {
+      if (!res)
+        ngZone.run(() => { router.navigate(['']); });
+    })
+  }
 }
