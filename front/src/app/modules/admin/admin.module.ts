@@ -57,7 +57,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog'
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-  ]
+  ],
+  entryComponents:[UserFormComponent]
 })
 
 export class AdminModule {}

@@ -3,6 +3,8 @@ import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user/user.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { UserFormComponent } from './user-form/user-form.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user',
@@ -13,21 +15,20 @@ export class UserComponent implements OnInit {
 
   @ViewChild(Table) attendantTable: Table;
 
-  modalDialog: Model.App.User;
   users: Array<Model.App.User>;
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
-  showDialog: Boolean = false;
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
+    private modalService : NgbModal,
     private toastrService: ToastrService) { }
 
   ngOnInit() {
-    this.getAttendants();
+    this.getUsers();
   }
 
-  private getAttendants() {
+  private getUsers() {
     //TODO: make retrive routines for Attendant by API request
 
     return this.userService.getAllUsers().subscribe(res => {
@@ -44,29 +45,29 @@ export class UserComponent implements OnInit {
   searchSubmit($event) {
 
     if (!this.searchTerm)
-      this.getAttendants();
+      this.getUsers();
 
     this.usersGrid = this.users.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.login || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
-  // showDialog(attendant: Model.App.User) {
-  //   const modalRef = this.modalService.open(AttendantFormComponent, {
-  //     backdrop: 'static'
-  //   });
+  showDialog(user: Model.App.User) {
+    const modalRef = this.modalService.open(UserFormComponent, {
+      backdrop: 'static'
+    });
 
-  //   modalRef.componentInstance.name = 'Attendant';
+    modalRef.componentInstance.name = 'Usuário';
 
-  //   modalRef.componentInstance.attendant = attendant;
+    modalRef.componentInstance.modalDialog = user;
 
-  //   modalRef.result.then((res: Model.App.User) => {
-  //     if (res == null) return;
+    modalRef.result.then((res: Model.App.User) => {
+      if (res == null) return;
 
-  //     this.getAttendants();
+      this.getUsers();
 
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  // }
+    }).catch(err => {
+      console.log(err);
+    });
+  }
 
   deleteUser(user) {
 
@@ -76,7 +77,7 @@ export class UserComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.userService.deleteUser(user.id).subscribe(() => {
-          this.getAttendants();
+          this.getUsers();
           this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O Atendente <b> ' + user.nome + ' </b> foi deletado com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
@@ -88,9 +89,4 @@ export class UserComponent implements OnInit {
       }
     });
   }
-
-  public teste($event){
-    this.showDialog = false;
-  }
-
 }

@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (req.url.indexOf(environment.apiConfig.apiRoutes.login.default) >= 0) {
             return next.handle(req);
         }
-debugger;
+
         let token = this.authService.getOAuthToken();
 
         if (token) {
