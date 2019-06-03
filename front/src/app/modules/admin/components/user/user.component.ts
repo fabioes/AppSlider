@@ -52,12 +52,13 @@ export class UserComponent implements OnInit {
 
   showDialog(user: Model.App.User) {
     const modalRef = this.modalService.open(UserFormComponent, {
-      backdrop: 'static'
+      backdrop: 'static',
+      size: 'lg'
     });
 
     modalRef.componentInstance.name = 'Usuário';
 
-    modalRef.componentInstance.modalDialog = user;
+    modalRef.componentInstance.user = user;
 
     modalRef.result.then((res: Model.App.User) => {
       if (res == null) return;
@@ -70,7 +71,7 @@ export class UserComponent implements OnInit {
   }
 
   deleteUser(user) {
-
+debugger;
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar o usuário ' + user.nome + '?',
       header: 'Confirma a deleção?',

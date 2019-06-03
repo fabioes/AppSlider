@@ -57,6 +57,12 @@
                   <a (click)="deleteUser(user)">
                     <i class="pi pi-times"></i>
                   </a>
+                  <a (click)="switchActive(user)" title="{{user.ativo == true ? 'desativar' : 'ativar'}}">
+                    <i class="pi" [ngClass]="{'pi-lock': user.ativo == true, 'pi-unlock': user.ativo != true}"></i>
+                  </a>
+                  <a (click)="resetPassword(user)" title="resetar senha?">
+                    <i class="pi pi-key"></i>
+                  </a>
                 </td>
               </tr>
             </ng-template>
@@ -65,4 +71,5 @@
       </div>
     </div>
   </div>
+  <p-confirmDialog header="Tem certeza?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 </div>

@@ -14,9 +14,16 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class UserFormComponent implements OnInit {
 
   @Input() user: Model.App.User;
-  @Output() dialogCallback = new EventEmitter();
   userForm: FormGroup;
-  formAttempt: Boolean
+  formAttempt: Boolean;
+  profiles = [{
+    name: 'Administrador',
+    value: 'admin'
+  },
+  {
+    name: 'Usuário',
+    value: 'user'
+  }];
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -29,7 +36,7 @@ export class UserFormComponent implements OnInit {
       id: [''],
       nome: ['', Validators.required],
       login: ['', Validators.required],
-      senha: ['', Validators.required],
+      senha: (this.user || <Model.App.User>{}).id ? [''] : ['', Validators.required],
       perfil: ['', Validators.required],
       ativo: [true],
       email: ['', Validators.required],
@@ -38,6 +45,9 @@ export class UserFormComponent implements OnInit {
     });
 
     this.userForm.patchValue(this.user || {});
+
+    if ((this.user || <Model.App.User>{}).id)
+      this.userForm.get('perfil').setValue(this.profiles.filter(f => f.value == this.user.perfil)[0]);
   }
 
   public save() {
@@ -45,6 +55,7 @@ export class UserFormComponent implements OnInit {
     if (this.userForm.invalid) return;
 
     this.user = this.userForm.value;
+    this.user.perfil = (<any>this.user.perfil).value;
 
     if (this.user.id) {
       this.userService.updateUser(this.user).subscribe(res => this.callbackAction('alterado', res));
@@ -72,7 +83,7 @@ export class UserFormComponent implements OnInit {
       positionClass: 'toast-top-right'
     });
 
-    this.dialogCallback.emit("");
+    this.activeModal.close(res);
   }
 
 
