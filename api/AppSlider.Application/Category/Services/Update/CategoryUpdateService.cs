@@ -51,6 +51,8 @@ namespace AppSlider.Application.Category.Services.Update
                 {
                     messageValidations.Add("Categoria já existente!");
                 }
+
+                categoryRepository.DetachCategory(catetoryValidation);
             }
             
             if (messageValidations.Count > 0)

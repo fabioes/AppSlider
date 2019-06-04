@@ -7,14 +7,14 @@
         <div class="card-header">
           <div class="row">
             <div class="col-4 col-xl-5">
-              <h5 class="title">Usuários</h5>
-              <p class="subtitle">Mantenha as informações dos usuários do sistema!</p>
+              <h5 class="title">Tipos de Negócio</h5>
+              <p class="subtitle">Mantenha as informações dos tipos de negócio do sistema!</p>
             </div>
             <div class="search-container col-6 col-xl-5">
               <form (ngSubmit)="searchSubmit($event)">
                 <div class="input-group no-border">
                   <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="searchSubmit($event)"
-                    placeholder="buscar usuários?...">
+                    placeholder="buscar tipos de negócio?...">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="now-ui-icons ui-1_zoom-bold" (click)="searchSubmit($event)"></i>
@@ -24,45 +24,31 @@
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="user = null; showDialog(null)">Novo</button>
+              <button type="button" class="btn float-right layout-button" (click)="businessType = null; showDialog(null)">Novo</button>
             </div>
           </div>
 
         </div>
         <div class="card-body">
-          <p-table [value]="usersGrid" [paginator]="true" [rows]="10">
+          <p-table [value]="businessTypesGrid" [paginator]="true" [rows]="10">
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
-                <th>Login</th>
-                <th>Perfil</th>
-                <th>E-mail</th>
-                <th>Unidades de Negócio</th>
-                <th>Ativo?</th>
+                <th>Descrição</th>
                 <th></th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user>
+            <ng-template pTemplate="body" let-businessType>
               <tr>
-                <td>{{user.nome}}</td>
-                <td>{{user.login}}</td>
-                <td>{{user.perfil}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.franquias}}</td>
-                <td>{{user.ativo ? 'sim' : 'não'}}</td>
+                <td>{{businessType.nome}}</td>
+                <td>{{businessType.descricao}}</td>
                 <td>
-                  <a (click)="showDialog(user)">
+                  <a (click)="showDialog(businessType)">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteUser(user)">
+                  <a (click)="deleteBusinessType(businessType)">
                     <i class="pi pi-times"></i>
-                  </a>
-                  <a (click)="switchActive(user)" title="{{user.ativo == true ? 'desativar' : 'ativar'}}">
-                    <i class="pi" [ngClass]="{'pi-lock': user.ativo == true, 'pi-unlock': user.ativo != true}"></i>
-                  </a>
-                  <a (click)="resetPassword(user)" title="resetar senha?">
-                    <i class="pi pi-key"></i>
-                  </a>
+                  </a>                 
                 </td>
               </tr>
             </ng-template>

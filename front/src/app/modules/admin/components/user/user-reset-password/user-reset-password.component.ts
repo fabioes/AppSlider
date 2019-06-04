@@ -15,7 +15,6 @@ export class UserResetPasswordComponent implements OnInit {
 
   @Input() user: Model.App.User;
   resetPasswordForm: FormGroup;
-  formAttempt: Boolean;
   
 
   constructor(public activeModal: NgbActiveModal,
@@ -39,8 +38,6 @@ export class UserResetPasswordComponent implements OnInit {
     let model = this.resetPasswordForm.value;
     
       this.userService.resetUserPassword(model).subscribe(res => this.callbackAction(res));
-    
-    this.formAttempt = true;
   }
 
 

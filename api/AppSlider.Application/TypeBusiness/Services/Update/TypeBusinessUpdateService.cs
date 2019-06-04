@@ -51,6 +51,8 @@ namespace AppSlider.Application.TypeBusiness.Services.Update
                 {
                     messageValidations.Add("Tipo de Negócio já existente!");
                 }
+
+                businessTypeRepository.DetachBusinessType(businessTypeValidation);
             }
             
             if (messageValidations.Count > 0)

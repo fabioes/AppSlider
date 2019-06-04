@@ -10,11 +10,15 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { UpgradeComponent } from './components/upgrade/upgrade.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserComponent } from './components/user/user.component';
+import { CategoryComponent } from './components/category/category.component';
+import { BusinessTypeComponent } from './components/business-type/business-type.component';
 
 export const AdminRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'welcome',        component: WelcomeComponent },
     { path: 'usuarios',       component: UserComponent },
+    { path: 'categorias',     component: CategoryComponent },
+    { path: 'tipos-negocio',  component: BusinessTypeComponent },
 
     // { path: 'user-profile',   component: UserProfileComponent },
     // { path: 'table-list',     component: TableListComponent },

@@ -7,6 +7,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
 import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
+import { CategoryComponent } from './components/category/category.component';
+import { CategoryFormComponent } from './components/category/category-form/category-form.component';
+import { BusinessTypeComponent } from './components/business-type/business-type.component';
+import { BusinessTypeFormComponent } from './components/business-type/business-type-form/business-type-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
@@ -20,13 +24,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from './components/upgrade/upgrade.component';
 
 //primeng
-import {TableModule} from 'primeng/table';
-import {DropdownModule} from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
-import {CheckboxModule} from 'primeng/checkbox';
-import {DialogModule} from 'primeng/dialog'
-import {ConfirmDialogModule} from 'primeng/confirmdialog'
-
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog'
+import { ConfirmDialogModule } from 'primeng/confirmdialog'
 
 
 @NgModule({
@@ -53,6 +56,10 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog'
     UserResetPasswordComponent,
     WelcomeComponent,
     UserProfileComponent,
+    CategoryComponent,
+    CategoryFormComponent,
+    BusinessTypeComponent,
+    BusinessTypeFormComponent,
     TableListComponent,
     UpgradeComponent,
     TypographyComponent,
@@ -60,7 +67,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog'
     MapsComponent,
     NotificationsComponent,
   ],
-  entryComponents:[UserFormComponent, UserResetPasswordComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent]
 })
 
-export class AdminModule {}
+export class AdminModule { }

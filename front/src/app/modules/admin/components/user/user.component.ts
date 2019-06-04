@@ -14,8 +14,6 @@ import { UserResetPasswordComponent } from './user-reset-password/user-reset-pas
 })
 export class UserComponent implements OnInit {
 
-  @ViewChild(Table) attendantTable: Table;
-
   users: Array<Model.App.User>;
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
@@ -114,7 +112,7 @@ export class UserComponent implements OnInit {
   resetPassword(user) {
     const modalRef = this.modalService.open(UserResetPasswordComponent, {
       backdrop: 'static',
-      size: 'lg'
+      //size: 'lg'
     });
 
     modalRef.componentInstance.name = 'Usuário';

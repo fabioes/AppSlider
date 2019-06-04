@@ -15,7 +15,7 @@ export class UserFormComponent implements OnInit {
 
   @Input() user: Model.App.User;
   userForm: FormGroup;
-  formAttempt: Boolean;
+
   profiles = [{
     name: 'Administrador',
     value: 'admin'
@@ -63,8 +63,6 @@ export class UserFormComponent implements OnInit {
     else {
       this.userService.createUser(this.user).subscribe(res => this.callbackAction('criado', res));
     }
-
-    this.formAttempt = true;
   }
 
 
@@ -85,7 +83,5 @@ export class UserFormComponent implements OnInit {
 
     this.activeModal.close(res);
   }
-
-
 
 }

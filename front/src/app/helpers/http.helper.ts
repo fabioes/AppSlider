@@ -168,11 +168,11 @@ export class HttpHelper {
             return;
         }
 
-        if (error != null && error.error != null && error.error.hasOwnProperty('mensagem')) {
-            let errorMessage = error.error.mensagem.titulo;
+        if (error != null && error.error != null && error.error.hasOwnProperty('message')) {
+            let errorMessage = error.error.message.title;
 
-            if (error.error.mensagem.detalhes.length > 0) {
-                errorMessage = error.error.mensagem.detalhes.join('\r\n')
+            if (error.error.message.details.length > 0) {
+                errorMessage = error.error.message.details.join('\r\n')
             }
             this.showError(errorMessage);
         } else {

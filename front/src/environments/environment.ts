@@ -15,6 +15,12 @@ export const environment = {
         default: "/users",
         switchActive: "/users/switch_active",
         resetPassword: "/users/reset_password"
+      },
+      category: {
+        default: "/categories"
+      },
+      business_type: {
+        default: "/business_type"
       }
     }
   }
