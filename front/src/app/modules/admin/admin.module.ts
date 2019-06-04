@@ -6,6 +6,7 @@ import { AdminRoutes } from './admin.routing';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { UserFormComponent } from './components/user/user-form/user-form.component';
+import { UserResetPasswordComponent } from './components/user/user-reset-password/user-reset-password.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
@@ -49,6 +50,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog'
     DashboardComponent,
     UserComponent,
     UserFormComponent,
+    UserResetPasswordComponent,
     WelcomeComponent,
     UserProfileComponent,
     TableListComponent,
@@ -58,7 +60,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog'
     MapsComponent,
     NotificationsComponent,
   ],
-  entryComponents:[UserFormComponent]
+  entryComponents:[UserFormComponent, UserResetPasswordComponent]
 })
 
 export class AdminModule {}

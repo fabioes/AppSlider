@@ -5,6 +5,7 @@ import { UserService } from '../../services/user/user.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { UserFormComponent } from './user-form/user-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
 
 @Component({
   selector: 'app-user',
@@ -21,7 +22,7 @@ export class UserComponent implements OnInit {
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
-    private modalService : NgbModal,
+    private modalService: NgbModal,
     private toastrService: ToastrService) { }
 
   ngOnInit() {
@@ -71,7 +72,6 @@ export class UserComponent implements OnInit {
   }
 
   deleteUser(user) {
-debugger;
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar o usuário ' + user.nome + '?',
       header: 'Confirma a deleção?',
@@ -79,7 +79,7 @@ debugger;
       accept: () => {
         this.userService.deleteUser(user.id).subscribe(() => {
           this.getUsers();
-          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O Atendente <b> ' + user.nome + ' </b> foi deletado com sucesso.', '', {
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O usuário <b> ' + user.nome + ' </b> foi deletado com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
             enableHtml: true,
@@ -88,6 +88,46 @@ debugger;
           });
         });
       }
+    });
+  }
+
+  switchActive(user) {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja ' + (user.ativo ? 'desativar' : 'ativar') + ' o usuário ' + user.nome + '?',
+      header: 'Confirma a ' + (user.ativo ? 'desativação' : 'ativação') + '?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.userService.switchActive(user.id).subscribe(() => {
+          this.getUsers();
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O usuário <b> ' + user.nome + ' </b> foi ' + (user.ativo ? 'desativado' : 'ativado') + ' com sucesso.', '', {
+            timeOut: 3500,
+            closeButton: true,
+            enableHtml: true,
+            toastClass: "alert alert-success alert-with-icon",
+            positionClass: 'toast-top-right'
+          });
+        });
+      }
+    });
+  }
+
+  resetPassword(user) {
+    const modalRef = this.modalService.open(UserResetPasswordComponent, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+
+    modalRef.componentInstance.name = 'Usuário';
+
+    modalRef.componentInstance.user = user;
+
+    modalRef.result.then((res: Model.App.User) => {
+      if (res == null) return;
+
+      this.getUsers();
+
+    }).catch(err => {
+      console.log(err);
     });
   }
 }

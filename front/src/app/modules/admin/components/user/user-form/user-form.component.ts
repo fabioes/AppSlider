@@ -75,7 +75,7 @@ export class UserFormComponent implements OnInit {
 
   public callbackAction(action, res) {
 
-    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O atendente <b> ' + res.name + ' </b> foi ' + action + ' com sucesso.', '', {
+    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> O usuário <b> ' + res.name + ' </b> foi ' + action + ' com sucesso.', '', {
       timeOut: 3500,
       closeButton: true,
       enableHtml: true,
