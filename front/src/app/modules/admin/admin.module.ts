@@ -11,6 +11,8 @@ import { CategoryComponent } from './components/category/category.component';
 import { CategoryFormComponent } from './components/category/category-form/category-form.component';
 import { BusinessTypeComponent } from './components/business-type/business-type.component';
 import { BusinessTypeFormComponent } from './components/business-type/business-type-form/business-type-form.component';
+import { FranchiseComponent } from './components/franchise/franchise.component';
+import { FranchiseFormComponent } from './components/franchise/franchise-form/franchise-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
@@ -60,6 +62,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog'
     CategoryFormComponent,
     BusinessTypeComponent,
     BusinessTypeFormComponent,
+    FranchiseComponent,
+    FranchiseFormComponent,
     TableListComponent,
     UpgradeComponent,
     TypographyComponent,
@@ -67,7 +71,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog'
     MapsComponent,
     NotificationsComponent,
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent]
 })
 
 export class AdminModule { }

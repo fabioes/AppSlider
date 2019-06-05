@@ -10,7 +10,7 @@ namespace AppSlider.Domain.Entities.Business
     {
         public virtual Guid? IdFather { get; protected set; }
         public virtual Guid IdType { get; protected set; }
-        public virtual Guid IdCategory { get; protected set; }
+        public virtual Guid? IdCategory { get; protected set; }
         public virtual String Name { get; protected set; }
         public virtual String Description { get; protected set; }
         public virtual Guid? IdLogo { get; protected set; }
@@ -35,7 +35,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
+        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -52,7 +52,7 @@ namespace AppSlider.Domain.Entities.Business
             Active = active;
         }
 
-        public BusinessEntity(Guid? idFather, Guid idType, Guid idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
+        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
         {
             IdFather = idFather;
             IdType = idType;

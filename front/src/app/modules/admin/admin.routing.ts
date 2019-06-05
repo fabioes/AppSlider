@@ -12,6 +12,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserComponent } from './components/user/user.component';
 import { CategoryComponent } from './components/category/category.component';
 import { BusinessTypeComponent } from './components/business-type/business-type.component';
+import { FranchiseComponent } from './components/franchise/franchise.component';
 
 export const AdminRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,6 +20,7 @@ export const AdminRoutes: Routes = [
     { path: 'usuarios',       component: UserComponent },
     { path: 'categorias',     component: CategoryComponent },
     { path: 'tipos-negocio',  component: BusinessTypeComponent },
+    { path: 'franquias',      component: FranchiseComponent },
 
     // { path: 'user-profile',   component: UserProfileComponent },
     // { path: 'table-list',     component: TableListComponent },

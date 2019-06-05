@@ -16,7 +16,7 @@ namespace AppSlider.Application.Category.Results
         
         public static explicit operator CategoryResult(Domain.Entities.Categories.Category category)
         {
-            return new CategoryResult
+            return category == null ? null : new CategoryResult
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -26,7 +26,7 @@ namespace AppSlider.Application.Category.Results
 
         public static explicit operator Domain.Entities.Categories.Category(CategoryResult category)
         {
-            return new Domain.Entities.Categories.Category(
+            return category == null ? null : new Domain.Entities.Categories.Category(
                 category.Id,
                 category.Name,
                 category.Description

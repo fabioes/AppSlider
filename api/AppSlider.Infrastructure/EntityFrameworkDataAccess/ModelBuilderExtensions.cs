@@ -1,4 +1,5 @@
-﻿using AppSlider.Domain.Entities.Roles;
+﻿using AppSlider.Domain.Entities.Business;
+using AppSlider.Domain.Entities.Roles;
 using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,12 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new Role("AppSlider.Write.Category", "Permissão de escrita para rotina de Categoria."),
                 new Role("AppSlider.Read.Playlist", "Permissão de leitura para rotina de Playlist."),
                 new Role("AppSlider.Write.Playlist", "Permissão de escrita para rotina de Playlist.")
+            );
+
+            modelBuilder.Entity<BusinessType>().HasData(
+                new BusinessType("Franquia", "Franquia como Tipo de Negócio."),
+                new BusinessType("Estabelecimento", "Estabelecimento como Tipo de Negócio."),
+                new BusinessType("Anunciante", "Anunciente como Tipo de Negócio.")
             );
         }
     }

@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h3>{{!businessType?.id ? 'novo tipo de negócio?' : 'editando tipo de negócio ' + businessType?.nome}}</h3>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>preencha as informações relevantes do tipo de negócio {{businessType?.id ? businessType.nome : ''}}</p>
+
+    <form [formGroup]="businessTypeForm">
+
+        <input formControlName="id" type="hidden">
+
+        <div class="form-group">
+            <label>Nome do tipo de negócio</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
+                placeholder="digite o nome do tipo de negócio" name="nome" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+                Favor inserir o 'Nome do Tipo de Negócio'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Descrição do Tipo de Negócio</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
+                placeholder="digite a descrição do tipo de negócio" name="descricao">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('descricao')">
+                Favor inserir a 'Descrição do Tipo de Negócio'!
+            </div>
+        </div>
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn bg-dark" [disabled]="!businessTypeForm.valid" (click)="save()">
+        {{businessType?.id ? 'Salvar' : 'Cadastrar' }}</button>
+</div>

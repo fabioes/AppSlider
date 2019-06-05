@@ -16,7 +16,7 @@ namespace AppSlider.Application.TypeBusiness.Results
         
         public static explicit operator TypeBusinessResult(Domain.Entities.Business.BusinessType businessType)
         {
-            return new TypeBusinessResult
+            return businessType == null ? null : new TypeBusinessResult
             {
                 Id = businessType.Id,
                 Name = businessType.Name,
@@ -24,12 +24,12 @@ namespace AppSlider.Application.TypeBusiness.Results
             };
         }
 
-        public static explicit operator Domain.Entities.Business.BusinessType(TypeBusinessResult category)
+        public static explicit operator Domain.Entities.Business.BusinessType(TypeBusinessResult businessType)
         {
-            return new Domain.Entities.Business.BusinessType(
-                category.Id,
-                category.Name,
-                category.Description
+            return businessType == null ? null : new Domain.Entities.Business.BusinessType(
+                businessType.Id,
+                businessType.Name,
+                businessType.Description
             );
         }
     }
