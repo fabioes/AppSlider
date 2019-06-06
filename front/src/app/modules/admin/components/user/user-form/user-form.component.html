@@ -1,0 +1,82 @@
+<div class="modal-header">
+    <h3>{{!user?.id ? 'novo usuário?' : 'editando usuário ' + user?.nome}}</h3>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>preencha as informações relevantes do usuario {{user?.id ? user.nome : ''}}</p>
+
+    <form [formGroup]="userForm">
+
+        <input formControlName="id" type="hidden">
+
+        <div class="form-group">
+            <label>Nome do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
+                placeholder="digite o nome do usuário" name="nome" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+                Favor inserir o 'Nome do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Login do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('login')}" formControlName="login"
+                placeholder="digite o login do usuário" name="login" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('login')">
+                Favor inserir o 'Login do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group" *ngIf="!user?.id">
+            <label>Senha do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" type="password" [ngClass]="{'is-invalid': isFieldInvalid('senha')}"
+                formControlName="senha" placeholder="digite a senha do usuário" name="senha" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('senha')">
+                Favor inserir a 'Senha do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>E-mail do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('email')}" formControlName="email"
+                placeholder="digite o email do usuário" name="email" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('email')">
+                Favor inserir o 'E-mail do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Perfil do usuário</label>
+            <label class="required-info-asterisk">*</label>
+            <!-- <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('perfil')}" formControlName="perfil"
+                placeholder="digite o perfil do usuário" name="perfil" required>  (onChange)="setWelcomeHsmValue($event)" -->
+                <p-dropdown required="true" [options]="profiles" [filter]="true"
+                    placeholder="Selecione o perfil do usuário" [style]="{'width':'100%', 'backgroud-color': 'white'}"
+                    optionLabel="name" formControlName="perfil" required></p-dropdown>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('perfil')">
+                Favor inserir o 'Perfil do Usuário'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Ativo?</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}" formControlName="ativo"
+                name="ativo">
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('perfil')">
+                Favor inserir o 'Perfil do Usuário'!
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn bg-dark" [disabled]="!userForm.valid" (click)="save()">{{user?.id
+        ? 'Salvar' : 'Cadastrar' }}</button>
+</div>

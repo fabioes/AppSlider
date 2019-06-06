@@ -8,3 +8,156 @@ p.subtitle{
 // .btn-primary{
 //     background-color: black;
 // }
+
+.search-container{    
+    padding-top: 10px;
+
+    i.ui-1_zoom-bold{
+        cursor: pointer;
+    }
+}
+
+.required-info-asterisk{
+    color: red !important;
+    margin-left: 5px;
+}
+
+/* prime ng custom */
+
+.ui-progressbar-indeterminate{
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+    height: 7px !important;
+    background-color: rgba(180,180,180,.5) !important;
+
+    & > div{
+        background-color: #f96332 !important;        
+    }
+}
+
+.ui-table-thead {
+    tr{
+        border-bottom: 1px solid black;
+
+        th{
+            padding: 0.5rem !important;
+            border: none !important;
+            background-color: inherit !important;
+        }
+    }
+}
+
+.ui-table-tbody {
+    tr{
+        border-bottom: 1px solid lightgray;
+        background-color: inherit !important;
+
+        td{
+            padding: 0.75rem 0.5rem !important;
+            border: none !important;
+        }
+    }
+}
+
+p-paginator{
+    margin-top: 10px;
+    display: block;
+
+    .ui-paginator{
+        background-color: white !important;
+        border: none !important;
+    }
+}
+
+
+p-dropdown{
+    background-color: white;
+
+    .ui-dropdown-filter-container{
+        background-color: white;
+    }
+    
+    .ui-dropdown {
+        border: 1px solid lightgray;
+        border-radius: 30px;
+        
+        .ui-dropdown-label.ui-placeholder, .ui-dropdown-label{
+            font-size: 0.79rem;
+            padding: 9px 20px;
+            border-radius: 35px;
+        }
+
+        .ui-dropdown-trigger{
+            margin: 0px 5.5px;
+            border-radius: 35px;
+        }
+
+        .ui-dropdown-items.ui-dropdown-list{
+            background-color: white;
+
+            li{
+                text-indent: 0;
+                border-bottom: 1px solid lightgray;
+                padding: 8px 20px;
+                
+                &:last-child{
+                    border-bottom: none;
+                }
+
+                &:hover{
+                    background-color: #eee
+                }
+            }
+        }
+    }
+}
+
+p-calendar{
+    display: block;
+    & > span{
+        width: 100%;
+    }
+
+    .ui-datepicker{
+        width: 360px !important;
+        min-width: 300px !important;
+
+        .ui-datepicker-group{
+            width: 335px;
+        }
+    }
+
+    input {
+        border-radius: 30px !important;
+        color: #2c2c2c !important;
+        line-height: normal !important;
+        font-size: 0.8571em !important;
+        padding: 11px 19px !important;
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        height: 37px !important;
+        font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif !important;
+
+        &:focus{
+            border: 1px solid #f96332;
+            box-shadow: none;
+            outline: 0 !important;
+            color: #2c2c2c;
+        }
+    }
+}
+
+/* prime ng custom end */
+
+.form-group{
+    margin-bottom: 20px;
+
+    input[type='checkbox']{
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+        position: absolute;
+        margin: -5px 15px;
+    }    
+}

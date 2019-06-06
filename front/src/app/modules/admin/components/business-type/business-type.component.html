@@ -1,0 +1,61 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-4 col-xl-5">
+              <h5 class="title">Tipos de Negócio</h5>
+              <p class="subtitle">Mantenha as informações dos tipos de negócio do sistema!</p>
+            </div>
+            <div class="search-container col-6 col-xl-5">
+              <form (ngSubmit)="searchSubmit($event)">
+                <div class="input-group no-border">
+                  <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="searchSubmit($event)"
+                    placeholder="buscar tipos de negócio?...">
+                  <div class="input-group-append">
+                    <div class="input-group-text">
+                      <i class="now-ui-icons ui-1_zoom-bold" (click)="searchSubmit($event)"></i>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="actions-container col-2 col-xl-2">
+              <button type="button" class="btn float-right layout-button" (click)="businessType = null; showDialog(null)">Novo</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <p-table [value]="businessTypesGrid" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-businessType>
+              <tr>
+                <td>{{businessType.nome}}</td>
+                <td>{{businessType.descricao}}</td>
+                <td>
+                  <a (click)="showDialog(businessType)" *ngIf="businessType.bloqueado !== true">
+                    <i class="pi pi-pencil"></i>
+                  </a>
+                  <a (click)="deleteBusinessType(businessType)" *ngIf="businessType.bloqueado !== true">
+                    <i class="pi pi-times"></i>
+                  </a>                 
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-confirmDialog header="Tem certeza?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>

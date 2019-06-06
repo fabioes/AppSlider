@@ -115,7 +115,8 @@
 
             &.active > a,
             &.active-pro > a{
-              background-color: $white-color;
+              background-color: $light-gray;
+              color: $black-color;
               box-shadow: $box-shadow;
               i{
                 color: $danger-color;
@@ -184,6 +185,7 @@
         a.logo-mini,
         a.logo-normal{
             @extend .animation-transition-general;
+            font-size: 2 6px;
         }
 
         a.logo-mini{

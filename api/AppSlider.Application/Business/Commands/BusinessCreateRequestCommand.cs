@@ -13,7 +13,7 @@ namespace AppSlider.Application.Business.Commands
         public Guid IdType { get; set; }
 
         [JsonProperty("id_categoria")]
-        public Guid IdCategory { get; set; }
+        public Guid? IdCategory { get; set; }
 
         [JsonProperty("nome")]
         public String Name { get; set; }
@@ -24,20 +24,20 @@ namespace AppSlider.Application.Business.Commands
         [JsonProperty("id_logo")]
         public Guid? IdLogo { get; set; }
 
-        [JsonProperty("nome_contato")]
+        [JsonProperty("contato_nome")]
         public String ContactName { get; set; }
 
-        [JsonProperty("email_contato")]
+        [JsonProperty("contato_email")]
         public String ContactEmail { get; set; }
 
-        [JsonProperty("phone_contato")]
+        [JsonProperty("contato_telefone")]
         public String ContactPhone { get; set; }
 
-        [JsonProperty("endereco_contato")]
+        [JsonProperty("contato_endereco")]
         public String ContactAddress { get; set; }
 
         [JsonProperty("data_expiracao")]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         
         [JsonProperty("ativo")]
         public Boolean Active { get; set; }
