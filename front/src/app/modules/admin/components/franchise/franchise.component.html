@@ -7,14 +7,14 @@
         <div class="card-header">
           <div class="row">
             <div class="col-4 col-xl-5">
-              <h5 class="title">Tipos de Negócio</h5>
-              <p class="subtitle">Mantenha as informações dos tipos de negócio do sistema!</p>
+              <h5 class="title">Franquias</h5>
+              <p class="subtitle">Mantenha as informações das franquias do sistema!</p>
             </div>
             <div class="search-container col-6 col-xl-5">
               <form (ngSubmit)="searchSubmit($event)">
                 <div class="input-group no-border">
                   <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="searchSubmit($event)"
-                    placeholder="buscar tipos de negócio?...">
+                    placeholder="buscar franquias?...">
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <i class="now-ui-icons ui-1_zoom-bold" (click)="searchSubmit($event)"></i>
@@ -24,31 +24,41 @@
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="businessType = null; showDialog(null)">Novo</button>
+              <button type="button" class="btn float-right layout-button" (click)="franchise = null; showDialog(null)">Nova</button>
             </div>
           </div>
 
         </div>
         <div class="card-body">
-          <p-table [value]="businessTypesGrid" [paginator]="true" [rows]="10">
+          <p-table [value]="franchisesGrid" [paginator]="true" [rows]="10">
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
                 <th>Descrição</th>
+                <th>Data de Expiração</th>
+                <th>Ativo?</th>
                 <th></th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-businessType>
+            <ng-template pTemplate="body" let-franchise>
               <tr>
-                <td>{{businessType.nome}}</td>
-                <td>{{businessType.descricao}}</td>
+                <td>{{franchise.nome}}</td>
+                <td>{{franchise.descricao}}</td>
+                <td>{{franchise.data_expiracao | dateFormat}}</td>
+                <td>{{franchise.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(businessType)">
+                  <a (click)="showDialog(franchise)">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteBusinessType(businessType)">
+                  <a (click)="deleteFranchise(franchise)">
                     <i class="pi pi-times"></i>
-                  </a>                 
+                  </a>
+                  <a (click)="switchActive(franchise)" title="{{franchise.ativo == true ? 'desativar' : 'ativar'}}">
+                    <i class="pi" [ngClass]="{'pi-lock': franchise.ativo == true, 'pi-unlock': franchise.ativo != true}"></i>
+                  </a>
+                  <a (click)="manageFranchise(c)" title="gerenciar franquia">
+                    <i class="pi pi-cog"></i>
+                  </a>
                 </td>
               </tr>
             </ng-template>

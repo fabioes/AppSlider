@@ -43,10 +43,10 @@
                 <td>{{businessType.nome}}</td>
                 <td>{{businessType.descricao}}</td>
                 <td>
-                  <a (click)="showDialog(businessType)">
+                  <a (click)="showDialog(businessType)" *ngIf="businessType.bloqueado !== true">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteBusinessType(businessType)">
+                  <a (click)="deleteBusinessType(businessType)" *ngIf="businessType.bloqueado !== true">
                     <i class="pi pi-times"></i>
                   </a>                 
                 </td>

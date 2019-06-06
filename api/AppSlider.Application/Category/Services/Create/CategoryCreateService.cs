@@ -21,7 +21,7 @@ namespace AppSlider.Application.Category.Services.Create
         {
             await CategoryCreateValidationsAsync(command);
 
-            var category = new Domain.Entities.Categories.Category(command.Name, command.Description);
+            var category = new Domain.Entities.Categories.Category(command.Name, command.Description, false);
 
             await categoryRepository.Add(category);
 

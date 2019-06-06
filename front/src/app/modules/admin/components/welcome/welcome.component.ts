@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Chartist from 'chartist';
+import { LoadingBarService } from '../../../../services/shared/ui/loading-bar.service';
 
 @Component({
   selector: 'app-welcome',
@@ -8,9 +8,9 @@ import * as Chartist from 'chartist';
 })
 export class WelcomeComponent implements OnInit {
     
-  constructor() { }
+  constructor(private loadingBarService: LoadingBarService) { }
 
   ngOnInit() {
-   
+   this.loadingBarService.hideLoadingBar();
   }
 }

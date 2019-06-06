@@ -43,10 +43,10 @@
                 <td>{{category.nome}}</td>
                 <td>{{category.descricao}}</td>
                 <td>
-                  <a (click)="showDialog(category)">
+                  <a (click)="showDialog(category)" *ngIf="category.bloqueado !== true">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteCategory(category)">
+                  <a (click)="deleteCategory(category)" *ngIf="category.bloqueado !== true">
                     <i class="pi pi-times"></i>
                   </a>                 
                 </td>

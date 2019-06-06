@@ -21,7 +21,7 @@ namespace AppSlider.Application.TypeBusiness.Services.Create
         {
             await TypeBusinessCreateValidationsAsync(command);
 
-            var typeBusiness = new Domain.Entities.Business.BusinessType(command.Name, command.Description);
+            var typeBusiness = new Domain.Entities.Business.BusinessType(command.Name, command.Description, false);
 
             await businessTypeRepository.Add(typeBusiness);
 

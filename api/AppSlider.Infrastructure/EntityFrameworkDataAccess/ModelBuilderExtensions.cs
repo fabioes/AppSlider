@@ -1,4 +1,5 @@
 ﻿using AppSlider.Domain.Entities.Business;
+using AppSlider.Domain.Entities.Categories;
 using AppSlider.Domain.Entities.Roles;
 using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
@@ -27,10 +28,22 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new Role("AppSlider.Write.Playlist", "Permissão de escrita para rotina de Playlist.")
             );
 
+            var midiaFoneFranchiseCategory = new Category("MidiaFone", "Categoria MidiaFone.", true);
+
+            modelBuilder.Entity<Category>().HasData(
+                midiaFoneFranchiseCategory
+            );
+
+            var midiaFoneFranchiseType = new BusinessType("Franquia", "Franquia como Tipo de Negócio.", true);
+
             modelBuilder.Entity<BusinessType>().HasData(
-                new BusinessType("Franquia", "Franquia como Tipo de Negócio."),
-                new BusinessType("Estabelecimento", "Estabelecimento como Tipo de Negócio."),
-                new BusinessType("Anunciante", "Anunciente como Tipo de Negócio.")
+                midiaFoneFranchiseType,
+                new BusinessType("Estabelecimento", "Estabelecimento como Tipo de Negócio.", true),
+                new BusinessType("Anunciante", "Anunciente como Tipo de Negócio.", true)
+            );
+
+            modelBuilder.Entity<BusinessEntity>().HasData(
+                new BusinessEntity(null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true)
             );
         }
     }

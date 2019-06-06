@@ -18,7 +18,7 @@ namespace AppSlider.Domain.Entities.Business
         public virtual String ContactEmail { get; protected set; }
         public virtual String ContactPhone { get; protected set; }
         public virtual String ContactAddress { get; protected set; }
-        public virtual DateTime ExpirationDate { get; protected set; }
+        public virtual DateTime? ExpirationDate { get; protected set; }
         public virtual Boolean Active { get; protected set; }
 
         [ForeignKey("IdCategory")]
@@ -35,7 +35,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
+        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -52,7 +52,7 @@ namespace AppSlider.Domain.Entities.Business
             Active = active;
         }
 
-        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime expirationDate, bool active) : this()
+        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active) : this()
         {
             IdFather = idFather;
             IdType = idType;

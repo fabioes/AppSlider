@@ -23,12 +23,8 @@
 
         <div class="form-group">
             <label>Descrição do Tipo de Negócio</label>
-            <label class="required-info-asterisk">*</label>
             <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
                 placeholder="digite a descrição do tipo de negócio" name="descricao">
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('descricao')">
-                Favor inserir a 'Descrição do Tipo de Negócio'!
-            </div>
         </div>
 
     </form>

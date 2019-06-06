@@ -32,6 +32,11 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
+import { CalendarModule } from 'primeng/calendar';
+
+//pipes
+import { PhonePipe } from './shared/pipes/phone.pipe';
+import { DateFormat} from './shared/pipes/date-format.pipe'
 
 
 @NgModule({
@@ -49,7 +54,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog'
     CheckboxModule,
     FileUploadModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    CalendarModule
   ],
   declarations: [
     DashboardComponent,
@@ -70,6 +76,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog'
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    DateFormat,
+    PhonePipe
   ],
   entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent]
 })

@@ -13,8 +13,8 @@ import { FranchiseFormComponent } from './franchise-form/franchise-form.componen
 })
 export class FranchiseComponent implements OnInit {
 
-  franchises: Array<Model.App.BusinessType>;
-  franchisesGrid: Array<Model.App.BusinessType>;
+  franchises: Array<Model.App.Business>;
+  franchisesGrid: Array<Model.App.Business>;
   searchTerm: string;
 
   constructor(private businessService: BusinessService,
@@ -56,7 +56,7 @@ export class FranchiseComponent implements OnInit {
 
     modalRef.componentInstance.name = 'Franquia';
 
-    modalRef.componentInstance.business = franchise;
+    modalRef.componentInstance.franchise = franchise;
 
     modalRef.result.then((res: Model.App.Business) => {
       if (res == null) return;
@@ -86,6 +86,30 @@ export class FranchiseComponent implements OnInit {
         });
       }
     });
+  }
+
+  switchActive(franchise){
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja ' + (franchise.ativo ? 'desativar' : 'ativar') + ' a franquia ' + franchise.nome + '?',
+      header: 'Confirma a ' + (franchise.ativo ? 'desativação' : 'ativação') + '?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.businessService.switchActive(franchise.id).subscribe(() => {
+          this.getFranchises();
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> A Franquia <b> ' + franchise.nome + ' </b> foi ' + (franchise.ativo ? 'desativada' : 'ativada') + ' com sucesso.', '', {
+            timeOut: 3500,
+            closeButton: true,
+            enableHtml: true,
+            toastClass: "alert alert-success alert-with-icon",
+            positionClass: 'toast-top-right'
+          });
+        });
+      }
+    });
+  }
+  
+  manageFranchise(franchise){
+    alert('proxima sprint');
   }
 
 }

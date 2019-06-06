@@ -28,4 +28,17 @@ export class GlobalService {
             ? this.activedRoute.firstChild.params.pipe(map(params => params[name]))
             : this.activedRoute.params.pipe(map(params => params[name])));
     }
+
+    public getPrimeCalendarPtConfig() {
+        return {
+            firstDayOfWeek: 0,
+            dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado"],
+            dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+            dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
+            monthNames: ["Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+            monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+            today: 'Hoje',
+            clear: 'Apagar'
+        };
+    }
 }

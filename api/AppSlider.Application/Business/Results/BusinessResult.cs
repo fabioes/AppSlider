@@ -43,7 +43,7 @@ namespace AppSlider.Application.Business.Results
         public virtual String ContactAddress { get; set; }
 
         [JsonProperty("data_expiracao")]
-        public virtual DateTime ExpirationDate { get; set; }
+        public virtual DateTime? ExpirationDate { get; set; }
 
         [JsonProperty("ativo")]
         public virtual Boolean Active { get; set; }

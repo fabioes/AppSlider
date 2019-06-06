@@ -21,7 +21,7 @@ namespace AppSlider.Application.Category.Services.Update
         {
             await CategoryUpdateValidationsAsync(command);
 
-            var user = new Domain.Entities.Categories.Category(command.Id,  command.Name, command.Description);
+            var user = new Domain.Entities.Categories.Category(command.Id,  command.Name, command.Description, false);
 
             await categoryRepository.Update(user);
 

@@ -21,7 +21,7 @@ namespace AppSlider.Application.TypeBusiness.Services.Update
         {
             await TypeBusinessUpdateValidationsAsync(command);
 
-            var businessType = new Domain.Entities.Business.BusinessType(command.Id,  command.Name, command.Description);
+            var businessType = new Domain.Entities.Business.BusinessType(command.Id,  command.Name, command.Description, false);
 
             await businessTypeRepository.Update(businessType);
 

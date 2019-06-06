@@ -20,6 +20,10 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { HttpLoadingInterceptor } from './config/interceptors/http-loading.interceptor';
 import { AuthInterceptor } from './config/interceptors/auth.interceptor';
 
+/** prime ng modules */
+import { ProgressBarModule } from 'primeng/progressbar';
+/** prime ng modules end */
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -30,7 +34,9 @@ import { AuthInterceptor } from './config/interceptors/auth.interceptor';
     RouterModule,
     AppRoutingModule,
     NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    //prime ng
+    ProgressBarModule
   ],
   declarations: [
     AppComponent,

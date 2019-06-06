@@ -4,7 +4,8 @@ import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../../services/business/business.service';
-
+import * as moment from 'moment';
+import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 
 @Component({
   selector: 'franchise-form',
@@ -15,13 +16,17 @@ export class FranchiseFormComponent implements OnInit {
 
   @Input() franchise: Model.App.Business;
   franchiseForm: FormGroup;
- 
+  pt = this.globalService.getPrimeCalendarPtConfig();
+
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
     private globalService: GlobalService,
     private businessService: BusinessService,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private businessTypeService: BusinessTypeService) {
+    moment.locale('pt-BR');
+  }
 
   ngOnInit() {
     this.franchiseForm = this.fb.group({
@@ -37,10 +42,19 @@ export class FranchiseFormComponent implements OnInit {
       contato_telefone: [''],
       contato_endereco: [''],
       data_expiracao: [''],
-      ativo: [true]
+      ativo: [true],
+      dateTemp: [null]
     });
 
-    this.franchiseForm.patchValue(this.franchise || {});    
+    this.franchiseForm.patchValue(this.franchise || {});
+
+    this.businessTypeService.getAllBusinessTypes().subscribe(res => {
+      this.franchiseForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Franquia')[0]).id);
+    });
+
+    if((this.franchise || <Model.App.Business>{}).data_expiracao)
+    this.franchiseForm.get('dateTemp').setValue(new Date(this.franchise.data_expiracao));
+
   }
 
   public save() {
@@ -48,7 +62,7 @@ export class FranchiseFormComponent implements OnInit {
     if (this.franchiseForm.invalid) return;
 
     this.franchise = this.franchiseForm.value;
-    
+
     if (this.franchise.id) {
       this.businessService.updateBusiness(this.franchise).subscribe(res => this.callbackAction('alterada', res));
     }
@@ -65,7 +79,7 @@ export class FranchiseFormComponent implements OnInit {
 
   public callbackAction(action, res) {
 
-    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + res.name + ' </b> foi ' + action + ' com sucesso.', '', {
+    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
       timeOut: 3500,
       closeButton: true,
       enableHtml: true,
@@ -74,6 +88,11 @@ export class FranchiseFormComponent implements OnInit {
     });
 
     this.activeModal.close(res);
+  }
+
+  setDateValue(event) {
+    let date = moment(event).format();
+    this.franchiseForm.get('data_expiracao').setValue(date);
   }
 
 }

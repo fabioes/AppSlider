@@ -5,15 +5,16 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    charName: string
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/adm/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
-    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '' },
-    { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '' },
-    { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '' },
-    { path: '/adm/franquias', title: 'Franquias',  icon: 'files_single-copy-04', class: '' },
+    { path: '/adm/dashboard', title: 'Dashboard',  icon: 'design_app', class: '', charName: 'dashboard'},
+    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '', charName: 'usuarios' },
+    { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias' },
+    { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio' },
+    { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias' },
     
-    { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '' },
+    // { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '', charName: 'icons' },
     // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },
     // { path: '/notifications', title: 'Notifications',  icon:'ui-1_bell-53', class: '' },
 

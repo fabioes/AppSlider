@@ -13,14 +13,18 @@ namespace AppSlider.Application.TypeBusiness.Results
 
         [JsonProperty("descricao")]
         public String Description { get; private set; }
-        
+
+        [JsonProperty("bloqueado")]
+        public Boolean Blocked { get; private set; }
+
         public static explicit operator TypeBusinessResult(Domain.Entities.Business.BusinessType businessType)
         {
             return businessType == null ? null : new TypeBusinessResult
             {
                 Id = businessType.Id,
                 Name = businessType.Name,
-                Description = businessType.Description
+                Description = businessType.Description,
+                Blocked = businessType.Blocked
             };
         }
 
@@ -29,7 +33,8 @@ namespace AppSlider.Application.TypeBusiness.Results
             return businessType == null ? null : new Domain.Entities.Business.BusinessType(
                 businessType.Id,
                 businessType.Name,
-                businessType.Description
+                businessType.Description,
+                businessType.Blocked
             );
         }
     }

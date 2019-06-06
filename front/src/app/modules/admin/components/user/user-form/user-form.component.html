@@ -58,7 +58,7 @@
                 placeholder="digite o perfil do usuário" name="perfil" required>  (onChange)="setWelcomeHsmValue($event)" -->
                 <p-dropdown required="true" [options]="profiles" [filter]="true"
                     placeholder="Selecione o perfil do usuário" [style]="{'width':'100%', 'backgroud-color': 'white'}"
-                    optionLabel="name" formControlName="perfil"></p-dropdown>
+                    optionLabel="name" formControlName="perfil" required></p-dropdown>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('perfil')">
                 Favor inserir o 'Perfil do Usuário'!
             </div>
