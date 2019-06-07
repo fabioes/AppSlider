@@ -145,7 +145,7 @@
             app.UseSwagger()
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                   c.SwaggerEndpoint("/midiafoneapi/swagger/v1/swagger.json", "My API V1");
                });
         }
     }

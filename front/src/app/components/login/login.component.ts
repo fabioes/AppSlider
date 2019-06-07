@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   private formSubmitAttempt: boolean;
-  private notLogged: boolean;
+  public notLogged: boolean;
 
   constructor(private fb: FormBuilder,
     private globalService: GlobalService,
