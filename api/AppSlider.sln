@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSlider.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSlider.WebApi", "AppSlider.WebApi\AppSlider.WebApi.csproj", "{9EF3CE81-FF0A-405E-9865-5BB043E2DEBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSlider.Utils", "AppSlider.Utils\AppSlider.Utils.csproj", "{FCFB24B9-13A6-42C7-858A-088C09F068DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppSlider.Utils", "AppSlider.Utils\AppSlider.Utils.csproj", "{FCFB24B9-13A6-42C7-858A-088C09F068DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
