@@ -11,6 +11,11 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().Property(p => p.Active).HasColumnType("bit");
+            modelBuilder.Entity<BusinessEntity>().Property(p => p.Active).HasColumnType("bit");
+            modelBuilder.Entity<BusinessType>().Property(p => p.Blocked).HasColumnType("bit");
+            modelBuilder.Entity<Category>().Property(p => p.Blocked).HasColumnType("bit");
+            
             modelBuilder.Entity<User>().HasData(
                 new User("Administrador", "admin", CriptoManager.CriptoSHA256("AdminAppSlider@123"), "admin", "", null, null, true)
             );
@@ -39,7 +44,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             modelBuilder.Entity<BusinessType>().HasData(
                 midiaFoneFranchiseType,
                 new BusinessType("Estabelecimento", "Estabelecimento como Tipo de Negócio.", true),
-                new BusinessType("Anunciante", "Anunciente como Tipo de Negócio.", true)
+                new BusinessType("Anunciante", "Anunciante como Tipo de Negócio.", true)
             );
 
             modelBuilder.Entity<BusinessEntity>().HasData(
