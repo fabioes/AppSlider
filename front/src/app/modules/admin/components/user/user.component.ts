@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   users: Array<Model.App.User>;
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
+  roles: Array<Model.App.Role>;
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
@@ -24,7 +25,11 @@ export class UserComponent implements OnInit {
     private toastrService: ToastrService) { }
 
   ngOnInit() {
-    this.getUsers();
+
+    this.userService.getAllRoles().subscribe(res => {
+      this.roles = res;
+      this.getUsers();
+    });
   }
 
   private getUsers() {
@@ -58,6 +63,7 @@ export class UserComponent implements OnInit {
     modalRef.componentInstance.name = 'Usuário';
 
     modalRef.componentInstance.user = user;
+    modalRef.componentInstance.roles = this.roles;
 
     modalRef.result.then((res: Model.App.User) => {
       if (res == null) return;

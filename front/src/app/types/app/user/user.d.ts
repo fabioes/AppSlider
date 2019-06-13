@@ -15,4 +15,10 @@ declare namespace Model.App {
         id: string,
         senha: string
     }
+
+    export interface Role {
+        id: string,
+        nome: string,
+        descricao: string
+    }
 }

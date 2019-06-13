@@ -15,7 +15,7 @@
             <label>Nome da categoria</label>
             <label class="required-info-asterisk">*</label>
             <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
-                placeholder="digite o nome da categoria" name="nome" required>
+                placeholder="digite o nome da categoria" name="nome" maxlength="500" required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
                 Favor inserir o 'Nome da Categoria'!
             </div>
@@ -23,8 +23,8 @@
 
         <div class="form-group">
             <label>Descrição da Categoria</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
-                placeholder="digite a descrição da categoria" name="descricao">
+            <textarea class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
+                placeholder="digite a descrição da categoria" name="descricao" maxlength="500"></textarea>0
         </div>
 
     </form>

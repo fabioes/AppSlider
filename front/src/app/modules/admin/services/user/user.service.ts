@@ -46,4 +46,9 @@ export class UserService {
         return this.httpHelper.HttpPatch<Model.Core.ApiResultItem<Model.App.User>>(environment.apiConfig.apiRoutes.user.resetPassword, userReq)
             .pipe(map(res => res.item));
       }
+
+      public getAllRoles(): Observable<Array<Model.App.Role>> {
+        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Role>>(environment.apiConfig.apiRoutes.user.default + environment.apiConfig.apiRoutes.user.roles)
+            .pipe(map(res => res.items));
+    }
 }

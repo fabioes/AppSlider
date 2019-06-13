@@ -9,7 +9,8 @@ export const environment = {
       user: {
         default: "/users",
         switchActive: "/users/switch_active",
-        resetPassword: "/users/reset_password"
+        resetPassword: "/users/reset_password",
+        roles: "/roles"
       },
       category: {
         default: "/categories"

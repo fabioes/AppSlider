@@ -26,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { UpgradeComponent } from './components/upgrade/upgrade.component';
 
 //primeng
+import { AccordionModule } from 'primeng/accordion';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -49,6 +50,7 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     NgbModule,
     ToastrModule.forRoot(),
     //primeng
+    AccordionModule,
     TableModule,
     DropdownModule,
     CheckboxModule,
