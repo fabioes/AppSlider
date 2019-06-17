@@ -7,5 +7,7 @@ namespace AppSlider.Application.Role.Services.Get
     public interface IRoleGetService
     {
         Task<List<RoleResult>> GetAll();
+
+        Task<List<RoleResult>> GetForLoggedUser();
     }
 }

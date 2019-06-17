@@ -10,5 +10,7 @@ namespace AppSlider.Application.Business.Services.Get
         Task<BusinessResult> Get(Guid id);
 
         Task<List<BusinessResult>> GetAll();
+
+        Task<List<BusinessResult>> GetForLoggedUser();
     }
 }

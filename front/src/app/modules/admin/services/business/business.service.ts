@@ -40,6 +40,5 @@ export class BusinessService {
     public switchActive(id: string): any {
         return this.httpHelper.HttpPatch<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.switchActive + '/' + id)
             .pipe(map(res => res.item));
-      }
-     
+      }           
 }

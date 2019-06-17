@@ -6,6 +6,8 @@
 
     public interface IRoleRepository
     {
-        Task<ICollection<Role>> GetAll();     
+        Task<ICollection<Role>> GetAll();
+
+        Task<ICollection<Role>> GetForLoggedUser(Entities.Users.User loggedUser);
     }
 }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using AppSlider.Application.Business.Services.Get;
 using AppSlider.Application.Login.Messages;
 using AppSlider.Application.Login.Services;
+using AppSlider.Application.Role.Services.Get;
 using AppSlider.Application.User.Results;
 using AppSlider.Domain;
 using AppSlider.Domain.Authentication;
@@ -23,10 +26,14 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
     public class LoginController : Controller
     {
         private readonly ILoginService _loginService;
-        
-        public LoginController(ILoginService loginService)
+        private readonly IRoleGetService _rolesService;
+        private readonly IBusinessGetService _businessService;
+
+        public LoginController(ILoginService loginService, IRoleGetService rolesService, IBusinessGetService businessService)
         {
             _loginService = loginService;
+            _rolesService = rolesService;
+            _businessService = businessService;
         }
 
         /// <summary>
@@ -51,7 +58,7 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
                 ClaimsIdentity identity = new ClaimsIdentity(
                     new GenericIdentity(login.Username, !string.IsNullOrWhiteSpace(user.Profile) ? user.Profile : "Login"),
                     new[] {
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N"))
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                     }
                 );
 
@@ -69,10 +76,21 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
                     Expires = dataExpiracao
                 });
 
-                //Add profile to token (unique_name_profile = unpr)
-                (securityToken as JwtSecurityToken).Payload["unpr"] = CriptoManager.Base64Encode(user.Profile);
+                //Custom Claims                
 
-                (securityToken as JwtSecurityToken).Payload["unac"] = user.Active.ToString().ToLower();
+                if (user.Profile != "sa")
+                {
+                    if (user?.Roles?.Any() == true)
+                    {
+                        var roles = await _rolesService.GetForLoggedUser();
+                        (securityToken as JwtSecurityToken).Payload["roles"] = roles.Select(s => s.Name).ToList();
+                    }
+                    if (user?.Franchises?.Any() == true)
+                    {
+                        var roles = await _businessService.GetForLoggedUser();
+                        (securityToken as JwtSecurityToken).Payload["franchises"] = roles.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
+                    }
+                }
 
                 var token = handler.WriteToken(securityToken);
 

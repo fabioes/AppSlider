@@ -15,7 +15,7 @@
             <label>Nome da categoria</label>
             <label class="required-info-asterisk">*</label>
             <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
-                placeholder="digite o nome da categoria" name="nome" maxlength="500" required>
+                placeholder="digite o nome da categoria" name="nome" maxlength="200" required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
                 Favor inserir o 'Nome da Categoria'!
             </div>

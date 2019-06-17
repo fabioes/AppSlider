@@ -48,6 +48,9 @@ namespace AppSlider.Application.Business.Results
         [JsonProperty("ativo")]
         public virtual Boolean Active { get; set; }
 
+        [JsonProperty("bloqueado")]
+        public virtual Boolean Blocked { get; set; }
+
         [JsonProperty("categoria")]
         public virtual CategoryResult Category { get; set; }
 
@@ -83,13 +86,14 @@ namespace AppSlider.Application.Business.Results
                 IdLogo = b.IdLogo,
                 IdType = b.IdType,
                 Name = b.Name,
-                Type = (TypeBusinessResult)b.Type
+                Type = (TypeBusinessResult)b.Type,
+                Blocked = b.Blocked
             };
         }
 
         public static explicit operator Domain.Entities.Business.BusinessEntity(BusinessResult b)
         {
-            return new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress, b.ExpirationDate, b.Active);
+            return new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress, b.ExpirationDate, b.Active, b.Blocked);
 
         }
 

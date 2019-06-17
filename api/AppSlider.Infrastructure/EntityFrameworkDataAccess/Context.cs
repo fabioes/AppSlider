@@ -18,6 +18,7 @@
         public DbSet<Domain.Entities.PlayLists.PlayList> PlayLists { get; set; }
         public DbSet<Domain.Entities.PlayLists.PlayListFile> PlayListFiles { get; set; }
         public DbSet<Domain.Entities.BusinessPlayLists.BusinessPlayList> BusinessPlayLists { get; set; }
+        public DbSet<Domain.Entities.Equipaments.Equipament> Equipaments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,9 @@
 
             modelBuilder.Entity<Domain.Entities.BusinessPlayLists.BusinessPlayList>()
                .ToTable("BusinessPlaylists");
+
+            modelBuilder.Entity<Domain.Entities.Equipaments.Equipament>()
+               .ToTable("Equipaments");
 
             modelBuilder.Seed();
         }

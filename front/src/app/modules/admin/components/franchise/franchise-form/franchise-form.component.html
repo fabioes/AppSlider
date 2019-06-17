@@ -44,7 +44,7 @@
             <label class="required-info-asterisk">*</label>
             <input class="form-control" type="email" [ngClass]="{'is-invalid': isFieldInvalid('contato_email')}"
                 formControlName="contato_email" placeholder="digite o e-mail do contato da franquia" name="contato_email"
-                maxlength="100"
+                maxlength="200"
                 required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_email')">
                 Favor inserir o 'E-mail do Contato da Franquia'!

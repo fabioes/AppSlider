@@ -37,7 +37,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
 
     let usingRoles = _.compact(_.reduce(this.roles, (result, role) => (result || []).concat((role || {}).roles),[]));
-    let userRoles = ((this.user || <Model.App.User>{}).roles || '').split(',');
+    let userRoles = ((this.user || <Model.App.User>{}).roles || []);
     this.rolesList = this.roles.filter(h => userRoles.filter(hsm => hsm == h.id).length > 0 || usingRoles.filter(eh => eh === h.id).length == 0);
 
     this.userForm = this.fb.group({

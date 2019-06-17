@@ -22,6 +22,9 @@ namespace AppSlider.Application.User.Results
         [JsonProperty("ativo")]
         public Boolean Active { get; private set; }
 
+        [JsonProperty("bloqueado")]
+        public Boolean Blocked { get; private set; }
+
         [JsonProperty("nome")]
         public String Name { get; private set; }
 
@@ -46,7 +49,8 @@ namespace AppSlider.Application.User.Results
                 Email = u.Email,
                 Name = u.Name,
                 Franchises = String.IsNullOrEmpty(u.Franchises) ? null : u.Franchises.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
-                Roles = String.IsNullOrEmpty(u.Roles) ? null : u.Roles.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList()
+                Roles = String.IsNullOrEmpty(u.Roles) ? null : u.Roles.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Blocked = u.Blocked
             };
         }
 
@@ -61,7 +65,8 @@ namespace AppSlider.Application.User.Results
                 u.Email,
                 u.Franchises != null ? String.Join(",", u.Franchises) : null,
                 u.Roles != null ? String.Join(",", u.Roles) : null,
-                u.Active
+                u.Active,
+                u.Blocked
             );
         }
     }

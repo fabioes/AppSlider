@@ -29,7 +29,8 @@ namespace AppSlider.Application.User.Services.Create
                 command.Email,
                 command.Franchises != null ? String.Join(",", command.Franchises) : null,
                 command.Roles != null ? String.Join(",", command.Roles) : null,
-                command.Active);
+                command.Active,
+                false);
 
             await userRepository.Add(user);
 

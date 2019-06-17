@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppSlider.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20190611004159_initial")]
-    partial class initial
+    [Migration("20190617044048_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,17 +27,25 @@ namespace AppSlider.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ContactAddress");
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("ContactEmail");
+                    b.Property<string>("ContactAddress")
+                        .HasMaxLength(300);
 
-                    b.Property<string>("ContactName");
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(200);
 
-                    b.Property<string>("ContactPhone");
+                    b.Property<string>("ContactName")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("ContactPhone")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("DataCreated");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
                     b.Property<DateTime?>("ExpirationDate");
 
@@ -49,7 +57,8 @@ namespace AppSlider.Infrastructure.Migrations
 
                     b.Property<Guid>("IdType");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -66,16 +75,17 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7e9b8790-ae13-4831-8f7a-3ea41ed7fde7"),
+                            Id = new Guid("12b1e0d6-1d07-4677-9e92-29ece0a0e842"),
                             Active = true,
+                            Blocked = true,
                             ContactAddress = "",
                             ContactEmail = "",
                             ContactName = "",
                             ContactPhone = "",
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 758, DateTimeKind.Local).AddTicks(8595),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 253, DateTimeKind.Local).AddTicks(926),
                             Description = "Franquia padrão 'MidiaFone'",
-                            IdCategory = new Guid("2fa84b4e-ce62-46d7-a289-6ff0aece6da6"),
-                            IdType = new Guid("f9b24f48-1afe-484a-8e09-ada83aa66551"),
+                            IdCategory = new Guid("1a707818-eb75-421a-a28a-3d2172707dcb"),
+                            IdType = new Guid("eacebea6-0859-40cc-822f-a0b43cf4f09c"),
                             Name = "MidiaFone"
                         });
                 });
@@ -90,36 +100,40 @@ namespace AppSlider.Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCreated");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("BusinessTypes");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f9b24f48-1afe-484a-8e09-ada83aa66551"),
+                            Id = new Guid("eacebea6-0859-40cc-822f-a0b43cf4f09c"),
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(421),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7481),
                             Description = "Franquia como Tipo de Negócio.",
                             Name = "Franquia"
                         },
                         new
                         {
-                            Id = new Guid("36bb2422-01cc-4a64-8e7e-f022aac0f11c"),
+                            Id = new Guid("00aba179-5d6d-4f7b-9df3-1dff4262594a"),
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(680),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7739),
                             Description = "Estabelecimento como Tipo de Negócio.",
                             Name = "Estabelecimento"
                         },
                         new
                         {
-                            Id = new Guid("a5d22a51-d9ac-42b1-bba5-161b60e0ab13"),
+                            Id = new Guid("f729156b-cf17-4e1b-af39-e8f28ac82ad0"),
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(752),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7874),
                             Description = "Anunciante como Tipo de Negócio.",
                             Name = "Anunciante"
                         });
@@ -155,9 +169,11 @@ namespace AppSlider.Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCreated");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -166,12 +182,50 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2fa84b4e-ce62-46d7-a289-6ff0aece6da6"),
+                            Id = new Guid("1a707818-eb75-421a-a28a-3d2172707dcb"),
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 806, DateTimeKind.Local).AddTicks(8557),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 313, DateTimeKind.Local).AddTicks(6339),
                             Description = "Categoria MidiaFone.",
                             Name = "MidiaFone"
                         });
+                });
+
+            modelBuilder.Entity("AppSlider.Domain.Entities.Equipaments.Equipament", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCreated");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
+
+                    b.Property<Guid?>("IdEstablishment");
+
+                    b.Property<Guid>("IdFranchise");
+
+                    b.Property<Guid?>("IdPlaylist");
+
+                    b.Property<string>("MacAddress")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdEstablishment");
+
+                    b.HasIndex("IdFranchise");
+
+                    b.HasIndex("IdPlaylist");
+
+                    b.HasIndex("MacAddress");
+
+                    b.ToTable("Equipaments");
                 });
 
             modelBuilder.Entity("AppSlider.Domain.Entities.Files.File", b =>
@@ -243,9 +297,11 @@ namespace AppSlider.Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCreated");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -254,71 +310,71 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e96c4a63-378f-4eaf-b714-0105f6b579cf"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3316),
+                            Id = new Guid("9ed1dc75-c3b5-4630-aae3-af24fb134190"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6378),
                             Description = "Permissão de leitura para rotina de Usuário.",
                             Name = "AppSlider.Read.User"
                         },
                         new
                         {
-                            Id = new Guid("39d2c107-39af-4687-8cbe-56a687933924"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3496),
+                            Id = new Guid("ad80052b-545e-412e-9578-daf17220025f"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6563),
                             Description = "Permissão de escrita para rotina de Usuário.",
                             Name = "AppSlider.Write.User"
                         },
                         new
                         {
-                            Id = new Guid("8c336567-5ae0-4df9-91ee-c8b658f2441c"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3544),
+                            Id = new Guid("e4544d2c-18aa-4da1-88d9-6e8de8a85cfc"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6614),
                             Description = "Permissão de leitura para rotina de Negócio.",
                             Name = "AppSlider.Read.Business"
                         },
                         new
                         {
-                            Id = new Guid("077fdbec-6021-4bc4-b20b-1d56461daf9c"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3586),
+                            Id = new Guid("6a472771-b38a-4315-b770-9577d3b7d410"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6657),
                             Description = "Permissão de escrita para rotina de Negócio.",
                             Name = "AppSlider.Write.Business"
                         },
                         new
                         {
-                            Id = new Guid("42aa092a-599d-4166-bdff-f893bbca06e4"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3629),
+                            Id = new Guid("314aeed0-bfcb-4b76-baaa-7b8970fd01e8"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6777),
                             Description = "Permissão de leitura para rotina de Tipos de Negócio.",
                             Name = "AppSlider.Read.BusinessType"
                         },
                         new
                         {
-                            Id = new Guid("8184896a-be6f-4929-a608-e161fd92c1d5"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3671),
+                            Id = new Guid("85b152fe-411e-4821-8bd6-dbb3a5bd49e8"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6820),
                             Description = "Permissão de escrita para rotina de Tipos de Negócio.",
                             Name = "AppSlider.Write.BusinessType"
                         },
                         new
                         {
-                            Id = new Guid("f1a76e22-0787-4a7d-934a-6c08696f0a22"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3724),
+                            Id = new Guid("fdd5bbbd-1d5f-46aa-93a5-8b069d5dbf17"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6892),
                             Description = "Permissão de leitura para rotina de Categoria.",
                             Name = "AppSlider.Read.Category"
                         },
                         new
                         {
-                            Id = new Guid("90f47c7c-8a54-4630-9a68-12a94e659d2f"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3884),
+                            Id = new Guid("6b608f8d-e0f5-4d20-981d-2da0b489dab2"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6990),
                             Description = "Permissão de escrita para rotina de Categoria.",
                             Name = "AppSlider.Write.Category"
                         },
                         new
                         {
-                            Id = new Guid("5db27234-2d10-419c-9043-a7b38971e8b4"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3933),
+                            Id = new Guid("6420bc94-ad83-43c6-8f84-41c08492d8c6"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(7032),
                             Description = "Permissão de leitura para rotina de Playlist.",
                             Name = "AppSlider.Read.Playlist"
                         },
                         new
                         {
-                            Id = new Guid("291077e1-b03c-4165-a48f-9ed9d5e06a3b"),
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3974),
+                            Id = new Guid("d5b2c6e4-8f35-4a58-bd54-0c2b88fca3e3"),
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(7073),
                             Description = "Permissão de escrita para rotina de Playlist.",
                             Name = "AppSlider.Write.Playlist"
                         });
@@ -332,13 +388,17 @@ namespace AppSlider.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("DataCreated");
 
                     b.Property<string>("Email");
 
                     b.Property<string>("Franchises");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Password");
 
@@ -346,7 +406,8 @@ namespace AppSlider.Infrastructure.Migrations
 
                     b.Property<string>("Roles");
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Username")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -355,13 +416,14 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5ba3c6c6-2120-4727-919e-8f10f96e5fa1"),
+                            Id = new Guid("b3613f5e-3b06-463a-943e-ca51b7dabbd7"),
                             Active = true,
-                            DataCreated = new DateTime(2019, 6, 10, 21, 41, 58, 812, DateTimeKind.Local).AddTicks(5541),
+                            Blocked = true,
+                            DataCreated = new DateTime(2019, 6, 17, 1, 40, 48, 320, DateTimeKind.Local).AddTicks(8952),
                             Email = "",
                             Name = "Administrador",
                             Password = "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6",
-                            Profile = "admin",
+                            Profile = "sa",
                             Username = "admin"
                         });
                 });
@@ -397,6 +459,22 @@ namespace AppSlider.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("IdPlayList")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AppSlider.Domain.Entities.Equipaments.Equipament", b =>
+                {
+                    b.HasOne("AppSlider.Domain.Entities.Business.BusinessEntity", "Establishment")
+                        .WithMany()
+                        .HasForeignKey("IdEstablishment");
+
+                    b.HasOne("AppSlider.Domain.Entities.Business.BusinessEntity", "Franchise")
+                        .WithMany()
+                        .HasForeignKey("IdFranchise")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AppSlider.Domain.Entities.PlayLists.PlayList", "PlayList")
+                        .WithMany()
+                        .HasForeignKey("IdPlaylist");
                 });
 
             modelBuilder.Entity("AppSlider.Domain.Entities.PlayLists.PlayListFile", b =>

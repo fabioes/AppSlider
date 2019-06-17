@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppSlider.Infrastructure.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace AppSlider.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DataCreated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
                     Blocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -28,8 +28,8 @@ namespace AppSlider.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DataCreated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
                     Blocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -74,8 +74,8 @@ namespace AppSlider.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DataCreated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,14 +88,15 @@ namespace AppSlider.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DataCreated = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Username = table.Column<string>(maxLength: 50, nullable: true),
                     Password = table.Column<string>(nullable: true),
                     Profile = table.Column<string>(nullable: true),
                     Franchises = table.Column<string>(nullable: true),
                     Roles = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    Blocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,15 +112,16 @@ namespace AppSlider.Infrastructure.Migrations
                     IdFather = table.Column<Guid>(nullable: true),
                     IdType = table.Column<Guid>(nullable: false),
                     IdCategory = table.Column<Guid>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
                     IdLogo = table.Column<Guid>(nullable: true),
-                    ContactName = table.Column<string>(nullable: true),
-                    ContactEmail = table.Column<string>(nullable: true),
-                    ContactPhone = table.Column<string>(nullable: true),
-                    ContactAddress = table.Column<string>(nullable: true),
+                    ContactName = table.Column<string>(maxLength: 200, nullable: true),
+                    ContactEmail = table.Column<string>(maxLength: 200, nullable: true),
+                    ContactPhone = table.Column<string>(maxLength: 50, nullable: true),
+                    ContactAddress = table.Column<string>(maxLength: 300, nullable: true),
                     ExpirationDate = table.Column<DateTime>(nullable: true),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    Blocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,47 +206,84 @@ namespace AppSlider.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Equipaments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    DataCreated = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: true),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    MacAddress = table.Column<string>(maxLength: 200, nullable: true),
+                    IdFranchise = table.Column<Guid>(nullable: false),
+                    IdEstablishment = table.Column<Guid>(nullable: true),
+                    IdPlaylist = table.Column<Guid>(nullable: true),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipaments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Equipaments_Business_IdEstablishment",
+                        column: x => x.IdEstablishment,
+                        principalTable: "Business",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Equipaments_Business_IdFranchise",
+                        column: x => x.IdFranchise,
+                        principalTable: "Business",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Equipaments_Playlists_IdPlaylist",
+                        column: x => x.IdPlaylist,
+                        principalTable: "Playlists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "BusinessTypes",
                 columns: new[] { "Id", "Blocked", "DataCreated", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("f9b24f48-1afe-484a-8e09-ada83aa66551"), true, new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(421), "Franquia como Tipo de Negócio.", "Franquia" },
-                    { new Guid("36bb2422-01cc-4a64-8e7e-f022aac0f11c"), true, new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(680), "Estabelecimento como Tipo de Negócio.", "Estabelecimento" },
-                    { new Guid("a5d22a51-d9ac-42b1-bba5-161b60e0ab13"), true, new DateTime(2019, 6, 10, 21, 41, 58, 803, DateTimeKind.Local).AddTicks(752), "Anunciante como Tipo de Negócio.", "Anunciante" }
+                    { new Guid("eacebea6-0859-40cc-822f-a0b43cf4f09c"), true, new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7481), "Franquia como Tipo de Negócio.", "Franquia" },
+                    { new Guid("00aba179-5d6d-4f7b-9df3-1dff4262594a"), true, new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7739), "Estabelecimento como Tipo de Negócio.", "Estabelecimento" },
+                    { new Guid("f729156b-cf17-4e1b-af39-e8f28ac82ad0"), true, new DateTime(2019, 6, 17, 1, 40, 48, 307, DateTimeKind.Local).AddTicks(7874), "Anunciante como Tipo de Negócio.", "Anunciante" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Blocked", "DataCreated", "Description", "Name" },
-                values: new object[] { new Guid("2fa84b4e-ce62-46d7-a289-6ff0aece6da6"), true, new DateTime(2019, 6, 10, 21, 41, 58, 806, DateTimeKind.Local).AddTicks(8557), "Categoria MidiaFone.", "MidiaFone" });
+                values: new object[] { new Guid("1a707818-eb75-421a-a28a-3d2172707dcb"), true, new DateTime(2019, 6, 17, 1, 40, 48, 313, DateTimeKind.Local).AddTicks(6339), "Categoria MidiaFone.", "MidiaFone" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "DataCreated", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("e96c4a63-378f-4eaf-b714-0105f6b579cf"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3316), "Permissão de leitura para rotina de Usuário.", "AppSlider.Read.User" },
-                    { new Guid("39d2c107-39af-4687-8cbe-56a687933924"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3496), "Permissão de escrita para rotina de Usuário.", "AppSlider.Write.User" },
-                    { new Guid("8c336567-5ae0-4df9-91ee-c8b658f2441c"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3544), "Permissão de leitura para rotina de Negócio.", "AppSlider.Read.Business" },
-                    { new Guid("077fdbec-6021-4bc4-b20b-1d56461daf9c"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3586), "Permissão de escrita para rotina de Negócio.", "AppSlider.Write.Business" },
-                    { new Guid("42aa092a-599d-4166-bdff-f893bbca06e4"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3629), "Permissão de leitura para rotina de Tipos de Negócio.", "AppSlider.Read.BusinessType" },
-                    { new Guid("8184896a-be6f-4929-a608-e161fd92c1d5"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3671), "Permissão de escrita para rotina de Tipos de Negócio.", "AppSlider.Write.BusinessType" },
-                    { new Guid("f1a76e22-0787-4a7d-934a-6c08696f0a22"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3724), "Permissão de leitura para rotina de Categoria.", "AppSlider.Read.Category" },
-                    { new Guid("90f47c7c-8a54-4630-9a68-12a94e659d2f"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3884), "Permissão de escrita para rotina de Categoria.", "AppSlider.Write.Category" },
-                    { new Guid("5db27234-2d10-419c-9043-a7b38971e8b4"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3933), "Permissão de leitura para rotina de Playlist.", "AppSlider.Read.Playlist" },
-                    { new Guid("291077e1-b03c-4165-a48f-9ed9d5e06a3b"), new DateTime(2019, 6, 10, 21, 41, 58, 810, DateTimeKind.Local).AddTicks(3974), "Permissão de escrita para rotina de Playlist.", "AppSlider.Write.Playlist" }
+                    { new Guid("9ed1dc75-c3b5-4630-aae3-af24fb134190"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6378), "Permissão de leitura para rotina de Usuário.", "AppSlider.Read.User" },
+                    { new Guid("ad80052b-545e-412e-9578-daf17220025f"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6563), "Permissão de escrita para rotina de Usuário.", "AppSlider.Write.User" },
+                    { new Guid("e4544d2c-18aa-4da1-88d9-6e8de8a85cfc"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6614), "Permissão de leitura para rotina de Negócio.", "AppSlider.Read.Business" },
+                    { new Guid("6a472771-b38a-4315-b770-9577d3b7d410"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6657), "Permissão de escrita para rotina de Negócio.", "AppSlider.Write.Business" },
+                    { new Guid("314aeed0-bfcb-4b76-baaa-7b8970fd01e8"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6777), "Permissão de leitura para rotina de Tipos de Negócio.", "AppSlider.Read.BusinessType" },
+                    { new Guid("85b152fe-411e-4821-8bd6-dbb3a5bd49e8"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6820), "Permissão de escrita para rotina de Tipos de Negócio.", "AppSlider.Write.BusinessType" },
+                    { new Guid("fdd5bbbd-1d5f-46aa-93a5-8b069d5dbf17"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6892), "Permissão de leitura para rotina de Categoria.", "AppSlider.Read.Category" },
+                    { new Guid("6b608f8d-e0f5-4d20-981d-2da0b489dab2"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(6990), "Permissão de escrita para rotina de Categoria.", "AppSlider.Write.Category" },
+                    { new Guid("6420bc94-ad83-43c6-8f84-41c08492d8c6"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(7032), "Permissão de leitura para rotina de Playlist.", "AppSlider.Read.Playlist" },
+                    { new Guid("d5b2c6e4-8f35-4a58-bd54-0c2b88fca3e3"), new DateTime(2019, 6, 17, 1, 40, 48, 318, DateTimeKind.Local).AddTicks(7073), "Permissão de escrita para rotina de Playlist.", "AppSlider.Write.Playlist" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Active", "DataCreated", "Email", "Franchises", "Name", "Password", "Profile", "Roles", "Username" },
-                values: new object[] { new Guid("5ba3c6c6-2120-4727-919e-8f10f96e5fa1"), true, new DateTime(2019, 6, 10, 21, 41, 58, 812, DateTimeKind.Local).AddTicks(5541), "", null, "Administrador", "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6", "admin", null, "admin" });
+                columns: new[] { "Id", "Active", "Blocked", "DataCreated", "Email", "Franchises", "Name", "Password", "Profile", "Roles", "Username" },
+                values: new object[] { new Guid("b3613f5e-3b06-463a-943e-ca51b7dabbd7"), true, true, new DateTime(2019, 6, 17, 1, 40, 48, 320, DateTimeKind.Local).AddTicks(8952), "", null, "Administrador", "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6", "sa", null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Business",
-                columns: new[] { "Id", "Active", "ContactAddress", "ContactEmail", "ContactName", "ContactPhone", "DataCreated", "Description", "ExpirationDate", "IdCategory", "IdFather", "IdLogo", "IdType", "Name" },
-                values: new object[] { new Guid("7e9b8790-ae13-4831-8f7a-3ea41ed7fde7"), true, "", "", "", "", new DateTime(2019, 6, 10, 21, 41, 58, 758, DateTimeKind.Local).AddTicks(8595), "Franquia padrão 'MidiaFone'", null, new Guid("2fa84b4e-ce62-46d7-a289-6ff0aece6da6"), null, null, new Guid("f9b24f48-1afe-484a-8e09-ada83aa66551"), "MidiaFone" });
+                columns: new[] { "Id", "Active", "Blocked", "ContactAddress", "ContactEmail", "ContactName", "ContactPhone", "DataCreated", "Description", "ExpirationDate", "IdCategory", "IdFather", "IdLogo", "IdType", "Name" },
+                values: new object[] { new Guid("12b1e0d6-1d07-4677-9e92-29ece0a0e842"), true, true, "", "", "", "", new DateTime(2019, 6, 17, 1, 40, 48, 253, DateTimeKind.Local).AddTicks(926), "Franquia padrão 'MidiaFone'", null, new Guid("1a707818-eb75-421a-a28a-3d2172707dcb"), null, null, new Guid("eacebea6-0859-40cc-822f-a0b43cf4f09c"), "MidiaFone" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Business_IdCategory",
@@ -277,6 +316,31 @@ namespace AppSlider.Infrastructure.Migrations
                 column: "IdPlayList");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BusinessTypes_Name",
+                table: "BusinessTypes",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipaments_IdEstablishment",
+                table: "Equipaments",
+                column: "IdEstablishment");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipaments_IdFranchise",
+                table: "Equipaments",
+                column: "IdFranchise");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipaments_IdPlaylist",
+                table: "Equipaments",
+                column: "IdPlaylist");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipaments_MacAddress",
+                table: "Equipaments",
+                column: "MacAddress");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlaylistFiles_IdFile",
                 table: "PlaylistFiles",
                 column: "IdFile");
@@ -291,6 +355,9 @@ namespace AppSlider.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BusinessPlaylists");
+
+            migrationBuilder.DropTable(
+                name: "Equipaments");
 
             migrationBuilder.DropTable(
                 name: "PlaylistFiles");

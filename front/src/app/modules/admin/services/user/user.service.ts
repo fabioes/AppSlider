@@ -48,7 +48,7 @@ export class UserService {
       }
 
       public getAllRoles(): Observable<Array<Model.App.Role>> {
-        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Role>>(environment.apiConfig.apiRoutes.user.default + environment.apiConfig.apiRoutes.user.roles)
+        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Role>>(environment.apiConfig.apiRoutes.user.roles)
             .pipe(map(res => res.items));
     }
 }

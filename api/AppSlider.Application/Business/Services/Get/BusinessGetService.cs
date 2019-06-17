@@ -11,10 +11,12 @@ namespace AppSlider.Application.Business.Services.Get
     public class UserGetService : IBusinessGetService
     {
         private readonly IBusinessRepository businessRepository;
-        
-        public UserGetService(IBusinessRepository businessRepository)
+        private readonly Domain.Entities.Users.User loggedUser;
+
+        public UserGetService(IBusinessRepository businessRepository, [FromServices]Domain.Entities.Users.User loggedUser)
         {
             this.businessRepository = businessRepository;
+            this.loggedUser = loggedUser;
         }
 
         public async Task<BusinessResult> Get(Guid id)
@@ -32,6 +34,15 @@ namespace AppSlider.Application.Business.Services.Get
 
             var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
             
+            return returnBusiness;
+        }
+
+        public async Task<List<BusinessResult>> GetForLoggedUser()
+        {
+            var business = await businessRepository.GetForLoggedUser(loggedUser);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
             return returnBusiness;
         }
     }
