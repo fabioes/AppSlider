@@ -16,8 +16,10 @@ export class UserFormComponent implements OnInit {
 
   @Input() user: Model.App.User;
   @Input() roles: Array<Model.App.Role>;
+  @Input() franchises: Array<Model.App.Business>;
   userForm: FormGroup;
   rolesList: Array<Model.App.Role>;
+  franchisesList: Array<Model.App.Business>;
 
   profiles = [{
     name: 'Administrador',
@@ -36,9 +38,12 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
 
-    let usingRoles = _.compact(_.reduce(this.roles, (result, role) => (result || []).concat((role || {}).roles),[]));
     let userRoles = ((this.user || <Model.App.User>{}).roles || []);
-    this.rolesList = this.roles.filter(h => userRoles.filter(hsm => hsm == h.id).length > 0 || usingRoles.filter(eh => eh === h.id).length == 0);
+    this.rolesList = this.roles.filter(h => userRoles.filter(hsm => hsm == h.id).length > 0);
+
+    let userFranchises = ((this.user || <Model.App.User>{}).franquias || []);
+    this.franchisesList = this.franchises.filter(f => userFranchises.filter(franchise => franchise == f.id).length > 0);
+
 
     this.userForm = this.fb.group({
       id: [''],

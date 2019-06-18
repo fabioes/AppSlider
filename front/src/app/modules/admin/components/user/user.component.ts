@@ -6,6 +6,8 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { UserFormComponent } from './user-form/user-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
+import { tokenKey } from '@angular/core/src/view';
+import { RouterInitializer } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +20,7 @@ export class UserComponent implements OnInit {
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
   roles: Array<Model.App.Role>;
+  franchises: Array<Model.App.Business>;
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
@@ -26,6 +29,12 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
 
+    this.userService.getAllRoles().subscribe(res => {
+      this.roles = res;
+      this.getUsers();
+    });
+
+    //obter franquias do tokenKey... terminar e testar a rotina
     this.userService.getAllRoles().subscribe(res => {
       this.roles = res;
       this.getUsers();
@@ -64,6 +73,7 @@ export class UserComponent implements OnInit {
 
     modalRef.componentInstance.user = user;
     modalRef.componentInstance.roles = this.roles;
+    modalRef.componentInstance.franchises = this.franchises;
 
     modalRef.result.then((res: Model.App.User) => {
       if (res == null) return;
