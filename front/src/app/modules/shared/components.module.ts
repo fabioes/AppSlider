@@ -7,11 +7,16 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+/** prime ng */
+import {DropdownModule} from 'primeng/dropdown'
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    //primeng
+    DropdownModule
   ],
   declarations: [
     FooterComponent,

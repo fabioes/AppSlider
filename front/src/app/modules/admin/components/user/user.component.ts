@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user/user.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { UserFormComponent } from './user-form/user-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
-import { tokenKey } from '@angular/core/src/view';
-import { RouterInitializer } from '@angular/router/src/router_module';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -20,24 +19,23 @@ export class UserComponent implements OnInit {
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
   roles: Array<Model.App.Role>;
-  franchises: Array<Model.App.Business>;
+  franchises: Array<Model.App.UserFranchise>;
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
     private modalService: NgbModal,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private authService: AuthService) { }
 
   ngOnInit() {
 
-    this.userService.getAllRoles().subscribe(res => {
-      this.roles = res;
-      this.getUsers();
-    });
+    this.userService.getAllRoles().subscribe(resR => {
+      this.roles = resR;
+      this.authService.getFranchisesToken().subscribe(resT => {
 
-    //obter franquias do tokenKey... terminar e testar a rotina
-    this.userService.getAllRoles().subscribe(res => {
-      this.roles = res;
-      this.getUsers();
+        this.franchises = resT;
+        this.getUsers();
+      });
     });
   }
 

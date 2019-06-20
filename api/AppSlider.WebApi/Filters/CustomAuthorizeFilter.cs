@@ -108,7 +108,7 @@ namespace AppSlider.WebApi.Filters
 
         private bool ValidateUserRoutePermission(JwtSecurityToken token, AuthorizationFilterContext context)
         {
-            if (_loggedUser.Profile == "admin")
+            if (_loggedUser.Profile == "sa")
                 return true;
 
             //Verify if the route has CustomAuthorizeAttribute.

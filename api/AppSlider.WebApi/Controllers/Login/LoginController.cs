@@ -87,8 +87,8 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
                     }
                     if (user?.Franchises?.Any() == true)
                     {
-                        var roles = await _businessService.GetForLoggedUser();
-                        (securityToken as JwtSecurityToken).Payload["franchises"] = roles.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
+                        var franchises = await _businessService.GetForLoggedUser();
+                        (securityToken as JwtSecurityToken).Payload["franchises"] = franchises.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
                     }
                 }
 

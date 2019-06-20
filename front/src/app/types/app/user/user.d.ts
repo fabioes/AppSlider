@@ -22,4 +22,9 @@ declare namespace Model.App {
         nome: string,
         descricao: string
     }
+
+    export interface UserFranchise {
+        id: string,
+        name: string
+    }
 }

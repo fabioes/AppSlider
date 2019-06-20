@@ -19,7 +19,12 @@ export class NavbarComponent implements OnInit {
 
     public isCollapsed = true;
 
-    constructor(location: Location, private element: ElementRef, private router: Router, private authService: AuthService) {
+    public franchises: Array<Model.App.UserFranchise> = []
+
+    constructor(location: Location,
+        private element: ElementRef,
+        private router: Router,
+        private authService: AuthService) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -37,6 +42,10 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
+
+        this.authService.getFranchisesToken().subscribe(res => {
+            this.franchises = res;
+        })
     }
 
     collapse() {
