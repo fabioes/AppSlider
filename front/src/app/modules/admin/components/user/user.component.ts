@@ -32,7 +32,6 @@ export class UserComponent implements OnInit {
     this.userService.getAllRoles().subscribe(resR => {
       this.roles = resR;
       this.authService.getFranchisesToken().subscribe(resT => {
-
         this.franchises = resT;
         this.getUsers();
       });

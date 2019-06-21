@@ -37,31 +37,9 @@ export class UserFormComponent implements OnInit {
     private toastrService: ToastrService) { }
 
   ngOnInit() {
-debugger;
 
-let usingHsm = _.compact(_.reduce(this.queueStatusList, (result, queue) => (result || []).concat((queue || {}).hsms), []));
-
-    this.hsmService.getAllHsms().subscribe(res => {
-      this.hsmList = res.filter(h => ((this.queueStatus || {}).hsms || []).filter(hsm => hsm == h.id).length > 0 || usingHsm.filter(eh => eh === h.id).length == 0);
-    });
-
-
-    let usingRoles = _.compact(_.reduce(this.roles, (result, role) => (result || []).concat((role || {}).roles), []));
-
-
-    //get from token
-
-    this.hsmService.getAllHsms().subscribe(res => {
-      this.hsmList = res.filter(h => ((this.queueStatus || {}).hsms || []).filter(hsm => hsm == h.id).length > 0 || usingHsm.filter(eh => eh === h.id).length == 0);
-    });
-
-
-    let userRoles = ((this.user || <Model.App.User>{}).roles || []);
-    this.rolesList = this.roles.filter(r => userRoles.filter(role => role == r.id).length > 0);
-
-    let userFranchises = ((this.user || <Model.App.User>{}).franquias || []);
-    this.franchisesList = this.franchises.filter(f => userFranchises.filter(franchise => franchise == f.id).length > 0);
-
+    this.rolesList = this.roles.filter(r => ((this.user || <Model.App.User>{}).roles || []).filter(role => role == r.nome).length > 0);
+    this.franchisesList = this.franchises.filter(f => ((this.user || <Model.App.User>{}).franquias || []).filter(franchise => franchise == f.nome).length > 0);
 
     this.userForm = this.fb.group({
       id: [''],

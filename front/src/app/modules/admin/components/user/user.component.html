@@ -37,7 +37,6 @@
                 <th>Login</th>
                 <th>Perfil</th>
                 <th>E-mail</th>
-                <th>Franquias</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -48,16 +47,15 @@
                 <td>{{user.login}}</td>
                 <td>{{user.perfil}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.franquias}}</td>
                 <td>{{user.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(user)" *ngIf="franchise?.bloqueado !== true">
+                  <a (click)="showDialog(user)" *ngIf="user?.bloqueado !== true">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteUser(user)" *ngIf="franchise?.bloqueado !== true">
+                  <a (click)="deleteUser(user)" *ngIf="user?.bloqueado !== true">
                     <i class="pi pi-times"></i>
                   </a>
-                  <a (click)="switchActive(user)" title="{{user?.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="franchise?.bloqueado !== true">
+                  <a (click)="switchActive(user)" title="{{user?.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="user?.bloqueado !== true">
                     <i class="pi" [ngClass]="{'pi-lock': user.ativo == true, 'pi-unlock': user.ativo != true}"></i>
                   </a>
                   <a (click)="resetPassword(user)" title="resetar senha?">

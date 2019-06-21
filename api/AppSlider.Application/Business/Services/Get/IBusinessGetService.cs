@@ -12,5 +12,7 @@ namespace AppSlider.Application.Business.Services.Get
         Task<List<BusinessResult>> GetAll();
 
         Task<List<BusinessResult>> GetForLoggedUser();
+
+        Task<List<BusinessResult>> GetFromUser(Domain.Entities.Users.User user);
     }
 }

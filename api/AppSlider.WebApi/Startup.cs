@@ -61,7 +61,7 @@
 
             var loggedUser = new Domain.Entities.Users.User();
             services.AddSingleton(loggedUser);
-
+        
             services.AddMvc(options =>
             {
                 var userGetService = _container?.Resolve<IUserGetService>();

@@ -36,5 +36,14 @@ namespace AppSlider.Application.Role.Services.Get
 
             return returnRoles;
         }
+
+        public async Task<List<RoleResult>> GetFromUser(Domain.Entities.Users.User user)
+        {
+            var roles = await roleRepository.GetForLoggedUser(user);
+
+            var returnRoles = roles.Select(s => (RoleResult)s).OrderBy(o => o.Name)?.ToList();
+
+            return returnRoles;
+        }
     }
 }

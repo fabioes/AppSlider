@@ -67,7 +67,7 @@
         <div class="form-group p-accordion">
             <p-accordion>
                 <p-accordionTab header="Acessos">
-                    <p-table #dt sortField="nome" [value]="rolesList" [paginator]="true" [rows]="10"
+                    <p-table #dt sortField="nome" [value]="roles" [paginator]="true" [rows]="10"
                         [globalFilterFields]="['nome','descricao']">
 
                         <ng-template pTemplate="caption">
@@ -104,7 +104,7 @@
         <div class="form-group p-accordion">
             <p-accordion>
                 <p-accordionTab header="Franquias">
-                    <p-table #dt sortField="nome" [value]="franchisesList" [paginator]="true" [rows]="10"
+                    <p-table #dt sortField="nome" [value]="franchises" [paginator]="true" [rows]="10"
                         [globalFilterFields]="['nome','descricao']">
 
                         <ng-template pTemplate="caption">
@@ -118,19 +118,17 @@
                         <ng-template pTemplate="header">
                             <tr>
                                 <th style="width:10%"></th>
-                                <th style="width:45%">Nome</th>
-                                <th style="width:45%">Descrição</th>
+                                <th style="width:90%">Nome</th>
                             </tr>
                         </ng-template>
 
                         <ng-template pTemplate="body" let-franchise>
                             <tr>
                                 <td>
-                                    <p-checkbox name="franchisesList" value="{{franchise?.id || ''}}" [formControl]="userForm.controls['franchises']">
+                                    <p-checkbox name="franchisesList" value="{{franchise?.id || ''}}" [formControl]="userForm.controls['franquias']">
                                     </p-checkbox>
                                 </td>
-                                <td>{{franchise?.nome}}</td>
-                                <td>{{franchise?.descricao}}</td>
+                                <td>{{franchise?.name}}</td>
                             </tr>
                         </ng-template>
                     </p-table>

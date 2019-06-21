@@ -9,5 +9,7 @@ namespace AppSlider.Application.Role.Services.Get
         Task<List<RoleResult>> GetAll();
 
         Task<List<RoleResult>> GetForLoggedUser();
+
+        Task<List<RoleResult>> GetFromUser(Domain.Entities.Users.User user);
     }
 }

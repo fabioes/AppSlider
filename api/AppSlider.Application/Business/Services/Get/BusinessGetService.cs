@@ -45,5 +45,13 @@ namespace AppSlider.Application.Business.Services.Get
 
             return returnBusiness;
         }
+        public async Task<List<BusinessResult>> GetFromUser(Domain.Entities.Users.User user)
+        {
+            var business = await businessRepository.GetForLoggedUser(user);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
     }
 }

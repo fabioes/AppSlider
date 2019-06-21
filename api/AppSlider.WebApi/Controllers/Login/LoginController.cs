@@ -56,11 +56,13 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
                     throw new BusinessException("Falha ao Authenticar!");
 
                 ClaimsIdentity identity = new ClaimsIdentity(
-                    new GenericIdentity(login.Username, !string.IsNullOrWhiteSpace(user.Profile) ? user.Profile : "Login"),
+                    new GenericIdentity(login.Username, user.Profile),
                     new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                     }
                 );
+
+                loggedUser = (User)user; 
 
                 DateTime dataCriacao = DateTime.Now;
                 DateTime dataExpiracao = dataCriacao + TimeSpan.FromSeconds(tokenConfigurations.Seconds);
@@ -77,20 +79,11 @@ namespace AtlasChatbotApi.WebApi.Controllers.Login
                 });
 
                 //Custom Claims                
+                var roles = await _rolesService.GetFromUser(loggedUser);
+                (securityToken as JwtSecurityToken).Payload["roles"] = roles.Select(s => s.Name).ToList();
 
-                if (user.Profile != "sa")
-                {
-                    if (user?.Roles?.Any() == true)
-                    {
-                        var roles = await _rolesService.GetForLoggedUser();
-                        (securityToken as JwtSecurityToken).Payload["roles"] = roles.Select(s => s.Name).ToList();
-                    }
-                    if (user?.Franchises?.Any() == true)
-                    {
-                        var franchises = await _businessService.GetForLoggedUser();
-                        (securityToken as JwtSecurityToken).Payload["franchises"] = franchises.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
-                    }
-                }
+                var franchises = await _businessService.GetFromUser(loggedUser);
+                (securityToken as JwtSecurityToken).Payload["franchises"] = franchises.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
 
                 var token = handler.WriteToken(securityToken);
 
