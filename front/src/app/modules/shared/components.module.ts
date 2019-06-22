@@ -9,12 +9,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 /** prime ng */
 import {DropdownModule} from 'primeng/dropdown'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     NgbModule,
+    FormsModule,
     //primeng
     DropdownModule
   ],
