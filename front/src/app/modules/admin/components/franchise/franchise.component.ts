@@ -108,8 +108,4 @@ export class FranchiseComponent implements OnInit {
     });
   }
   
-  manageFranchise(franchise){
-    alert('proxima sprint');
-  }
-
 }

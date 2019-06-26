@@ -13,6 +13,10 @@ import { BusinessTypeComponent } from './components/business-type/business-type.
 import { BusinessTypeFormComponent } from './components/business-type/business-type-form/business-type-form.component';
 import { FranchiseComponent } from './components/franchise/franchise.component';
 import { FranchiseFormComponent } from './components/franchise/franchise-form/franchise-form.component';
+import { AdvertiserComponent } from './components/advertiser/advertiser.component';
+import { AdvertiserFormComponent } from './components/advertiser/advertiser-form/advertiser-form.component';
+import { EstablishmentComponent } from './components/establishment/establishment.component';
+import { EstablishmentFormComponent } from './components/establishment/establishment-form/establishment-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { TableListComponent } from './components/table-list/table-list.component';
@@ -72,6 +76,10 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     BusinessTypeFormComponent,
     FranchiseComponent,
     FranchiseFormComponent,
+    AdvertiserComponent,
+    AdvertiserFormComponent,
+    EstablishmentComponent,
+    EstablishmentFormComponent,
     TableListComponent,
     UpgradeComponent,
     TypographyComponent,
@@ -81,7 +89,7 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     DateFormat,
     PhonePipe
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent]
 })
 
 export class AdminModule { }
