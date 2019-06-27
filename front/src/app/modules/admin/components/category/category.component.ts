@@ -29,7 +29,7 @@ export class CategoryComponent implements OnInit {
   private getCategories() {
     //TODO: make retrive routines for Attendant by API request
 
-    return this.categoryService.getAllCategorys().subscribe(res => {
+    return this.categoryService.getAllCategories().subscribe(res => {
 
       this.categories = res;
 

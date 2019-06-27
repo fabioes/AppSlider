@@ -34,7 +34,7 @@
             <label>Categoria do Estabelecimento</label>
             <label class="required-info-asterisk">*</label>
             <p-dropdown required="true" [options]="categories" [filter]="true" placeholder="Selecione a Categoria"
-                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="name" formControlName="categoria"
+                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_categoria"
                 required></p-dropdown>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('categoria')">
                 Favor inserir o 'Categoria do Estabelecimento'!
@@ -76,7 +76,7 @@
 
         <div class="form-group date-group">
             <label>Data de expiração</label>
-            <p-calendar [locale]="pt" placeholder="buscar por data?..." (onSelect)="setDateValue($event)"
+            <p-calendar [locale]="pt" placeholder="data de expiração" (onSelect)="setDateValue($event)"
                 formControlName="dateTemp" dateFormat="dd/M/yy">
             </p-calendar>
         </div>

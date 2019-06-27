@@ -20,7 +20,7 @@ export class EstablishmentFormComponent implements OnInit {
   establishmentForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
   franchise: Model.App.UserFranchise;
-  categories : Array<Model.App.Category>;
+  categories: Array<Model.App.Category>;
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -28,13 +28,13 @@ export class EstablishmentFormComponent implements OnInit {
     private businessService: BusinessService,
     private toastrService: ToastrService,
     private businessTypeService: BusinessTypeService,
-    private franchiseService : FranchiseService,
-    private categoryService : CategoryService,
-    ) {
+    private franchiseService: FranchiseService,
+    private categoryService: CategoryService,
+  ) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
 
-    this.categoryService.getAllCategorys().subscribe(res => this.categories = res);
+    this.categoryService.getAllCategories().subscribe(res => { debugger; this.categories = res });
   }
 
   ngOnInit() {
@@ -56,14 +56,19 @@ export class EstablishmentFormComponent implements OnInit {
       dateTemp: [null]
     });
 
-    this.establishmentForm.patchValue(this.establishment || {});
+    setTimeout(() => {
+      if (this.establishment.id_categoria)
+        this.establishment.id_categoria = <any>(this.categories || []).filter(f => f.id == this.establishment.id_categoria)[0];
+
+      this.establishmentForm.patchValue(this.establishment || {});
+    }, 1000);
 
     this.businessTypeService.getAllBusinessTypes().subscribe(res => {
       this.establishmentForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Estabelecimento')[0]).id);
     });
 
-    if((this.establishment || <Model.App.Business>{}).data_expiracao)
-    this.establishmentForm.get('dateTemp').setValue(new Date(this.establishment.data_expiracao));
+    if ((this.establishment || <Model.App.Business>{}).data_expiracao)
+      this.establishmentForm.get('dateTemp').setValue(new Date(this.establishment.data_expiracao));
 
   }
 
@@ -72,6 +77,8 @@ export class EstablishmentFormComponent implements OnInit {
     if (this.establishmentForm.invalid) return;
 
     this.establishment = this.establishmentForm.value;
+
+    this.establishment.id_categoria = (<any>this.establishment.id_categoria).id
 
     if (this.establishment.id) {
       this.businessService.updateBusiness(this.establishment).subscribe(res => this.callbackAction('alterado', res));

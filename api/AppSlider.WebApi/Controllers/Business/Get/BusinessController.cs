@@ -23,7 +23,7 @@ namespace AppSlider.WebApi.Controllers.Users.Get
         }
 
         /// <summary>
-        /// Obtem um ou vários Usuários
+        /// Obtem um ou vários Negócios
         /// </summary>
         [HttpGet("{id?}")]
         [Authorize("Bearer")]
@@ -39,6 +39,20 @@ namespace AppSlider.WebApi.Controllers.Users.Get
             }
 
             var results = await _businessGetService.GetAll();
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetByType/{type}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetByType(String type)
+        {
+            var results = await _businessGetService.GetByType(type);
 
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }

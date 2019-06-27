@@ -13,8 +13,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias' },
     { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio' },
     { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias' },
-    { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'travel_istanbul', class: '', charName: 'estabelecimentos' },
-    { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'travel_istanbul', class: '', charName: 'anunciantes' },
+    { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'business_bank', class: '', charName: 'estabelecimentos' },
+    { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'users_circle-08', class: '', charName: 'anunciantes' },
     
     // { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '', charName: 'icons' },
     // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },

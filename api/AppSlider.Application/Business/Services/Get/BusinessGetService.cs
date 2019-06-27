@@ -37,6 +37,18 @@ namespace AppSlider.Application.Business.Services.Get
             return returnBusiness;
         }
 
+        public async Task<List<BusinessResult>> GetByType(String type)
+        {
+            if (String.IsNullOrWhiteSpace(type))
+                throw new Exception("tipo é obrigatório");
+
+            var business = await businessRepository.GetByType(type);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
+
         public async Task<List<BusinessResult>> GetForLoggedUser()
         {
             var business = await businessRepository.GetForLoggedUser(loggedUser);

@@ -17,6 +17,11 @@ export class BusinessService {
             .pipe(map(res => res.items));
     }
 
+    public getByType(type: string): Observable<Array<Model.App.Business>> {
+        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.get_by_type + '/' + type)
+            .pipe(map(res => res.items));
+    }
+
     public getBusiness(id: string) {
         return this.httpHelper.HttpGet<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.default + '/' + id)
             .pipe(map(res => res.item));

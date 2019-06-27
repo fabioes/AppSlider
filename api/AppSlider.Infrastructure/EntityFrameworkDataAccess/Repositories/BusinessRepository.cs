@@ -48,6 +48,13 @@
             return businessEntities;
         }
 
+        public async Task<ICollection<BusinessEntity>> GetByType(String type)
+        {
+            var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == type).ToListAsync();
+
+            return businessEntities;
+        }
+
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {

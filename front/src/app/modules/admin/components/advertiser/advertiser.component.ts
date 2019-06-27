@@ -29,7 +29,7 @@ export class AdvertiserComponent implements OnInit {
   private getAdvertisers() {
     //TODO: make retrive routines for Attendant by API request
 
-    return this.businessService.getAllBusinesss().subscribe(res => {
+    return this.businessService.getByType("Anunciante").subscribe(res => {
 
       this.advertisers = res;
 

@@ -25,7 +25,8 @@ export const environment = {
       },
       business: {
         default: "/business",
-        switchActive: "/business/switch_active"
+        switchActive: "/business/switch_active",
+        get_by_type: "/business/GetByType"
       }
     }
   }
