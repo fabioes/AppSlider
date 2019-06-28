@@ -3,14 +3,15 @@ import { HttpHelper } from '../../../../helpers/http.helper';
 import { environment } from '../../../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { FranchiseService } from '../franchise/franchise.service';
 
 
 @Injectable({
-    providedIn: 'root' 
+    providedIn: 'root'
 })
 export class BusinessService {
 
-    constructor(private httpHelper: HttpHelper) { }
+    constructor(private httpHelper: HttpHelper, private franchiseService: FranchiseService) { }
 
     public getAllBusinesss(): Observable<Array<Model.App.Business>> {
         return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.default)
@@ -22,9 +23,19 @@ export class BusinessService {
             .pipe(map(res => res.items));
     }
 
+    public getByFranchiseAndType(type: string): Observable<Array<Model.App.Business>> {
+        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.get_by_type + '/' + this.franchiseService.Franchise.id + '/' + type)
+            .pipe(map(res => res.items));
+    }
+
     public getBusiness(id: string) {
         return this.httpHelper.HttpGet<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.default + '/' + id)
             .pipe(map(res => res.item));
+    }
+
+    public getForLoggedUser() {
+        return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.get_for_logged_user)
+            .pipe(map(res => res.items));
     }
 
     public createBusiness(Business: Model.App.Business) {
@@ -37,7 +48,7 @@ export class BusinessService {
             .pipe(map(res => res.item));
     }
 
-    public deleteBusiness(id: string) : Observable<Boolean>{
+    public deleteBusiness(id: string): Observable<Boolean> {
         return this.httpHelper.HttpDelete<Model.Core.ApiResultItem<Boolean>>(environment.apiConfig.apiRoutes.business.default + '/' + id)
             .pipe(map(res => res.item));
     }
@@ -45,5 +56,5 @@ export class BusinessService {
     public switchActive(id: string): any {
         return this.httpHelper.HttpPatch<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.switchActive + '/' + id)
             .pipe(map(res => res.item));
-      }           
+    }
 }

@@ -56,5 +56,34 @@ namespace AppSlider.WebApi.Controllers.Users.Get
 
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetByType/{franchiseId}/{type}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetByType(String franchiseId, String type)
+        {
+            var results = await _businessGetService.GetByFranchiseAndType(franchiseId, type);
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetForLoggedUser")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetForLoggedUser()
+        {
+            var results = await _businessGetService.GetForLoggedUser();
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
     }
 }

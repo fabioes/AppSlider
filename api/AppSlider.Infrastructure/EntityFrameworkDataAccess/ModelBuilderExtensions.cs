@@ -1,6 +1,8 @@
 ﻿using AppSlider.Domain.Entities.Business;
 using AppSlider.Domain.Entities.Categories;
 using AppSlider.Domain.Entities.Equipaments;
+using AppSlider.Domain.Entities.Files;
+using AppSlider.Domain.Entities.PlayLists;
 using AppSlider.Domain.Entities.Roles;
 using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
@@ -52,7 +54,13 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             //Index.
             modelBuilder.Entity<Equipament>().HasIndex(p => p.MacAddress);
 
-
+            //PlaylistFile
+            modelBuilder.Entity<PlayListFile>()
+            .HasOne(i => i.PlayList)
+            .WithMany(c => c.PLayListFiles)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+            
             //Has data ---> Seed Fact.
             modelBuilder.Entity<User>().HasData(
                 new User("Administrador", "admin", CriptoManager.CriptoSHA256("AdminAppSlider@123"), "sa", "", null, null, true, true)

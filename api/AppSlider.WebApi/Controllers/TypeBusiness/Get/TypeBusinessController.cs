@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AppSlider.WebApi.Controllers.Categories.Get
+namespace AppSlider.WebApi.Controllers.TypeBusiness.Get
 {
     [Route("api/business_type")]
     public class TypeBusinessController : Controller

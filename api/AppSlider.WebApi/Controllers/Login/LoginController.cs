@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AtlasChatbotApi.WebApi.Controllers.Login
+namespace AppSlider.WebApi.Controllers.Login
 {
     [Route("api/login")]
     public class LoginController : Controller

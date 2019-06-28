@@ -11,6 +11,8 @@ namespace AppSlider.Application.Business.Services.Get
 
         Task<List<BusinessResult>> GetByType(String type);
 
+        Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type);        
+
         Task<List<BusinessResult>> GetAll();
 
         Task<List<BusinessResult>> GetForLoggedUser();

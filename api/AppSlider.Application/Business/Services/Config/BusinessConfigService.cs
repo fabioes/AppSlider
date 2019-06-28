@@ -20,7 +20,7 @@ namespace AppSlider.Application.Business.Services.Config
 
         public async Task<BusinessResult> SwitchActive(Guid id)
         {
-            UserConfigSwitchActiveValidations(id);
+            BusinessConfigSwitchActiveValidations(id);
 
             var business = await businessRepository.Get(id);
 
@@ -38,7 +38,7 @@ namespace AppSlider.Application.Business.Services.Config
             return returnUser;
         }
 
-        private void UserConfigSwitchActiveValidations(Guid id)
+        private void BusinessConfigSwitchActiveValidations(Guid id)
         {
             var messageValidations = new List<String>();
 

@@ -55,6 +55,12 @@
             return businessEntities;
         }
 
+        public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
+        {
+            var businessEntities = await _context.Business.Include(i => i.Type).Where(w =>w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
+
+            return businessEntities;
+        }
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {

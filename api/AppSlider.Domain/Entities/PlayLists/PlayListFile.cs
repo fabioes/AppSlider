@@ -1,5 +1,6 @@
 ﻿using AppSlider.Domain.Entities.Files;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.PlayLists
@@ -8,6 +9,8 @@ namespace AppSlider.Domain.Entities.PlayLists
     {
         public virtual Guid IdPlayList { get; protected set; }
         public virtual PlayListFileType PlayListFileType { get; set; }
+
+        [Required]
         public virtual Guid IdFile { get; protected set; }
         public virtual Int16 Duration { get; set; }
 

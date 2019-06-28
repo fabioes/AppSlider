@@ -1,5 +1,6 @@
 ﻿
 using AppSlider.Application.Business.Results;
+using AppSlider.Domain.Authentication;
 using AppSlider.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace AppSlider.Application.Business.Services.Get
     public class UserGetService : IBusinessGetService
     {
         private readonly IBusinessRepository businessRepository;
-        private readonly Domain.Entities.Users.User loggedUser;
+        private readonly LoggedUser loggedUser;
 
-        public UserGetService(IBusinessRepository businessRepository, [FromServices]Domain.Entities.Users.User loggedUser)
+        public UserGetService(IBusinessRepository businessRepository, LoggedUser loggedUser)
         {
             this.businessRepository = businessRepository;
             this.loggedUser = loggedUser;
@@ -49,6 +50,24 @@ namespace AppSlider.Application.Business.Services.Get
             return returnBusiness;
         }
 
+        public async Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type)
+        {
+            if (String.IsNullOrWhiteSpace(franchiseId))
+                throw new Exception("franquia é obrigatória");
+
+            if(!Guid.TryParse(franchiseId, out Guid _franchiseId))
+                throw new Exception("informe uma franquia válida");
+
+            if (String.IsNullOrWhiteSpace(type))
+                throw new Exception("tipo é obrigatório");
+
+            var business = await businessRepository.GetByFranchiseAndType(_franchiseId, type);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
+
         public async Task<List<BusinessResult>> GetForLoggedUser()
         {
             var business = await businessRepository.GetForLoggedUser(loggedUser);
@@ -57,6 +76,7 @@ namespace AppSlider.Application.Business.Services.Get
 
             return returnBusiness;
         }
+
         public async Task<List<BusinessResult>> GetFromUser(Domain.Entities.Users.User user)
         {
             var business = await businessRepository.GetForLoggedUser(user);

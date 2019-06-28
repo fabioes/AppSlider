@@ -59,12 +59,13 @@
                 options.OperationFilter<SwaggerAuthorizationHeaderParameterOperationFilter>();
             });
 
-            var loggedUser = new Domain.Entities.Users.User();
-            services.AddSingleton(loggedUser);
+            //var loggedUser = new Domain.Entities.Users.User();
+            //services.AddSingleton(loggedUser);
         
             services.AddMvc(options =>
             {
                 var userGetService = _container?.Resolve<IUserGetService>();
+                var loggedUser = _container?.Resolve<LoggedUser>();
 
                 options.Filters.Add(new CustomAuthorizeFilter(loggedUser, userGetService, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)

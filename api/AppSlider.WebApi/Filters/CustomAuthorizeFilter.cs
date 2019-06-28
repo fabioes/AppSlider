@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppSlider.Application.User.Services.Get;
 using AppSlider.Domain;
+using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
@@ -23,12 +24,12 @@ namespace AppSlider.WebApi.Filters
 {
     public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
     {
-        private User _loggedUser { get; set; }
+        private LoggedUser _loggedUser { get; set; }
         public AuthorizationPolicy Policy { get; }
 
         private readonly IUserGetService _userGetService;
 
-        public CustomAuthorizeFilter([FromServices] User loggedUser,
+        public CustomAuthorizeFilter(LoggedUser loggedUser,
             IUserGetService userGetService,
             AuthorizationPolicy policy)
         {
@@ -77,7 +78,7 @@ namespace AppSlider.WebApi.Filters
                     var decodedToken = handler.ReadToken(token) as JwtSecurityToken;
                     var userToken = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
 
-                    _loggedUser = ((User)(await _userGetService.GetByUsername(userToken)));
+                    _loggedUser = ((LoggedUser)(await _userGetService.GetByUsername(userToken)));
 
                     if (String.IsNullOrWhiteSpace(_loggedUser.Username))
                     {

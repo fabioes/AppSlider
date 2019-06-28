@@ -29,7 +29,7 @@ export class FranchiseComponent implements OnInit {
   private getFranchises() {
     //TODO: make retrive routines for Attendant by API request
 
-    return this.businessService.getByType("Franquia").subscribe(res => {
+    return this.businessService.getForLoggedUser().subscribe(res => {
 
       this.franchises = res;
 

@@ -2,6 +2,7 @@
 {
     using Autofac;
     using AppSlider.Application;
+    using AppSlider.Domain.Authentication;
 
     public class ApplicationModule : Module
     {
@@ -10,9 +11,13 @@
             //
             // Register all Types in AppSlider.Application
             //
+            builder.RegisterType<LoggedUser>()
+               .As<LoggedUser>()
+               .SingleInstance();
+
             builder.RegisterAssemblyTypes(typeof(ApplicationException).Assembly)
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .SingleInstance();
         }
     }
 }
