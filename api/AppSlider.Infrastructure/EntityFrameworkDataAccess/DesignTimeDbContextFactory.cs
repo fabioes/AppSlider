@@ -22,7 +22,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             //return new Context(builder.Options);
             
             var builder = new DbContextOptionsBuilder<Context>();
-            builder.UseMySql("Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08;Connection Reset=false");
+            builder.UseMySql("Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08;Connection Reset=false;OldGuids=true");
             return new Context(builder.Options);
            
         }

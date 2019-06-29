@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapsComponent } from './maps.component';
+import { PlaylistFormComponent } from './playlist-form.component';
 
-describe('MapsComponent', () => {
-  let component: MapsComponent;
-  let fixture: ComponentFixture<MapsComponent>;
+describe('EstablishmentFormComponent', () => {
+  let component: PlaylistFormComponent;
+  let fixture: ComponentFixture<PlaylistFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapsComponent ]
+      declarations: [ PlaylistFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapsComponent);
+    fixture = TestBed.createComponent(PlaylistFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

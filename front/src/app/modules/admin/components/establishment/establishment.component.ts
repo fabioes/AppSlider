@@ -29,7 +29,7 @@ export class EstablishmentComponent implements OnInit {
   private getEstablishments() {
     //TODO: make retrive routines for Attendant by API request
 
-    return this.businessService.getByType("Estabelecimento").subscribe(res => {
+    return this.businessService.getByFranchiseAndType("Estabelecimento").subscribe(res => {
 
       this.establishments = res;
 

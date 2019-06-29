@@ -45,8 +45,7 @@ namespace AppSlider.WebApi.Controllers.Login
         public async Task<Object> PostAsync(
             [FromBody]LoginRequest login,
             [FromServices]SigningConfigurations signingConfigurations,
-            [FromServices]TokenConfigurations tokenConfigurations,
-            [FromServices]User loggedUser)
+            [FromServices]TokenConfigurations tokenConfigurations)
         {
             if (login != null)
             {
@@ -61,9 +60,7 @@ namespace AppSlider.WebApi.Controllers.Login
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                     }
                 );
-
-                loggedUser = (User)user; 
-
+                
                 DateTime dataCriacao = DateTime.Now;
                 DateTime dataExpiracao = dataCriacao + TimeSpan.FromSeconds(tokenConfigurations.Seconds);
 
@@ -77,6 +74,16 @@ namespace AppSlider.WebApi.Controllers.Login
                     NotBefore = dataCriacao,
                     Expires = dataExpiracao
                 });
+
+                var loggedUser = new LoggedUser
+                {
+                    Franchises = user.Franchises,
+                    Id = user.Id,
+                    Login = user.Username,
+                    Profile = user.Profile,
+                    Roles = user.Roles,
+                    UserName = user.Username
+                };
 
                 //Custom Claims                
                 var roles = await _rolesService.GetFromUser(loggedUser);

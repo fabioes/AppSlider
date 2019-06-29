@@ -9,22 +9,30 @@ namespace AppSlider.Utils.Enum
     {
         public static string GetDescription<T>(this T e) where T : IConvertible
         {
-            if ((e is System.Enum) == false) return string.Empty;
+            if (e is System.Enum)
+            {
+                Type type = e.GetType();
+                Array values = System.Enum.GetValues(type);
 
-            Type type = e.GetType();
-            var enumValue = System.Enum.GetValues(type).OfType<int>()
-                .FirstOrDefault(f => f == e.ToInt32(CultureInfo.InvariantCulture));
+                foreach (int val in values)
+                {
+                    if (val == e.ToInt32(CultureInfo.InvariantCulture))
+                    {
+                        var memInfo = type.GetMember(type.GetEnumName(val));
+                        var descriptionAttribute = memInfo[0]
+                            .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                            .FirstOrDefault() as DescriptionAttribute;
 
-            var enumName = type.GetEnumName(enumValue);
-            var memInfo = type.GetMember(enumName);
-            var descriptionAttribute = memInfo[0]
-                        .GetCustomAttributes(typeof(DescriptionAttribute), false)
-                        .FirstOrDefault() as DescriptionAttribute;
+                        if (descriptionAttribute != null)
+                        {
+                            return descriptionAttribute.Description;
+                        }
+                    }
+                }
+            }
 
+            return null; // could also return string.Empty
 
-            return descriptionAttribute != null
-                    ? descriptionAttribute.Description
-                    : (enumName ?? String.Empty);
         }
 
         public static T GetValueFromDescription<T>(string description)

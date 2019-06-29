@@ -1,42 +1,74 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
-using AppSlider.Application.Category.Messages;
-using AppSlider.Application.TypeBusiness.Results;
-using AppSlider.Application.TypeBusiness.Services.Create;
+using AppSlider.Application.PlaylistFile.Messages;
+using AppSlider.Application.PlaylistFile.Results;
+using AppSlider.Application.PlaylistFile.Services;
 using AppSlider.Domain;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
+using AppSlider.WebApi.ModelBinders;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace AppSlider.WebApi.Controllers.TypeBusiness.Create
 {
     [Route("api/playlist_file")]
-    public class TypeBusinessController : Controller
+    public class PlaylistFileController : Controller
     {
-        private readonly ITypeBusinessCreateService _typeBusinessCreateService;
+        private readonly IPlaylistFileService _playlistFileService;
 
-        public TypeBusinessController(ITypeBusinessCreateService typeBusinessCreateService)
+        public PlaylistFileController(IPlaylistFileService playlistFileService)
         {
-            _typeBusinessCreateService = typeBusinessCreateService;
+            _playlistFileService = playlistFileService;
         }
-        
+
         /// <summary>
         /// Cria um Item (PlaylistFile) para uma playlist.
         /// </summary>
         [HttpPost]
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.WritePlaylist)]
-        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<TypeBusinessResult>))]
-        public async Task<IActionResult> Create([FromBody]TypeBusinessCreateRequest request)
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistFileResult>))]
+        public async Task<IActionResult> Create([ModelBinder(BinderType = typeof(JsonModelBinder))] PlaylistFileCreateRequest value, IList<IFormFile> files)
         {
-            if(request== null) throw new BusinessException("Favor informar os dados do Tipo de Negócio!");
+            var file = files[0];
 
-            var result = await _typeBusinessCreateService.Process(new Application.TypeBusiness.Commands.TypeBusinessCreateCommand(request.Name, request.Description));
+            var fileMS = new MemoryStream();
+            file.CopyTo(fileMS);
 
-            return Ok(new ApiReturnItem<TypeBusinessResult> { Item = result, Success = true });
+            if (value == null) throw new BusinessException("Favor informar os dados do Item da Playlist!");
+
+            var result = await _playlistFileService.ProcessCreate(new Application.PlaylistFile.Commands.PlaylistFileCommand {
+                Duration = value.Duration,
+                IdPlayList = value.IdPlayList,
+                PlayListFileType = value.PlayListFileType,
+                FileData = fileMS.ToArray(),
+                FileName = file.FileName,
+                FileMimeType = file.ContentType,
+                FileSize = file.Length
+            });
+
+            return Ok(new ApiReturnItem<PlaylistFileResult> { Item = result, Success = true });
+        }
+
+        /// <summary>
+        /// Deleta um Item (PlaylistFile) de uma playlist.
+        /// </summary>
+        [HttpDelete("{idPlaylist}/{id}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WritePlaylist)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistFileResult>))]
+        public async Task<IActionResult> Delete(Guid idPlaylist, Guid id)
+        {
+            var result = await _playlistFileService.ProcessDelete(idPlaylist,id);
+
+            return Ok(new ApiReturnItem<Boolean> { Item = result, Success = true });
         }
     }
 }

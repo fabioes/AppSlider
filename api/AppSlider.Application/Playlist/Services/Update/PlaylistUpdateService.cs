@@ -22,7 +22,7 @@ namespace AppSlider.Application.Playlist.Services.Update
         {
             PlaylistUpdateValidations(command);
 
-            var businessType = new PlayList(command.Id, command.Name, command.Active, command.Expirate, command.FranchiseId);
+            var businessType = new PlayList(command.Id, command.Name, command.Active, command.Expirate, command.FranchiseId, false);
 
             await playlistRepository.Update(businessType);
 

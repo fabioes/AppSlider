@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AtlasChatbotApi.WebApi.Controllers.Categories.Update
+namespace AtlasChatbotApi.WebApi.Controllers.Ty.Update
 {
     [Route("api/business_type")]
     public class TypeBusinessController : Controller

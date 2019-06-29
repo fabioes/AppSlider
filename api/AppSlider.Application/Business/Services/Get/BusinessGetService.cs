@@ -2,6 +2,7 @@
 using AppSlider.Application.Business.Results;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,10 @@ namespace AppSlider.Application.Business.Services.Get
     {
         private readonly IBusinessRepository businessRepository;
         private readonly LoggedUser loggedUser;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserGetService(IBusinessRepository businessRepository, LoggedUser loggedUser)
+        public UserGetService(IBusinessRepository businessRepository,
+            [FromServices]LoggedUser loggedUser)
         {
             this.businessRepository = businessRepository;
             this.loggedUser = loggedUser;
@@ -77,7 +80,7 @@ namespace AppSlider.Application.Business.Services.Get
             return returnBusiness;
         }
 
-        public async Task<List<BusinessResult>> GetFromUser(Domain.Entities.Users.User user)
+        public async Task<List<BusinessResult>> GetFromUser(LoggedUser user)
         {
             var business = await businessRepository.GetForLoggedUser(user);
 

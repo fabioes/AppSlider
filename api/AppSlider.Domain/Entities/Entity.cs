@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities
 {
@@ -6,6 +8,8 @@ namespace AppSlider.Domain.Entities
     {
         private Guid? _id { get; set; }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual Guid Id
         {
             get

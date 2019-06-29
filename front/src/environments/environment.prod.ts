@@ -23,6 +23,15 @@ export const environment = {
         switchActive: "/business/switch_active",
         get_by_type: "/business/GetByType",
         get_for_logged_user: "/business/GetForLoggedUser"
+      },
+      playlist: {
+        default: "/playlist",
+        switchActive: "/playlist/switch_active",
+        getByFranchise: "/playlist/GetByFranchise",
+        playlistItem: "/playlist_file"
+      },
+      files: {
+        default: "/files"
       }
     }
   }

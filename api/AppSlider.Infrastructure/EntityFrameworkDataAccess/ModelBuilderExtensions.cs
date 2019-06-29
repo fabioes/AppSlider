@@ -7,6 +7,7 @@ using AppSlider.Domain.Entities.Roles;
 using AppSlider.Domain.Entities.Users;
 using AppSlider.Utils.Cripto;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
@@ -55,11 +56,11 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             modelBuilder.Entity<Equipament>().HasIndex(p => p.MacAddress);
 
             //PlaylistFile
-            modelBuilder.Entity<PlayListFile>()
-            .HasOne(i => i.PlayList)
-            .WithMany(c => c.PLayListFiles)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<PlayListFile>()
+            //.HasOne(i => i.PlayList)
+            //.WithMany(c => c.PLayListFiles)
+            //.IsRequired()
+            //.OnDelete(DeleteBehavior.Cascade);
             
             //Has data ---> Seed Fact.
             modelBuilder.Entity<User>().HasData(
@@ -93,9 +94,14 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new BusinessType("Anunciante", "Anunciante como Tipo de Negócio.", true)
             );
 
+            var midiaFoneFranchise = new BusinessEntity(null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true, true);
+
             modelBuilder.Entity<BusinessEntity>().HasData(
-                new BusinessEntity(null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true, true)
+                midiaFoneFranchise
             );
+            
+            modelBuilder.Entity<PlayList>().HasData(
+                new PlayList("Curiosidades MidiaFone", true, DateTime.MaxValue, midiaFoneFranchise.Id, true));
         }
     }
 }

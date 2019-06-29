@@ -17,17 +17,14 @@ import { AdvertiserComponent } from './components/advertiser/advertiser.componen
 import { AdvertiserFormComponent } from './components/advertiser/advertiser-form/advertiser-form.component';
 import { EstablishmentComponent } from './components/establishment/establishment.component';
 import { EstablishmentFormComponent } from './components/establishment/establishment-form/establishment-form.component';
+import { PlaylistComponent } from './components/playlist/playlist.component';
+import { PlaylistFormComponent } from './components/playlist/playlist-form/playlist-form.component';
+import { PlaylistFilesComponent } from './components/playlist/playlist-files/playlist-files.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { TableListComponent } from './components/table-list/table-list.component';
-import { TypographyComponent } from './components/typography/typography.component';
 import { IconsComponent } from './components/icons/icons.component';
-import { MapsComponent } from './components/maps/maps.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import { UpgradeComponent } from './components/upgrade/upgrade.component';
 
 //primeng
 import { AccordionModule } from 'primeng/accordion';
@@ -69,7 +66,6 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     UserFormComponent,
     UserResetPasswordComponent,
     WelcomeComponent,
-    UserProfileComponent,
     CategoryComponent,
     CategoryFormComponent,
     BusinessTypeComponent,
@@ -80,16 +76,14 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     AdvertiserFormComponent,
     EstablishmentComponent,
     EstablishmentFormComponent,
-    TableListComponent,
-    UpgradeComponent,
-    TypographyComponent,
+    PlaylistComponent,
+    PlaylistFormComponent,
+    PlaylistFilesComponent,
     IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
     DateFormat,
     PhonePipe
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent]
 })
 
 export class AdminModule { }

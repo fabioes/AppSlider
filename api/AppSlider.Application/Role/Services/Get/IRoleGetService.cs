@@ -1,4 +1,5 @@
 ﻿using AppSlider.Application.Role.Results;
+using AppSlider.Domain.Authentication;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,6 +11,6 @@ namespace AppSlider.Application.Role.Services.Get
 
         Task<List<RoleResult>> GetForLoggedUser();
 
-        Task<List<RoleResult>> GetFromUser(Domain.Entities.Users.User user);
+        Task<List<RoleResult>> GetFromUser(LoggedUser user);
     }
 }

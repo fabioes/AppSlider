@@ -8,6 +8,7 @@
     using AppSlider.Domain.Entities.Roles;
     using AppSlider.Domain.Entities.Users;
     using System.Linq;
+    using AppSlider.Domain.Authentication;
 
     public class RoleRepository : IRoleRepository
     {
@@ -25,9 +26,9 @@
             return roles;
         }
 
-        public async Task<ICollection<Role>> GetForLoggedUser(User loggedUser)
+        public async Task<ICollection<Role>> GetForLoggedUser(LoggedUser loggedUser)
         {
-            var ids = loggedUser.Roles?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(s => Guid.Parse(s))?.ToList();
+            var ids = loggedUser.Roles?.Select(s => Guid.Parse(s))?.ToList();
 
             var roles = await _context.Roles.Where(w => loggedUser.Profile == "sa" || (ids != null && ids.Contains(w.Id))).ToListAsync();
 

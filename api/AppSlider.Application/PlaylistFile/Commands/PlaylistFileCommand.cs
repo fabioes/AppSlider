@@ -12,7 +12,7 @@ namespace AppSlider.Application.PlaylistFile.Commands
         public virtual String FileName { get; set; }
         public virtual Byte[] FileData { get; set; }
         public virtual String FileMimeType { get; set; }
-        public virtual String FileSize { get; set; }
+        public virtual Int64 FileSize { get; set; }
         #endregion
     }
 }

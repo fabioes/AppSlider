@@ -48,7 +48,7 @@
             return playLists;
         }
 
-        public async Task<List<PlayList>> GetByFranchise(Guid franchiseId)
+        public async Task<ICollection<PlayList>> GetByFranchise(Guid franchiseId)
         {
             var playlists = await _context.PlayLists.Where(w => w.FranchiseId == franchiseId).ToListAsync();
             return playlists;

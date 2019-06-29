@@ -15,6 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias' },
     { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'business_bank', class: '', charName: 'estabelecimentos' },
     { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'users_circle-08', class: '', charName: 'anunciantes' },
+    { path: '/adm/playlists', title: 'Playlists',  icon: 'media-1_button-play', class: '', charName: 'playlists' },
     
     // { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '', charName: 'icons' },
     // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },

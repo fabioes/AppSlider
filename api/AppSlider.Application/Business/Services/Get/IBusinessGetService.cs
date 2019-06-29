@@ -1,4 +1,5 @@
 ﻿using AppSlider.Application.Business.Results;
+using AppSlider.Domain.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +18,6 @@ namespace AppSlider.Application.Business.Services.Get
 
         Task<List<BusinessResult>> GetForLoggedUser();
 
-        Task<List<BusinessResult>> GetFromUser(Domain.Entities.Users.User user);
+        Task<List<BusinessResult>> GetFromUser(LoggedUser user);
     }
 }

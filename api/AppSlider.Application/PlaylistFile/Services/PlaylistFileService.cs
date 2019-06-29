@@ -1,6 +1,4 @@
-﻿using AppSlider.Application.Playlist.Commands;
-using AppSlider.Application.Playlist.Results;
-using AppSlider.Application.PlaylistFile.Commands;
+﻿using AppSlider.Application.PlaylistFile.Commands;
 using AppSlider.Application.PlaylistFile.Results;
 using AppSlider.Domain;
 using AppSlider.Domain.Entities.PlayLists;
@@ -12,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace AppSlider.Application.PlaylistFile.Services
 {
-    public class PlaylistUpdateService : IPlaylistFileService
+    public class PlaylistFileService : IPlaylistFileService
     {
         private readonly IPlaylistRepository playlistRepository;
         private readonly IFileRepository fileRepository;
 
-        public PlaylistUpdateService(IPlaylistRepository playlistRepository, IFileRepository fileRepository)
+        public PlaylistFileService(IPlaylistRepository playlistRepository, IFileRepository fileRepository)
         {
             this.playlistRepository = playlistRepository;
             this.fileRepository = fileRepository;

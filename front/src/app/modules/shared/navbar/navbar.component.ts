@@ -60,7 +60,6 @@ export class NavbarComponent implements OnInit {
     }
 
     franchiseChange($event) {
-        debugger;
         this.franchiseService.Franchise = $event.value;
         this.ngZone.run(() => this.router.navigate(['/adm/welcome;']));
     }

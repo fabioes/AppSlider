@@ -11,10 +11,7 @@
             //
             // Register all Types in AppSlider.Application
             //
-            builder.RegisterType<LoggedUser>()
-               .As<LoggedUser>()
-               .SingleInstance();
-
+          
             builder.RegisterAssemblyTypes(typeof(ApplicationException).Assembly)
                 .AsImplementedInterfaces()
                 .SingleInstance();

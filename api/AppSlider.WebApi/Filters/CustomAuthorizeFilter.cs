@@ -24,18 +24,19 @@ namespace AppSlider.WebApi.Filters
 {
     public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
     {
-        private LoggedUser _loggedUser { get; set; }
+        private  LoggedUser _loggedUser { get; set; }
         public AuthorizationPolicy Policy { get; }
 
         private readonly IUserGetService _userGetService;
 
-        public CustomAuthorizeFilter(LoggedUser loggedUser,
+        public CustomAuthorizeFilter(
             IUserGetService userGetService,
-            AuthorizationPolicy policy)
+            AuthorizationPolicy policy, [FromServices]LoggedUser loggedUser)
         {
-            _loggedUser = loggedUser;
+            //_loggedUser = loggedUser;
             _userGetService = userGetService;
             Policy = policy ?? throw new ArgumentNullException(nameof(policy));
+            _loggedUser = loggedUser;
         }
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
@@ -78,15 +79,20 @@ namespace AppSlider.WebApi.Filters
                     var decodedToken = handler.ReadToken(token) as JwtSecurityToken;
                     var userToken = decodedToken.Claims.First(claim => claim.Type == "unique_name").Value;
 
-                    _loggedUser = ((LoggedUser)(await _userGetService.GetByUsername(userToken)));
+                    var user = await _userGetService.GetByUsername(userToken);
+                    _loggedUser.UserName = user.Username;
+                    _loggedUser.Profile = user.Profile;
+                    _loggedUser.Id = user.Id;
+                    _loggedUser.Franchises = user.Franchises;
+                    _loggedUser.Roles = user.Roles;
 
-                    if (String.IsNullOrWhiteSpace(_loggedUser.Username))
+                    if (String.IsNullOrWhiteSpace(_loggedUser?.UserName))
                     {
                         new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} inválido!");
                         return;
                     }
 
-                    if (_loggedUser?.Active != true)
+                    if (user?.Active != true)
                     {
                         context.Result = new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} está inativo!");
                         return;
@@ -121,7 +127,7 @@ namespace AppSlider.WebApi.Filters
 
 
             var role = customAuthorizeAttribute.ConstructorArguments.FirstOrDefault();
-            return role != null && (_loggedUser.Roles ?? "").Contains(role.Value?.ToString() ?? "_");
+            return role != null && (_loggedUser.Roles ?? new List<string>()).Contains(role.Value?.ToString() ?? "_");
 
         }
     }

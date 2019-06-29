@@ -1,6 +1,6 @@
 ﻿using AppSlider.Application.Business.Services.Get;
 using AppSlider.Application.Role.Results;
-using AppSlider.Application.User.Results;
+using AppSlider.Domain.Authentication;
 using AppSlider.Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace AppSlider.Application.Role.Services.Get
     public class RoleGetService : IRoleGetService
     {
         private readonly IRoleRepository roleRepository;
-        private readonly Domain.Entities.Users.User loggedUser;
+        private readonly LoggedUser loggedUser;
 
-        public RoleGetService(IRoleRepository roleRepository, [FromServices]Domain.Entities.Users.User loggedUser)
+        public RoleGetService(IRoleRepository roleRepository,[FromServices]LoggedUser loggedUser)
         {
             this.roleRepository = roleRepository;
             this.loggedUser = loggedUser;
@@ -37,7 +37,7 @@ namespace AppSlider.Application.Role.Services.Get
             return returnRoles;
         }
 
-        public async Task<List<RoleResult>> GetFromUser(Domain.Entities.Users.User user)
+        public async Task<List<RoleResult>> GetFromUser(LoggedUser user)
         {
             var roles = await roleRepository.GetForLoggedUser(user);
 

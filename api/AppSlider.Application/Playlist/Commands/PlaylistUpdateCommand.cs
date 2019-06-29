@@ -12,7 +12,7 @@ namespace AppSlider.Application.Playlist.Commands
         public virtual String Name { get; set; }
 
         [JsonProperty("ativa")]
-        public virtual String Active { get; set; }
+        public virtual Boolean Active { get; set; }
 
         [JsonProperty("data_expiracao")]
         public virtual DateTime Expirate { get; set; }

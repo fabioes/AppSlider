@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using AppSlider.Application.Playlist.Commands;
 using AppSlider.Application.Playlist.Messages;
@@ -36,7 +37,7 @@ namespace AppSlider.WebApi.Controllers.Playlist.Update
             {
                 Id = request.Id,
                 Active = request.Active,
-                Expirate = request.Expirate,
+                Expirate = request.Expirate ?? DateTime.MaxValue,
                 FranchiseId = request.FranchiseId,
                 Name = request.Name
             });

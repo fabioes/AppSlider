@@ -24,7 +24,7 @@ namespace AppSlider.Application.Playlist.Services.Create
         {
             PlaylistCreateValidations(command);
 
-            var playlist = new PlayList(command.Name, command.Active, command.Expirate, command.FranchiseId);
+            var playlist = new PlayList(command.Name, command.Active, command.Expirate, command.FranchiseId, false);
 
             await playlistRepository.Add(playlist);
 

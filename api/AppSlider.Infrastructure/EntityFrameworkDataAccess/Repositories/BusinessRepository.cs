@@ -7,6 +7,7 @@
     using AppSlider.Domain.Repositories;
     using AppSlider.Domain.Entities.Business;
     using System.Linq;
+    using AppSlider.Domain.Authentication;
 
     public class BusinessRepository : IBusinessRepository
     {
@@ -75,10 +76,9 @@
             _context.Entry(businessEntity).State = EntityState.Detached;
         }
 
-        public async Task<ICollection<BusinessEntity>> GetForLoggedUser(Domain.Entities.Users.User loggedUser)
+        public async Task<ICollection<BusinessEntity>> GetForLoggedUser(LoggedUser loggedUser)
         {
-
-            var ids = loggedUser.Franchises?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)?.Select(s => Guid.Parse(s))?.ToList();
+            var ids = loggedUser.Franchises?.Select(s => Guid.Parse(s))?.ToList();
 
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == "Franquia" && (loggedUser.Profile == "sa" || (ids != null && ids.Contains(w.Id)))).ToListAsync();
 

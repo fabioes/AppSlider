@@ -16,7 +16,10 @@ namespace AppSlider.Application.Playlist.Results
         public virtual String Name { get; set; }
 
         [JsonProperty("ativa")]
-        public virtual String Active { get; set; }
+        public virtual Boolean Active { get; set; }
+
+        [JsonProperty("bloqueada")]
+        public virtual Boolean Blocked { get; set; }
 
         [JsonProperty("data_expiracao")]
         public virtual DateTime Expirate { get; set; }
@@ -35,7 +38,9 @@ namespace AppSlider.Application.Playlist.Results
                 Name = playlist.Name,
                 Active = playlist.Active,
                 PlaylistFiles = playlist.PLayListFiles?.Select(s => (PlaylistFileResult)s)?.ToList(),
-                Expirate = playlist.Expirate
+                Expirate = playlist.Expirate,
+                Blocked = playlist.Blocked,
+                FranchiseId = playlist.FranchiseId
             };
         }
 
@@ -49,7 +54,8 @@ namespace AppSlider.Application.Playlist.Results
                 playlist.Name,
                 playlist.Active,
                 playlist.Expirate,
-                playlist.FranchiseId
+                playlist.FranchiseId,
+                playlist.Blocked
             );
 
             returnPlaylist.PLayListFiles = playlist.PlaylistFiles?.Select(s => (PlayListFile)s).ToList();
