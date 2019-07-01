@@ -6,7 +6,6 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
 import { AuthService } from '../../../../services/auth/auth.service';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-user',

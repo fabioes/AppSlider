@@ -20,6 +20,8 @@ import { EstablishmentFormComponent } from './components/establishment/establish
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { PlaylistFormComponent } from './components/playlist/playlist-form/playlist-form.component';
 import { PlaylistFilesComponent } from './components/playlist/playlist-files/playlist-files.component';
+import { EquipamentComponent } from './components/equipament/equipament.component';
+import { EquipamentFormComponent } from './components/equipament/equipament-form/equipament-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { IconsComponent } from './components/icons/icons.component';
 import { ChartsModule } from 'ng2-charts';
@@ -39,6 +41,7 @@ import { CalendarModule } from 'primeng/calendar';
 //pipes
 import { PhonePipe } from './shared/pipes/phone.pipe';
 import { DateFormat} from './shared/pipes/date-format.pipe'
+
 
 
 @NgModule({
@@ -79,11 +82,13 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     PlaylistComponent,
     PlaylistFormComponent,
     PlaylistFilesComponent,
+    EquipamentComponent,
+    EquipamentFormComponent,
     IconsComponent,
     DateFormat,
     PhonePipe
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent, EquipamentFormComponent]
 })
 
 export class AdminModule { }

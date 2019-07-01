@@ -10,6 +10,7 @@ import { FranchiseComponent } from './components/franchise/franchise.component';
 import { EstablishmentComponent } from './components/establishment/establishment.component';
 import { AdvertiserComponent } from './components/advertiser/advertiser.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { EquipamentComponent } from './components/equipament/equipament.component';
 
 export const AdminRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -21,5 +22,6 @@ export const AdminRoutes: Routes = [
     { path: 'estabelecimentos', component: EstablishmentComponent },
     { path: 'anunciantes', component: AdvertiserComponent },
     { path: 'playlists', component: PlaylistComponent },
+    { path: 'equipamentos', component: EquipamentComponent },
     { path: 'icons', component: IconsComponent }
 ];

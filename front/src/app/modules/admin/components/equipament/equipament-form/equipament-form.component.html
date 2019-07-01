@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h3>{{!equipament?.id ? 'novo equipamento?' : 'editando equipamento ' + equipament?.nome}}</h3>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>preencha as informações relevantes do equipamento {{equipament?.id ? equipament.nome : ''}}</p>
+
+    <form [formGroup]="equipamentForm">
+
+        <input formControlName="id" type="hidden">
+
+        <div class="form-group">
+            <label>Nome do equipamento</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
+                placeholder="digite o nome do equipamento" name="nome" maxlength="200" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+                Favor inserir o 'Nome do Equipamento'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Descrição do Equipamento</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
+                placeholder="digite a descrição do equipamento" name="descricao" maxlength="500">
+        </div>
+
+        <div class="form-group">
+            <label>Mac Address do equipamento</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('mac_address')}" formControlName="mac_address"
+                placeholder="digite o mac address do equipamento" name="mac_address" maxlength="200" required>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('mac_address')">
+                Favor inserir o 'Mac Address do Equipamento'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Estabelecimento para o equipamento</label>
+            <label class="required-info-asterisk">*</label>
+
+            <p-dropdown required="true" [options]="establishments" [filter]="true" placeholder="Selecione a Estabelecimento"
+                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_estabelecimento"
+                required></p-dropdown>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('id_estabelecimento')">
+                Favor inserir o 'Estabelecimento para o Equipamento'!
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Playlist do Equipamento</label>
+            <p-dropdown required="true" [options]="establishments" [filter]="true" placeholder="Selecione a Playlist"
+                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_estabelecimento"
+                required>
+            </p-dropdown>
+        </div>
+
+        <div class="form-group">
+            <label>Ativo?</label>
+            <label class="required-info-asterisk">*</label>
+            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}"
+                formControlName="ativo" name="ativo">
+        </div>
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn bg-dark" [disabled]="!equipmentForm.valid" (click)="save()">
+        {{equipament?.id ? 'Salvar' : 'Cadastrar' }}</button>
+</div>

@@ -1,5 +1,4 @@
-﻿using AppSlider.Utils.Cripto;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace AppSlider.Application.Business.Commands

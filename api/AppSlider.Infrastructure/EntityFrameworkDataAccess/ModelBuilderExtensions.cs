@@ -55,13 +55,6 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             //Index.
             modelBuilder.Entity<Equipament>().HasIndex(p => p.MacAddress);
 
-            //PlaylistFile
-            //modelBuilder.Entity<PlayListFile>()
-            //.HasOne(i => i.PlayList)
-            //.WithMany(c => c.PLayListFiles)
-            //.IsRequired()
-            //.OnDelete(DeleteBehavior.Cascade);
-            
             //Has data ---> Seed Fact.
             modelBuilder.Entity<User>().HasData(
                 new User("Administrador", "admin", CriptoManager.CriptoSHA256("AdminAppSlider@123"), "sa", "", null, null, true, true)
@@ -77,10 +70,12 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new Role("AppSlider.Read.Category", "Permissão de leitura para rotina de Categoria."),
                 new Role("AppSlider.Write.Category", "Permissão de escrita para rotina de Categoria."),
                 new Role("AppSlider.Read.Playlist", "Permissão de leitura para rotina de Playlist."),
-                new Role("AppSlider.Write.Playlist", "Permissão de escrita para rotina de Playlist.")
+                new Role("AppSlider.Write.Playlist", "Permissão de escrita para rotina de Playlist."),
+                new Role("AppSlider.Read.Equipament", "Permissão de leitura para rotina de Equipamento."),
+                new Role("AppSlider.Write.Equipament", "Permissão de escrita para rotina de Equipamento.")
             );
 
-            var midiaFoneFranchiseCategory = new Category("MidiaFone", "Categoria MidiaFone.", true);
+        var midiaFoneFranchiseCategory = new Category("MidiaFone", "Categoria MidiaFone.", true);
 
             modelBuilder.Entity<Category>().HasData(
                 midiaFoneFranchiseCategory

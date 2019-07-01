@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace AppSlider.Application.Category.Messages
+namespace AppSlider.Application.TypeBusiness.Messages
 {
     public class TypeBusinessCreateRequest
     {

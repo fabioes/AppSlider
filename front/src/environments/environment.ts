@@ -37,6 +37,12 @@ export const environment = {
       },
       files:{
         default: "/files"
+      },
+      equipament:{
+        default: "/equipament",
+        get_by_franchise: "/equipament/GetByFranchise",
+        get_by_mac_address: "/equipament/GetByMacAddress",
+        switchActive: "/equipament/switch_active"
       }
     }
   }
