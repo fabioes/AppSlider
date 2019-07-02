@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.PlayLists
 {
-    public class PlayList : Entity, IAggregateRoot
+    public class Playlist : Entity, IAggregateRoot
     {
         public virtual String Name { get; protected set; }
         public virtual Boolean Active { get; protected set; }
@@ -13,12 +13,12 @@ namespace AppSlider.Domain.Entities.PlayLists
         public virtual DateTime Expirate { get; set; }
         public virtual Guid FranchiseId { get; set; }
 
-        public virtual ICollection<PlayListFile> PLayListFiles { get; set; }
+        public virtual ICollection<PlaylistFile> PlaylistFiles { get; set; }
 
         [ForeignKey("FranchiseId")]
         public virtual BusinessEntity Franchise { get; set; }
 
-        public PlayList(Guid id, string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
+        public Playlist(Guid id, string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
         {
             Id = id;
             Name = name;
@@ -28,7 +28,7 @@ namespace AppSlider.Domain.Entities.PlayLists
             Blocked = blocked;
         }
 
-        public PlayList(string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
+        public Playlist(string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
         {
             Name = name;
             Active = active;
@@ -37,7 +37,7 @@ namespace AppSlider.Domain.Entities.PlayLists
             Blocked = blocked;
         }
 
-        public PlayList()
+        public Playlist()
         {
         }
     }

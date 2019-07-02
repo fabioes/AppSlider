@@ -7,15 +7,15 @@
 
     public interface IPlaylistRepository
     {
-        Task<PlayList> Get(Guid id);
-        Task<PlayList> GetMidiaFoneUtilitiesPlaylist();
-        Task<ICollection<PlayList>> GetAll();
-        Task<ICollection<PlayList>> GetByFranchise(Guid franshiseId);
-        Task<PlayList> Add(PlayList playList);
-        Task<PlayList> Update(PlayList playList);
-        Task<PlayListFile> AddPlaylistItem(PlayListFile playListFile);
-        Task<PlayList> DeletePlaylistItem(Guid playListId, Guid playListFileId);
-        Task<Boolean> Delete(PlayList playList);
-        void DetachPlaylist(PlayList playList);
+        Task<Playlist> Get(Guid id);
+        Task<Playlist> GetMidiaFoneUtilitiesPlaylist();
+        Task<ICollection<Playlist>> GetAll();
+        Task<ICollection<Playlist>> GetByFranchise(Guid franshiseId);
+        Task<Playlist> Add(Playlist playList);
+        Task<Playlist> Update(Playlist playList);
+        Task<PlaylistFile> AddPlaylistItem(PlaylistFile playListFile);
+        Task<Playlist> DeletePlaylistItem(Guid playListId, Guid playListFileId);
+        Task<Boolean> Delete(Playlist playList);
+        void DetachPlaylist(Playlist playList);
     }
 }

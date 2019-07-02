@@ -95,8 +95,8 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 midiaFoneFranchise
             );
             
-            modelBuilder.Entity<PlayList>().HasData(
-                new PlayList("Curiosidades MidiaFone", true, DateTime.MaxValue, midiaFoneFranchise.Id, true));
+            modelBuilder.Entity<Playlist>().HasData(
+                new Playlist("Curiosidades MidiaFone", true, DateTime.MaxValue, midiaFoneFranchise.Id, true));
         }
     }
 }

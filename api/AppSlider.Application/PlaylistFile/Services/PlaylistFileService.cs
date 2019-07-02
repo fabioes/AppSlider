@@ -33,7 +33,7 @@ namespace AppSlider.Application.PlaylistFile.Services
 
             var file = await fileRepository.Add(new Domain.Entities.Files.File(command.FileName, command.FileData, command.FileMimeType, command.FileSize));
 
-            var playlistFile = await playlistRepository.AddPlaylistItem(new PlayListFile(command.IdPlayList, EnumUtils.GetValueFromDescription<PlayListFileType>(command.PlayListFileType), file.Id, command.Duration));
+            var playlistFile = await playlistRepository.AddPlaylistItem(new Domain.Entities.PlayLists.PlaylistFile(command.IdPlayList, EnumUtils.GetValueFromDescription<PlaylistFileType>(command.PlayListFileType), file.Id, command.Duration));
 
             var returnPlaylistFile = (PlaylistFileResult)playlistFile;
 

@@ -17,7 +17,7 @@
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<PlayList> Add(PlayList playlist)
+        public async Task<Playlist> Add(Playlist playlist)
         {
             await _context.PlayLists.AddAsync(playlist);
             await _context.SaveChangesAsync();
@@ -25,7 +25,7 @@
             return playlist;
         }
 
-        public async Task<bool> Delete(PlayList playlist)
+        public async Task<bool> Delete(Playlist playlist)
         {
             _context.PlayLists.Remove(playlist);
 
@@ -34,37 +34,37 @@
             return true;
         }
 
-        public async Task<PlayList> Get(Guid id)
+        public async Task<Playlist> Get(Guid id)
         {
             var playList = await _context.PlayLists.FindAsync(id);
 
             return playList;
         }
         
-        public async Task<PlayList> GetMidiaFoneUtilitiesPlaylist()
+        public async Task<Playlist> GetMidiaFoneUtilitiesPlaylist()
         {
-            var playList = await _context.PlayLists.Include(i => i.PLayListFiles).FirstOrDefaultAsync(f => f.Blocked);
+            var playList = await _context.PlayLists.Include(i => i.PlaylistFiles).FirstOrDefaultAsync(f => f.Blocked);
 
             return playList;
         }
 
-        public async Task<ICollection<PlayList>> GetAll()
+        public async Task<ICollection<Playlist>> GetAll()
         {
             var playLists = await _context.PlayLists.ToListAsync();
 
             return playLists;
         }
 
-        public async Task<ICollection<PlayList>> GetByFranchise(Guid franchiseId)
+        public async Task<ICollection<Playlist>> GetByFranchise(Guid franchiseId)
         {
             var playlists = await _context.PlayLists.Where(w => w.FranchiseId == franchiseId).ToListAsync();
             return playlists;
         }
 
-        public async Task<PlayList> Update(PlayList playlist)
+        public async Task<Playlist> Update(Playlist playlist)
         {
             var playlistAux = await _context.PlayLists.FindAsync(playlist.Id);
-            playlist.PLayListFiles = playlistAux.PLayListFiles;
+            playlist.PlaylistFiles = playlistAux.PlaylistFiles;
 
             DetachPlaylist(playlistAux);
 
@@ -74,29 +74,29 @@
             return playlist;
         }
 
-        public void DetachPlaylist(PlayList playlist)
+        public void DetachPlaylist(Playlist playlist)
         {
             _context.Entry(playlist).State = EntityState.Detached;
         }
 
 
-        public async Task<PlayListFile> AddPlaylistItem(PlayListFile playListFile)
+        public async Task<PlaylistFile> AddPlaylistItem(PlaylistFile playListFile)
         {
             var playlist = await Get(playListFile.IdPlayList);
 
-            playlist.PLayListFiles = playlist.PLayListFiles ?? new List<PlayListFile>();
-            playlist.PLayListFiles.Add(playListFile);
+            playlist.PlaylistFiles = playlist.PlaylistFiles ?? new List<PlaylistFile>();
+            playlist.PlaylistFiles.Add(playListFile);
 
             _context.SaveChanges();
 
             return playListFile;
         }
 
-        public async Task<PlayList> DeletePlaylistItem(Guid playListId, Guid playListFileId)
+        public async Task<Playlist> DeletePlaylistItem(Guid playListId, Guid playListFileId)
         {
             var playlist = await Get(playListId);
 
-            var playlistFile = playlist?.PLayListFiles?.FirstOrDefault(f => f.Id == playListFileId);
+            var playlistFile = playlist?.PlaylistFiles?.FirstOrDefault(f => f.Id == playListFileId);
 
             if (playlistFile == null) return null;
 
@@ -105,7 +105,7 @@
             if (file != null)
                 _context.Entry(file).State = EntityState.Deleted;
 
-            playlist.PLayListFiles?.ToList()?.Remove(playlistFile);
+            playlist.PlaylistFiles?.ToList()?.Remove(playlistFile);
 
             _context.SaveChanges();
 

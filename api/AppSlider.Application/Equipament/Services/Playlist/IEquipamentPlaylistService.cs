@@ -33,41 +33,57 @@ namespace AppSlider.Application.Equipament.Services.Playlist
             if (equipamentPlaylist == null)
                 throw new Exception("Favor informar o Mac Address de um Equipamento válido");
 
-            if (equipamentPlaylist?.PlayList?.PLayListFiles.Any() != true)
+            if (equipamentPlaylist?.PlayList?.PlaylistFiles.Any() != true)
                 throw new Exception("Playlist do equipamento não possui itens");
 
             var midiaFoneUtilitiesPlaylist = await playlistRepository.GetMidiaFoneUtilitiesPlaylist();
 
-            if (midiaFoneUtilitiesPlaylist?.PLayListFiles?.Any() != true)
+            if (midiaFoneUtilitiesPlaylist?.PlaylistFiles?.Any() != true)
             {
-                var randomMidiaFonePlaylistItemsUsed = new List<PlayListFile>();
-                var countRandom = 0;
-                var returnPlaylistItems = new List<PlayListFile>();
-                var originalEquipamentPlaylistItems = equipamentPlaylist.PlayList.PLayListFiles.ToList();
+                //make random order
+                var randomMidiaFoneOrdened = midiaFoneUtilitiesPlaylist.PlaylistFiles.OrderBy(x => Guid.NewGuid()).ToList(); // new List<PlayListFile>();
 
+                //return playlist instance.
+                var returnPlaylistItems = new List<Domain.Entities.PlayLists.PlaylistFile>();
 
-                for (var i = 0; i < originalEquipamentPlaylistItems.Count(); i++)
+                //group original equipament playlist (chunk) for every 5 items.
+                var chunckedEquipamentPlaylistItems = new List<List<Domain.Entities.PlayLists.PlaylistFile>>();
+                var originalEquipamentPlaylistItems = equipamentPlaylist.PlayList.PlaylistFiles.ToList();
+
+                for (int i = 0; i < originalEquipamentPlaylistItems.Count; i += 5)
                 {
-                    returnPlaylistItems.Add(originalEquipamentPlaylistItems[i]);
-
-                    if ((countRandom % 5) == 0)
-                    {
-                        var randomMidiaFonePlaylistItem = midiaFoneUtilitiesPlaylist.PLayListFiles.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
-                        while (randomMidiaFonePlaylistItemsUsed.Any(a => a.Id == randomMidiaFonePlaylistItem.Id))
-                        {
-                            randomMidiaFonePlaylistItem = midiaFoneUtilitiesPlaylist.PLayListFiles.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
-                        }
-
-                        randomMidiaFonePlaylistItemsUsed.Add(randomMidiaFonePlaylistItem);
-                        returnPlaylistItems.Add(randomMidiaFonePlaylistItem);
-                    }
-                    countRandom++;
+                    chunckedEquipamentPlaylistItems.Add(originalEquipamentPlaylistItems.GetRange(i, Math.Min(5, originalEquipamentPlaylistItems.Count - i)));
                 }
+                //
 
-                equipamentPlaylist.PlayList.PLayListFiles = returnPlaylistItems;
+                if (randomMidiaFoneOrdened.Count > chunckedEquipamentPlaylistItems.Count)
+                {
+                    var playlistIteratorCount = 0;
+                    foreach (var item in randomMidiaFoneOrdened)
+                    {
+                        returnPlaylistItems.AddRange(chunckedEquipamentPlaylistItems[playlistIteratorCount]);
+                        returnPlaylistItems.Add(item);
+
+                        playlistIteratorCount = (playlistIteratorCount + 1) < chunckedEquipamentPlaylistItems.Count
+                                              ? playlistIteratorCount + 1 : 0;
+                    }
+                }
+                else
+                {
+                    var playlistIteratorCount = 0;
+                    foreach (var item in chunckedEquipamentPlaylistItems)
+                    {
+                        returnPlaylistItems.AddRange(item);
+                        returnPlaylistItems.Add(randomMidiaFoneOrdened[playlistIteratorCount]);
+
+                        playlistIteratorCount = (playlistIteratorCount + 1) < randomMidiaFoneOrdened.Count
+                                              ? playlistIteratorCount + 1 : 0;
+                    }
+                }
+                equipamentPlaylist.PlayList.PlaylistFiles = returnPlaylistItems;
             }
-            
-            return (PlaylistResult)equipamentPlaylist.PlayList; 
+
+            return (PlaylistResult)equipamentPlaylist.PlayList;
         }
     }
 }

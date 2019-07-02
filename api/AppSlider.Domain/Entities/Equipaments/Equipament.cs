@@ -32,7 +32,7 @@ namespace AppSlider.Domain.Entities.Equipaments
         public BusinessEntity Establishment { get; set; }
 
         [ForeignKey("IdPlaylist")]
-        public PlayList PlayList { get; set; }
+        public Playlist PlayList { get; set; }
 
 
         public Equipament(Guid id, string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active) : this()

@@ -30,26 +30,26 @@ namespace AppSlider.Application.Playlist.Results
         [JsonProperty("playlist_itens")]
         public virtual IList<PlaylistFileResult> PlaylistFiles { get; set; }
 
-        public static explicit operator PlaylistResult(PlayList playlist)
+        public static explicit operator PlaylistResult(Domain.Entities.PlayLists.Playlist playlist)
         {
             return playlist == null ? null : new PlaylistResult
             {
                 Id = playlist.Id,
                 Name = playlist.Name,
                 Active = playlist.Active,
-                PlaylistFiles = playlist.PLayListFiles?.Select(s => (PlaylistFileResult)s)?.ToList(),
+                PlaylistFiles = playlist.PlaylistFiles?.Select(s => (PlaylistFileResult)s)?.ToList(),
                 Expirate = playlist.Expirate,
                 Blocked = playlist.Blocked,
                 FranchiseId = playlist.FranchiseId
             };
         }
 
-        public static explicit operator PlayList(PlaylistResult playlist)
+        public static explicit operator Domain.Entities.PlayLists.Playlist(PlaylistResult playlist)
         {
             if (playlist == null) return null;
 
 
-            var returnPlaylist = new PlayList(
+            var returnPlaylist = new Domain.Entities.PlayLists.Playlist(
                 playlist.Id,
                 playlist.Name,
                 playlist.Active,
@@ -58,7 +58,7 @@ namespace AppSlider.Application.Playlist.Results
                 playlist.Blocked
             );
 
-            returnPlaylist.PLayListFiles = playlist.PlaylistFiles?.Select(s => (PlayListFile)s).ToList();
+            returnPlaylist.PlaylistFiles = playlist.PlaylistFiles?.Select(s => (Domain.Entities.PlayLists.PlaylistFile)s).ToList();
 
             return returnPlaylist;
         }

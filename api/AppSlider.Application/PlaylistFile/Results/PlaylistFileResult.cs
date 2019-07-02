@@ -22,7 +22,7 @@ namespace AppSlider.Application.PlaylistFile.Results
         [JsonProperty("tempo_duracao")]
         public virtual Int16 Duration { get; set; }
 
-        public static explicit operator PlaylistFileResult(PlayListFile playlistFile)
+        public static explicit operator PlaylistFileResult(Domain.Entities.PlayLists.PlaylistFile playlistFile)
         {
             return playlistFile == null ? null : new PlaylistFileResult
             {
@@ -30,16 +30,16 @@ namespace AppSlider.Application.PlaylistFile.Results
                 Duration = playlistFile.Duration,
                 IdFile = playlistFile.IdFile,
                 IdPlayList = playlistFile.IdPlayList,
-                PlayListFileType = EnumUtils.GetDescription(playlistFile.PlayListFileType)
+                PlayListFileType = EnumUtils.GetDescription(playlistFile.PlaylistFileType)
             };
         }
 
-        public static explicit operator PlayListFile(PlaylistFileResult playlistFile)
+        public static explicit operator Domain.Entities.PlayLists.PlaylistFile(PlaylistFileResult playlistFile)
         {
-            return playlistFile == null ? null : new PlayListFile(
+            return playlistFile == null ? null : new Domain.Entities.PlayLists.PlaylistFile(
                 playlistFile.Id,
                 playlistFile.IdPlayList,
-                EnumUtils.GetValueFromDescription<PlayListFileType>(playlistFile.PlayListFileType),
+                EnumUtils.GetValueFromDescription<PlaylistFileType>(playlistFile.PlayListFileType),
                 playlistFile.IdFile,
                 playlistFile.Duration);
         }

@@ -37,7 +37,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public virtual ICollection<PlayList> Playlists { get; set; }
+        public virtual ICollection<Playlist> Playlists { get; set; }
 
         public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
         {

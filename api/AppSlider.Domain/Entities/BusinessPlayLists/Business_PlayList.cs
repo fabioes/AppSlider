@@ -11,7 +11,7 @@ namespace AppSlider.Domain.Entities.BusinessPlayLists
         public virtual Guid IdPlayList { get; protected set; }
 
         [ForeignKey("IdPlayList")]
-        public virtual PlayList PlayList { get; protected set; }
+        public virtual Playlist PlayList { get; protected set; }
 
         [ForeignKey("IdBusiness")]
         public virtual BusinessEntity Business { get; protected set; }

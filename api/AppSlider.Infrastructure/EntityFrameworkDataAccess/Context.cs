@@ -15,8 +15,8 @@
         public DbSet<Domain.Entities.Business.BusinessType> BusinessTypes { get; set; }
         public DbSet<Domain.Entities.Files.File> Files { get; set; }
         public DbSet<Domain.Entities.Business.BusinessEntity> Business { get; set; }
-        public DbSet<Domain.Entities.PlayLists.PlayList> PlayLists { get; set; }
-        public DbSet<Domain.Entities.PlayLists.PlayListFile> PlayListFiles { get; set; }
+        public DbSet<Domain.Entities.PlayLists.Playlist> PlayLists { get; set; }
+        public DbSet<Domain.Entities.PlayLists.PlaylistFile> PlayListFiles { get; set; }
         public DbSet<Domain.Entities.BusinessPlayLists.BusinessPlayList> BusinessPlayLists { get; set; }
         public DbSet<Domain.Entities.Equipaments.Equipament> Equipaments { get; set; }
 
@@ -43,10 +43,10 @@
                 .WithOne(o => o.BusinessEntityFather)
                 .HasForeignKey(fk => fk.IdFather);
 
-            modelBuilder.Entity<Domain.Entities.PlayLists.PlayList>()
+            modelBuilder.Entity<Domain.Entities.PlayLists.Playlist>()
                .ToTable("Playlists");
 
-            modelBuilder.Entity<Domain.Entities.PlayLists.PlayListFile>()
+            modelBuilder.Entity<Domain.Entities.PlayLists.PlaylistFile>()
                .ToTable("PlaylistFiles");
 
             modelBuilder.Entity<Domain.Entities.BusinessPlayLists.BusinessPlayList>()
