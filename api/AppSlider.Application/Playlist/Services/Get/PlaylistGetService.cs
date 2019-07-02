@@ -1,5 +1,4 @@
 ﻿using AppSlider.Application.Playlist.Results;
-using AppSlider.Application.TypeBusiness.Results;
 using AppSlider.Domain.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace AppSlider.Application.Playlist.Services.Get
     public class PlaylistGetService : IPlaylistGetService
     {
         private readonly IPlaylistRepository playlistRepository;
-        
+
         public PlaylistGetService(IPlaylistRepository playlistRepository)
         {
             this.playlistRepository = playlistRepository;

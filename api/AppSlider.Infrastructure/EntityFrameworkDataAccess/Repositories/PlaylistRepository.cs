@@ -40,6 +40,13 @@
 
             return playList;
         }
+        
+        public async Task<PlayList> GetMidiaFoneUtilitiesPlaylist()
+        {
+            var playList = await _context.PlayLists.Include(i => i.PLayListFiles).FirstOrDefaultAsync(f => f.Blocked);
+
+            return playList;
+        }
 
         public async Task<ICollection<PlayList>> GetAll()
         {

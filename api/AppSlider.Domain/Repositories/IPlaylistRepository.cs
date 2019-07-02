@@ -1,6 +1,5 @@
 ﻿namespace AppSlider.Domain.Repositories
 {
-    using AppSlider.Domain.Entities.Business;
     using AppSlider.Domain.Entities.PlayLists;
     using System;
     using System.Collections.Generic;
@@ -9,6 +8,7 @@
     public interface IPlaylistRepository
     {
         Task<PlayList> Get(Guid id);
+        Task<PlayList> GetMidiaFoneUtilitiesPlaylist();
         Task<ICollection<PlayList>> GetAll();
         Task<ICollection<PlayList>> GetByFranchise(Guid franshiseId);
         Task<PlayList> Add(PlayList playList);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Equipament.Services.Playlist;
 using AppSlider.Application.Playlist.Results;
 using AppSlider.Application.Playlist.Services.Get;
 using AppSlider.Application.TypeBusiness.Results;
@@ -17,10 +18,12 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
     public class PlaylistController : Controller
     {
         private readonly IPlaylistGetService _playlistGetService;
+        private readonly IEquipamentPlaylistService _equipamentPlaylistService;
 
-        public PlaylistController(IPlaylistGetService playlistGetService)
+        public PlaylistController(IPlaylistGetService playlistGetService, IEquipamentPlaylistService equipamentPlaylistService)
         {
             _playlistGetService = playlistGetService;
+            _equipamentPlaylistService = equipamentPlaylistService;
         }
 
         /// <summary>
@@ -56,6 +59,20 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
             var results = await _playlistGetService.GetByFranchise(idFranchise);
 
             return Ok(new ApiReturnList<PlaylistResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem Playlist de um equipamento.
+        /// </summary>
+        [HttpGet("GetByMacAddressEquipament/{macAddress}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadPlaylist)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistResult>))]
+        public async Task<IActionResult> GetByMacAddressEquipament(String macAddress)
+        {
+            var result = await _equipamentPlaylistService.Process(macAddress);
+
+            return Ok(new ApiReturnItem<PlaylistResult> { Item = result, Success = true });
         }
     }
 }
