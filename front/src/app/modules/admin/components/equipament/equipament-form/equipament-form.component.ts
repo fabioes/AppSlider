@@ -36,32 +36,34 @@ export class EquipamentFormComponent implements OnInit {
 
   ngOnInit() {
 
-    forkJoin([this.businessServices.getByFranchiseAndType("Estabelecimento"),
-    this.playlistService.getByFranchise()], res => {
+    this.equipamentForm = this.fb.group({
+      id: [''],
+      nome: ['', Validators.required],
+      descricao: [''],
+      mac_address: ['', Validators.required],
+      id_franquia: [this.franchise.id, Validators.required],
+      id_estabelecimento: [''],
+      id_playlist: [''],
+      ativo: [true]
+    });
 
+    forkJoin([this.businessServices.getByFranchiseAndType("Estabelecimento"),
+    this.playlistService.getByFranchise()]).subscribe(res => {
+      
       this.establishments = res[0];
       this.playlists = res[1];
-
-      this.equipamentForm = this.fb.group({
-        id: [''],
-        nome: ['', Validators.required],
-        descricao: [''],
-        mac_address: ['', Validators.required],
-        id_franquia: [this.franchise.id, Validators.required],
-        id_estabelecimento: [''],
-        id_playlist: [''],
-        ativo: [true]
-      });
 
       this.equipamentForm.patchValue(this.equipament || {});
     });
   }
 
   public save() {
-
+debugger;
     if (this.equipamentForm.invalid) return;
 
     this.equipament = this.equipamentForm.value;
+
+    this.equipament.id_estabelecimento = (<any>this.equipament.id_estabelecimento).id;
 
     if (this.equipament.id) {
       this.businessTypeService.updateEquipament(this.equipament).subscribe(res => this.callbackAction('alterado', res));

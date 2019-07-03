@@ -8,8 +8,6 @@ namespace AppSlider.Domain.Entities
     {
         private Guid? _id { get; set; }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual Guid Id
         {
             get

@@ -230,7 +230,7 @@ namespace AppSlider.Infrastructure.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     DataCreated = table.Column<DateTime>(nullable: false),
                     IdPlayList = table.Column<Guid>(nullable: false),
-                    PlayListFileType = table.Column<int>(nullable: false),
+                    PlaylistFileType = table.Column<int>(nullable: false),
                     IdFile = table.Column<Guid>(nullable: false),
                     Duration = table.Column<short>(nullable: false)
                 },
@@ -256,47 +256,49 @@ namespace AppSlider.Infrastructure.Migrations
                 columns: new[] { "Id", "Blocked", "DataCreated", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("0ea0ec66-5aba-40d3-8098-5d0e258e6309"), true, new DateTime(2019, 6, 29, 14, 35, 49, 459, DateTimeKind.Local).AddTicks(3283), "Franquia como Tipo de Negócio.", "Franquia" },
-                    { new Guid("77baf8b9-09ec-4c20-86fd-65efbba5e5b3"), true, new DateTime(2019, 6, 29, 14, 35, 49, 459, DateTimeKind.Local).AddTicks(3642), "Estabelecimento como Tipo de Negócio.", "Estabelecimento" },
-                    { new Guid("fd918c53-a5eb-42b1-9474-c16dd2116248"), true, new DateTime(2019, 6, 29, 14, 35, 49, 459, DateTimeKind.Local).AddTicks(3866), "Anunciante como Tipo de Negócio.", "Anunciante" }
+                    { new Guid("73b18281-2566-49e7-bd47-2f858eb4f0cf"), true, new DateTime(2019, 7, 3, 0, 33, 57, 585, DateTimeKind.Local).AddTicks(1188), "Franquia como Tipo de Negócio.", "Franquia" },
+                    { new Guid("d4d5fdae-dfae-4d2b-93c3-afecb4db33c4"), true, new DateTime(2019, 7, 3, 0, 33, 57, 585, DateTimeKind.Local).AddTicks(1623), "Estabelecimento como Tipo de Negócio.", "Estabelecimento" },
+                    { new Guid("2abc3c81-81ec-4231-91c1-0bcd338845e7"), true, new DateTime(2019, 7, 3, 0, 33, 57, 585, DateTimeKind.Local).AddTicks(1786), "Anunciante como Tipo de Negócio.", "Anunciante" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Blocked", "DataCreated", "Description", "Name" },
-                values: new object[] { new Guid("cabbc0f7-f5e0-4301-88d8-7a76ba5ce90f"), true, new DateTime(2019, 6, 29, 14, 35, 49, 463, DateTimeKind.Local).AddTicks(903), "Categoria MidiaFone.", "MidiaFone" });
+                values: new object[] { new Guid("28f8faeb-6f0d-40b8-ae04-35ab61f40c77"), true, new DateTime(2019, 7, 3, 0, 33, 57, 588, DateTimeKind.Local).AddTicks(7132), "Categoria MidiaFone.", "MidiaFone" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "DataCreated", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("9d1a0956-c84f-4b57-9056-af8c370c01e1"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(7675), "Permissão de leitura para rotina de Usuário.", "AppSlider.Read.User" },
-                    { new Guid("b67063a4-7af2-423e-aa47-c1632120aaee"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(7952), "Permissão de escrita para rotina de Usuário.", "AppSlider.Write.User" },
-                    { new Guid("6b6b8638-4af7-482f-a63d-aece73215fb4"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8057), "Permissão de leitura para rotina de Negócio.", "AppSlider.Read.Business" },
-                    { new Guid("2924fefd-7a33-432a-ad05-a1f5b634b04d"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8162), "Permissão de escrita para rotina de Negócio.", "AppSlider.Write.Business" },
-                    { new Guid("f9d06571-0b07-4c95-b47b-72d335dfbe42"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8287), "Permissão de leitura para rotina de Tipos de Negócio.", "AppSlider.Read.BusinessType" },
-                    { new Guid("b2093d13-1b9e-4290-aa60-a6990787fb9f"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8419), "Permissão de escrita para rotina de Tipos de Negócio.", "AppSlider.Write.BusinessType" },
-                    { new Guid("47c3cec0-2a48-4f00-b179-85604605bb3a"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8686), "Permissão de leitura para rotina de Categoria.", "AppSlider.Read.Category" },
-                    { new Guid("5c91a132-fe2e-425a-b0b4-5b3573d6de09"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(8828), "Permissão de escrita para rotina de Categoria.", "AppSlider.Write.Category" },
-                    { new Guid("361a05a7-9e46-4129-83d6-445c6b8ec9b4"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(9040), "Permissão de leitura para rotina de Playlist.", "AppSlider.Read.Playlist" },
-                    { new Guid("66252759-14d9-4293-b587-f0d4cd5b3df1"), new DateTime(2019, 6, 29, 14, 35, 49, 477, DateTimeKind.Local).AddTicks(9138), "Permissão de escrita para rotina de Playlist.", "AppSlider.Write.Playlist" }
+                    { new Guid("72af5098-3216-418b-94d9-fe0769026e0d"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1958), "Permissão de leitura para rotina de Equipamento.", "AppSlider.Read.Equipament" },
+                    { new Guid("0c9c33ed-9b69-4d72-aea2-98ea0b412889"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1914), "Permissão de escrita para rotina de Playlist.", "AppSlider.Write.Playlist" },
+                    { new Guid("6c7e23b1-24a2-46c2-9457-80db72a8f7aa"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1869), "Permissão de leitura para rotina de Playlist.", "AppSlider.Read.Playlist" },
+                    { new Guid("4ee615d4-e58e-4b5c-b48a-88f3062bfa97"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1744), "Permissão de escrita para rotina de Categoria.", "AppSlider.Write.Category" },
+                    { new Guid("f50bedee-f90d-4a78-990a-2a37a8bc4c8f"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1685), "Permissão de leitura para rotina de Categoria.", "AppSlider.Read.Category" },
+                    { new Guid("c479f64d-6ce9-4c50-9c8e-bf58d27ed12d"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1410), "Permissão de leitura para rotina de Tipos de Negócio.", "AppSlider.Read.BusinessType" },
+                    { new Guid("13a35ba9-7647-48e8-a60f-10a502cd789c"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(2001), "Permissão de escrita para rotina de Equipamento.", "AppSlider.Write.Equipament" },
+                    { new Guid("85144031-f7a3-4f19-a767-4ba91e06ebb3"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1363), "Permissão de escrita para rotina de Negócio.", "AppSlider.Write.Business" },
+                    { new Guid("359bc08f-5945-4cdc-8395-8a9506293b7e"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1315), "Permissão de leitura para rotina de Negócio.", "AppSlider.Read.Business" },
+                    { new Guid("320ac917-36f9-48e9-bbec-762f061ed5ac"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1262), "Permissão de escrita para rotina de Usuário.", "AppSlider.Write.User" },
+                    { new Guid("da939422-78b5-47e0-9e0a-b27675e9e7a9"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1080), "Permissão de leitura para rotina de Usuário.", "AppSlider.Read.User" },
+                    { new Guid("31d181d8-5118-4d02-92e5-7d003dd24ad3"), new DateTime(2019, 7, 3, 0, 33, 57, 598, DateTimeKind.Local).AddTicks(1584), "Permissão de escrita para rotina de Tipos de Negócio.", "AppSlider.Write.BusinessType" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Active", "Blocked", "DataCreated", "Email", "Franchises", "Name", "Password", "Profile", "Roles", "Username" },
-                values: new object[] { new Guid("97942e3e-7d2a-4be4-a1fb-72295e65ed7d"), true, true, new DateTime(2019, 6, 29, 14, 35, 49, 480, DateTimeKind.Local).AddTicks(8147), "", null, "Administrador", "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6", "sa", null, "admin" });
+                values: new object[] { new Guid("803db767-ee31-4606-b983-5454f22cbfba"), true, true, new DateTime(2019, 7, 3, 0, 33, 57, 600, DateTimeKind.Local).AddTicks(4799), "", null, "Administrador", "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6", "sa", null, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Business",
                 columns: new[] { "Id", "Active", "Blocked", "ContactAddress", "ContactEmail", "ContactName", "ContactPhone", "DataCreated", "Description", "ExpirationDate", "IdCategory", "IdFather", "IdLogo", "IdType", "Name" },
-                values: new object[] { new Guid("893652cc-0166-437e-a750-d306abbe1d4b"), true, true, "", "", "", "", new DateTime(2019, 6, 29, 14, 35, 49, 386, DateTimeKind.Local).AddTicks(75), "Franquia padrão 'MidiaFone'", null, new Guid("cabbc0f7-f5e0-4301-88d8-7a76ba5ce90f"), null, null, new Guid("0ea0ec66-5aba-40d3-8098-5d0e258e6309"), "MidiaFone" });
+                values: new object[] { new Guid("81853d7a-41af-49b5-8bd8-83d622f7b8c4"), true, true, "", "", "", "", new DateTime(2019, 7, 3, 0, 33, 57, 538, DateTimeKind.Local).AddTicks(7870), "Franquia padrão 'MidiaFone'", null, new Guid("28f8faeb-6f0d-40b8-ae04-35ab61f40c77"), null, null, new Guid("73b18281-2566-49e7-bd47-2f858eb4f0cf"), "MidiaFone" });
 
             migrationBuilder.InsertData(
                 table: "Playlists",
                 columns: new[] { "Id", "Active", "Blocked", "DataCreated", "Expirate", "FranchiseId", "Name" },
-                values: new object[] { new Guid("370cd979-a3f2-4303-8cb8-68aa27475882"), true, true, new DateTime(2019, 6, 29, 14, 35, 49, 468, DateTimeKind.Local).AddTicks(2215), new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999), new Guid("893652cc-0166-437e-a750-d306abbe1d4b"), "Curiosidades MidiaFone" });
+                values: new object[] { new Guid("256eb97e-ebda-4310-9a30-412cfbd280ae"), true, true, new DateTime(2019, 7, 3, 0, 33, 57, 592, DateTimeKind.Local).AddTicks(1497), new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999), new Guid("81853d7a-41af-49b5-8bd8-83d622f7b8c4"), "Curiosidades MidiaFone" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Business_IdCategory",

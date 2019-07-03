@@ -65,7 +65,7 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
         /// Obtem Playlist de um equipamento.
         /// </summary>
         [HttpGet("GetByMacAddressEquipament/{macAddress}")]
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [CustomAuthorize(AppSliderRoles.ReadPlaylist)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistResult>))]
         public async Task<IActionResult> GetByMacAddressEquipament(String macAddress)

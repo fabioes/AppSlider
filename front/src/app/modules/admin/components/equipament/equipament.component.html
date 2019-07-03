@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-4 col-xl-5">
               <h5 class="title">Equipamento</h5>
-              <p class="subtitle">Mantenha as informações dos equipamento do sistema!</p>
+              <p class="subtitle">Mantenha as informações dos equipamentos do sistema!</p>
             </div>
             <div class="search-container col-6 col-xl-5">
               <form (ngSubmit)="searchSubmit($event)">
@@ -41,16 +41,19 @@
             </ng-template>
             <ng-template pTemplate="body" let-equipament>
               <tr>
-                <td>{equipament.nome}}</td>
-                <td>{equipament.descricao}}</td>
-                <td>{equipament.mac_address}}</td>
+                <td>{{equipament.nome}}</td>
+                <td>{{equipament.descricao}}</td>
+                <td>{{equipament.mac_address}}</td>
                 <td>
                   <a (click)="showDialog(equipament)">
                     <i class="pi pi-pencil"></i>
                   </a>
                   <a (click)="deleteEquipament(equipament)">
                     <i class="pi pi-times"></i>
-                  </a>                 
+                  </a>
+                  <a (click)="switchActive(equipament)" title="{{equipament.ativo == true ? 'desativar' : 'ativar'}}">
+                    <i class="pi" [ngClass]="{'pi-lock': equipament.ativo == true, 'pi-unlock': equipament.ativo != true}"></i>
+                  </a>
                 </td>
               </tr>
             </ng-template>

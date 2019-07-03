@@ -57,7 +57,7 @@ export class EstablishmentFormComponent implements OnInit {
     });
 
     setTimeout(() => {
-      if (this.establishment.id_categoria)
+      if ((this.establishment || <any>{}).id_categoria)
         this.establishment.id_categoria = <any>(this.categories || []).filter(f => f.id == this.establishment.id_categoria)[0];
 
       this.establishmentForm.patchValue(this.establishment || {});
