@@ -13,6 +13,7 @@ declare namespace Model.App {
         contato_endereco: string,
         data_expiracao: Date,
         ativo: boolean,
+        bloqueado: boolean,
         categoria:Model.App.Category,
         tipo: Model.App.BusinessType,
         //logo:Model.App.Logo,

@@ -15,7 +15,7 @@
 
             builder.RegisterAssemblyTypes(startup.Assembly)
                 .AsSelf()
-                .InstancePerLifetimeScope();
+                .SingleInstance();
         }
     }
 }

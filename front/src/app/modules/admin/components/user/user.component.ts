@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Table } from 'primeng/table';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user/user.service';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { UserFormComponent } from './user-form/user-form.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserResetPasswordComponent } from './user-reset-password/user-reset-password.component';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -17,14 +17,24 @@ export class UserComponent implements OnInit {
   users: Array<Model.App.User>;
   usersGrid: Array<Model.App.User>;
   searchTerm: string;
+  roles: Array<Model.App.Role>;
+  franchises: Array<Model.App.UserFranchise>;
 
   constructor(private userService: UserService,
     private confirmationService: ConfirmationService,
     private modalService: NgbModal,
-    private toastrService: ToastrService) { }
+    private toastrService: ToastrService,
+    private authService: AuthService) { }
 
   ngOnInit() {
-    this.getUsers();
+
+    this.userService.getAllRoles().subscribe(resR => {
+      this.roles = resR;
+      this.authService.getFranchisesToken().subscribe(resT => {
+        this.franchises = resT;
+        this.getUsers();
+      });
+    });
   }
 
   private getUsers() {
@@ -58,6 +68,8 @@ export class UserComponent implements OnInit {
     modalRef.componentInstance.name = 'Usuário';
 
     modalRef.componentInstance.user = user;
+    modalRef.componentInstance.roles = this.roles;
+    modalRef.componentInstance.franchises = this.franchises;
 
     modalRef.result.then((res: Model.App.User) => {
       if (res == null) return;

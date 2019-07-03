@@ -14,15 +14,22 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>,
         next: HttpHandler): Observable<HttpEvent<any>> {
+        
         this.cont++;
         if (this.cont == 1)
             this.loadingBarService.showLoadingBar();
 
-        return next.handle(req).pipe(map(event => {
+        let handleReq = next.handle(req);
+
+        if (!handleReq)
+            return;
+
+        return handleReq.pipe(map(event => {
+            
             if (event instanceof HttpResponse) { //<--only when event is a HttpRespose
                 this.cont--;
                 if (this.cont == 0)
-                this.loadingBarService.hideLoadingBar();
+                    this.loadingBarService.hideLoadingBar();
             }
             return event;
         }),

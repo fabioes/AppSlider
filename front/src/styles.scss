@@ -161,3 +161,21 @@ p-calendar{
         margin: -5px 15px;
     }    
 }
+
+.ui-confirmdialog{
+    z-index: 9998 !important;
+}
+
+.ui-widget-overlay.ui-dialog-mask{
+    z-index: 9997 !important;
+}
+
+
+textarea{
+    border: solid 1px #E3E3E3 !important;
+    border-radius: 30px !important;
+
+    &:focus{
+        border-color: #f96332 !important;
+    }
+}

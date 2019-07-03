@@ -24,7 +24,7 @@
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="user = null; showDialog(null)">Novo</button>
+              <button type="button" class="btn float-right layout-button" (click)="showDialog(null)">Novo</button>
             </div>
           </div>
 
@@ -37,7 +37,6 @@
                 <th>Login</th>
                 <th>Perfil</th>
                 <th>E-mail</th>
-                <th>Unidades de Negócio</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -48,16 +47,15 @@
                 <td>{{user.login}}</td>
                 <td>{{user.perfil}}</td>
                 <td>{{user.email}}</td>
-                <td>{{user.franquias}}</td>
                 <td>{{user.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(user)">
+                  <a (click)="showDialog(user)" *ngIf="user?.bloqueado !== true">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteUser(user)">
+                  <a (click)="deleteUser(user)" *ngIf="user?.bloqueado !== true">
                     <i class="pi pi-times"></i>
                   </a>
-                  <a (click)="switchActive(user)" title="{{user.ativo == true ? 'desativar' : 'ativar'}}">
+                  <a (click)="switchActive(user)" title="{{user?.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="user?.bloqueado !== true">
                     <i class="pi" [ngClass]="{'pi-lock': user.ativo == true, 'pi-unlock': user.ativo != true}"></i>
                   </a>
                   <a (click)="resetPassword(user)" title="resetar senha?">

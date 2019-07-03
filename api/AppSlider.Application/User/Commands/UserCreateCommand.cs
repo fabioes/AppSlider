@@ -1,5 +1,6 @@
 ﻿using AppSlider.Utils.Cripto;
 using System;
+using System.Collections.Generic;
 
 namespace AppSlider.Application.User.Commands
 {
@@ -15,13 +16,13 @@ namespace AppSlider.Application.User.Commands
 
         public String Profile { get; private set; }
 
-        public String Franchises { get; private set; }
+        public List<String> Franchises { get; private set; }
 
-        public String Roles { get; private set; }
+        public List<String> Roles { get; private set; }
 
         public Boolean Active { get; private set; }
 
-        public UserCreateCommand(String name, String username, String password, String email, String profile, String franchises, String roles, Boolean active)
+        public UserCreateCommand(String name, String username, String password, String email, String profile, List<String> franchises, List<String> roles, Boolean active)
         {
             Name = name;
             UserName = username;

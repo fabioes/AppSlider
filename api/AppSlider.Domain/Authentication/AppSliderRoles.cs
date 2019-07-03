@@ -14,5 +14,7 @@ namespace AppSlider.Domain.Authentication
         public const String WriteCategory = "AppSlider.Write.Category";
         public const String ReadPlaylist = "AppSlider.Read.Playlist";
         public const String WritePlaylist = "AppSlider.Write.Playlist";
+        public const String ReadEquipament = "AppSlider.Read.Equipament";
+        public const String WriteEquipament = "AppSlider.Write.Equipament";
     }
 }

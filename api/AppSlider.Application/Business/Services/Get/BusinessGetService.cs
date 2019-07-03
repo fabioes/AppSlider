@@ -1,6 +1,8 @@
 ﻿
 using AppSlider.Application.Business.Results;
+using AppSlider.Domain.Authentication;
 using AppSlider.Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,14 @@ namespace AppSlider.Application.Business.Services.Get
     public class UserGetService : IBusinessGetService
     {
         private readonly IBusinessRepository businessRepository;
-        
-        public UserGetService(IBusinessRepository businessRepository)
+        private readonly LoggedUser loggedUser;
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public UserGetService(IBusinessRepository businessRepository,
+            [FromServices]LoggedUser loggedUser)
         {
             this.businessRepository = businessRepository;
+            this.loggedUser = loggedUser;
         }
 
         public async Task<BusinessResult> Get(Guid id)
@@ -32,6 +38,54 @@ namespace AppSlider.Application.Business.Services.Get
 
             var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
             
+            return returnBusiness;
+        }
+
+        public async Task<List<BusinessResult>> GetByType(String type)
+        {
+            if (String.IsNullOrWhiteSpace(type))
+                throw new Exception("tipo é obrigatório");
+
+            var business = await businessRepository.GetByType(type);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
+
+        public async Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type)
+        {
+            if (String.IsNullOrWhiteSpace(franchiseId))
+                throw new Exception("franquia é obrigatória");
+
+            if(!Guid.TryParse(franchiseId, out Guid _franchiseId))
+                throw new Exception("informe uma franquia válida");
+
+            if (String.IsNullOrWhiteSpace(type))
+                throw new Exception("tipo é obrigatório");
+
+            var business = await businessRepository.GetByFranchiseAndType(_franchiseId, type);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
+
+        public async Task<List<BusinessResult>> GetForLoggedUser()
+        {
+            var business = await businessRepository.GetForLoggedUser(loggedUser);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
+            return returnBusiness;
+        }
+
+        public async Task<List<BusinessResult>> GetFromUser(LoggedUser user)
+        {
+            var business = await businessRepository.GetForLoggedUser(user);
+
+            var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
+
             return returnBusiness;
         }
     }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AtlasChatbotApi.WebApi.Controllers.Categories.Update
+namespace AppSlider.WebApi.Controllers.Categories.Update
 {
     [Route("api/categories")]
     public class CategoriesController : Controller

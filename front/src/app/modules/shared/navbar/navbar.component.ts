@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, NgZone } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
+import { FranchiseService } from '../../admin/services/franchise/franchise.service';
 
 @Component({
     selector: 'app-navbar',
@@ -16,10 +17,18 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
     userName: string = '';
+    franchise: Model.App.UserFranchise = null;
 
     public isCollapsed = true;
 
-    constructor(location: Location, private element: ElementRef, private router: Router, private authService: AuthService) {
+    public franchises: Array<Model.App.UserFranchise> = []
+
+    constructor(location: Location,
+        private element: ElementRef,
+        private router: Router,
+        private authService: AuthService,
+        private franchiseService: FranchiseService,
+        private ngZone: NgZone) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -37,6 +46,22 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
+
+        this.authService.getFranchisesToken().subscribe(res => {
+            this.franchises = res;
+
+            if (this.franchiseService.Franchise) {
+                this.franchise = this.franchiseService.Franchise;
+            } else {
+                this.franchiseService.Franchise = res[0];
+            }
+        });
+
+    }
+
+    franchiseChange($event) {
+        this.franchiseService.Franchise = $event.value;
+        this.ngZone.run(() => this.router.navigate(['/adm/welcome;']));
     }
 
     collapse() {

@@ -14,7 +14,8 @@ export const environment = {
       user: {
         default: "/users",
         switchActive: "/users/switch_active",
-        resetPassword: "/users/reset_password"
+        resetPassword: "/users/reset_password",
+        roles: "/users/roles"
       },
       category: {
         default: "/categories"
@@ -24,7 +25,24 @@ export const environment = {
       },
       business: {
         default: "/business",
-        switchActive: "/business/switch_active"
+        switchActive: "/business/switch_active",
+        get_by_type: "/business/GetByType",
+        get_for_logged_user: "/business/GetForLoggedUser"
+      },
+      playlist: {
+        default: "/playlist",
+        switchActive: "/playlist/switch_active",
+        getByFranchise: "/playlist/GetByFranchise",
+        playlistItem: "/playlist_file"
+      },
+      files:{
+        default: "/files"
+      },
+      equipament:{
+        default: "/equipament",
+        get_by_franchise: "/equipament/GetByFranchise",
+        get_by_mac_address: "/equipament/GetByMacAddress",
+        switchActive: "/equipament/switch_active"
       }
     }
   }

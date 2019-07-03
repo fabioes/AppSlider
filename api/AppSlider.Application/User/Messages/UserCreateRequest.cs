@@ -19,10 +19,10 @@ namespace AppSlider.Application.User.Messages
         public String Password { get; set; }
 
         [JsonProperty("roles")]
-        public String Roles { get; set; }
+        public List<String> Roles { get; set; }
 
         [JsonProperty("franquias")]
-        public String Franchises { get; set; }
+        public List<String> Franchises { get; set; }
 
         [JsonProperty("perfil")]
         public String Profile { get; set; }

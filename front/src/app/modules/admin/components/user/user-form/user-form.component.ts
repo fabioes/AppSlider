@@ -4,6 +4,7 @@ import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../services/user/user.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -14,7 +15,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class UserFormComponent implements OnInit {
 
   @Input() user: Model.App.User;
+  @Input() roles: Array<Model.App.Role>;
+  @Input() franchises: Array<Model.App.Business>;
   userForm: FormGroup;
+  rolesList: Array<Model.App.Role>;
+  franchisesList: Array<Model.App.Business>;
 
   profiles = [{
     name: 'Administrador',
@@ -32,6 +37,10 @@ export class UserFormComponent implements OnInit {
     private toastrService: ToastrService) { }
 
   ngOnInit() {
+
+    this.rolesList = this.roles.filter(r => ((this.user || <Model.App.User>{}).roles || []).filter(role => role == r.nome).length > 0);
+    this.franchisesList = this.franchises.filter(f => ((this.user || <Model.App.User>{}).franquias || []).filter(franchise => franchise == f.nome).length > 0);
+
     this.userForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
@@ -65,11 +74,9 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-
   public isFieldInvalid(field: string) {
     return this.globalService.isFieldInvalid(field, this.userForm);
   }
-
 
   public callbackAction(action, res) {
 

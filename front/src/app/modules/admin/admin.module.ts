@@ -13,19 +13,23 @@ import { BusinessTypeComponent } from './components/business-type/business-type.
 import { BusinessTypeFormComponent } from './components/business-type/business-type-form/business-type-form.component';
 import { FranchiseComponent } from './components/franchise/franchise.component';
 import { FranchiseFormComponent } from './components/franchise/franchise-form/franchise-form.component';
+import { AdvertiserComponent } from './components/advertiser/advertiser.component';
+import { AdvertiserFormComponent } from './components/advertiser/advertiser-form/advertiser-form.component';
+import { EstablishmentComponent } from './components/establishment/establishment.component';
+import { EstablishmentFormComponent } from './components/establishment/establishment-form/establishment-form.component';
+import { PlaylistComponent } from './components/playlist/playlist.component';
+import { PlaylistFormComponent } from './components/playlist/playlist-form/playlist-form.component';
+import { PlaylistFilesComponent } from './components/playlist/playlist-files/playlist-files.component';
+import { EquipamentComponent } from './components/equipament/equipament.component';
+import { EquipamentFormComponent } from './components/equipament/equipament-form/equipament-form.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { TableListComponent } from './components/table-list/table-list.component';
-import { TypographyComponent } from './components/typography/typography.component';
 import { IconsComponent } from './components/icons/icons.component';
-import { MapsComponent } from './components/maps/maps.component';
-import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import { UpgradeComponent } from './components/upgrade/upgrade.component';
 
 //primeng
+import { AccordionModule } from 'primeng/accordion';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -39,6 +43,7 @@ import { PhonePipe } from './shared/pipes/phone.pipe';
 import { DateFormat} from './shared/pipes/date-format.pipe'
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -49,6 +54,7 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     NgbModule,
     ToastrModule.forRoot(),
     //primeng
+    AccordionModule,
     TableModule,
     DropdownModule,
     CheckboxModule,
@@ -63,23 +69,26 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     UserFormComponent,
     UserResetPasswordComponent,
     WelcomeComponent,
-    UserProfileComponent,
     CategoryComponent,
     CategoryFormComponent,
     BusinessTypeComponent,
     BusinessTypeFormComponent,
     FranchiseComponent,
     FranchiseFormComponent,
-    TableListComponent,
-    UpgradeComponent,
-    TypographyComponent,
+    AdvertiserComponent,
+    AdvertiserFormComponent,
+    EstablishmentComponent,
+    EstablishmentFormComponent,
+    PlaylistComponent,
+    PlaylistFormComponent,
+    PlaylistFilesComponent,
+    EquipamentComponent,
+    EquipamentFormComponent,
     IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
     DateFormat,
     PhonePipe
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent]
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent, EquipamentFormComponent]
 })
 
 export class AdminModule { }

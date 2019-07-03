@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Options;
     using System;
     using AppSlider.Application.User.Services.Get;
+    using Microsoft.AspNetCore.Http;
 
     public class Startup
     {
@@ -59,17 +60,17 @@
                 options.OperationFilter<SwaggerAuthorizationHeaderParameterOperationFilter>();
             });
 
-            var loggedUser = new Domain.Entities.Users.User();
+            var loggedUser = new LoggedUser();
             services.AddSingleton(loggedUser);
 
             services.AddMvc(options =>
             {
                 var userGetService = _container?.Resolve<IUserGetService>();
-
-                options.Filters.Add(new CustomAuthorizeFilter(loggedUser, userGetService, new AuthorizationPolicyBuilder()
+                
+                options.Filters.Add(new CustomAuthorizeFilter(userGetService, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser()
-                    .Build()));
+                    .Build(), loggedUser));
 
                 options.Filters.Add(typeof(BusinessExceptionFilter));
                 options.Filters.Add(typeof(ValidateModelAttribute));
@@ -145,7 +146,8 @@
             app.UseSwagger()
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                   c.SwaggerEndpoint("/midiafoneapi/swagger/v1/swagger.json", "My API V1");
+                   //c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                });
         }
     }

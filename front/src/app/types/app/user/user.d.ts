@@ -5,14 +5,26 @@ declare namespace Model.App {
         senha: string,
         perfil: string,
         ativo: boolean,
+        bloqueado: boolean,
         nome: string,
         email: string,
-        franquias: string,
-        roles: string
+        franquias: Array<string>,
+        roles: Array<string>
     }
 
     export interface UserResetPassword {
         id: string,
         senha: string
+    }
+
+    export interface Role {
+        id: string,
+        nome: string,
+        descricao: string
+    }
+
+    export interface UserFranchise {
+        id: string,
+        name: string
     }
 }

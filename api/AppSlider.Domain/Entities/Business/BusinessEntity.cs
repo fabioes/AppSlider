@@ -1,5 +1,6 @@
 ﻿using AppSlider.Domain.Entities.Categories;
 using AppSlider.Domain.Entities.Files;
+using AppSlider.Domain.Entities.PlayLists;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,6 +21,7 @@ namespace AppSlider.Domain.Entities.Business
         public virtual String ContactAddress { get; protected set; }
         public virtual DateTime? ExpirationDate { get; protected set; }
         public virtual Boolean Active { get; protected set; }
+        public virtual Boolean Blocked { get; protected set; }
 
         [ForeignKey("IdCategory")]
         public virtual Category Category { get; set; }
@@ -35,7 +37,9 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active) : this()
+        public virtual ICollection<Playlist> Playlists { get; set; }
+
+        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -50,9 +54,10 @@ namespace AppSlider.Domain.Entities.Business
             ContactAddress = contactAddress;
             ExpirationDate = expirationDate;
             Active = active;
+            Blocked = blocked;
         }
 
-        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active) : this()
+        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
         {
             IdFather = idFather;
             IdType = idType;
@@ -66,6 +71,7 @@ namespace AppSlider.Domain.Entities.Business
             ContactAddress = contactAddress;
             ExpirationDate = expirationDate;
             Active = active;
+            Blocked = blocked;
         }
 
         public BusinessEntity()

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using AppSlider.Application.Category.Messages;
+using AppSlider.Application.TypeBusiness.Messages;
 using AppSlider.Application.TypeBusiness.Results;
 using AppSlider.Application.TypeBusiness.Services.Create;
 using AppSlider.Domain;

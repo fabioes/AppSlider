@@ -15,7 +15,7 @@
             <label>Nome do usuário</label>
             <label class="required-info-asterisk">*</label>
             <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
-                placeholder="digite o nome do usuário" name="nome" required>
+                placeholder="digite o nome do usuário" name="nome" maxlength="200" required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
                 Favor inserir o 'Nome do Usuário'!
             </div>
@@ -25,7 +25,7 @@
             <label>Login do usuário</label>
             <label class="required-info-asterisk">*</label>
             <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('login')}" formControlName="login"
-                placeholder="digite o login do usuário" name="login" required>
+                placeholder="digite o login do usuário" name="login" maxlength="50" required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('login')">
                 Favor inserir o 'Login do Usuário'!
             </div>
@@ -35,7 +35,7 @@
             <label>Senha do usuário</label>
             <label class="required-info-asterisk">*</label>
             <input class="form-control" type="password" [ngClass]="{'is-invalid': isFieldInvalid('senha')}"
-                formControlName="senha" placeholder="digite a senha do usuário" name="senha" required>
+                formControlName="senha" placeholder="digite a senha do usuário" name="senha" maxlength="20" required>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('senha')">
                 Favor inserir a 'Senha do Usuário'!
             </div>
@@ -56,19 +56,91 @@
             <label class="required-info-asterisk">*</label>
             <!-- <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('perfil')}" formControlName="perfil"
                 placeholder="digite o perfil do usuário" name="perfil" required>  (onChange)="setWelcomeHsmValue($event)" -->
-                <p-dropdown required="true" [options]="profiles" [filter]="true"
-                    placeholder="Selecione o perfil do usuário" [style]="{'width':'100%', 'backgroud-color': 'white'}"
-                    optionLabel="name" formControlName="perfil" required></p-dropdown>
+            <p-dropdown required="true" [options]="profiles" [filter]="true" placeholder="Selecione o perfil do usuário"
+                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="name" formControlName="perfil"
+                required></p-dropdown>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('perfil')">
                 Favor inserir o 'Perfil do Usuário'!
             </div>
         </div>
 
+        <div class="form-group p-accordion">
+            <p-accordion>
+                <p-accordionTab header="Acessos">
+                    <p-table #dt sortField="nome" [value]="roles" [paginator]="true" [rows]="10"
+                        [globalFilterFields]="['nome','descricao']">
+
+                        <ng-template pTemplate="caption">
+                            <div>
+                                <input type="text" pInputText size="50" placeholder="Buscar Acessos" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    style="width:90%">
+                                <i class="fa fa-search" style="margin:4px 4px 0 15px"></i>
+                            </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:10%"></th>
+                                <th style="width:45%">Nome</th>
+                                <th style="width:45%">Descrição</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-role>
+                            <tr>
+                                <td>
+                                    <p-checkbox name="rolesList" value="{{role?.id || ''}}" [formControl]="userForm.controls['roles']">
+                                    </p-checkbox>
+                                </td>
+                                <td>{{role?.nome}}</td>
+                                <td>{{role?.descricao}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+
+        <div class="form-group p-accordion">
+            <p-accordion>
+                <p-accordionTab header="Franquias">
+                    <p-table #dt sortField="nome" [value]="franchises" [paginator]="true" [rows]="10"
+                        [globalFilterFields]="['nome','descricao']">
+
+                        <ng-template pTemplate="caption">
+                            <div>
+                                <input type="text" pInputText size="50" placeholder="Buscar Franquias" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                    style="width:90%">
+                                <i class="fa fa-search" style="margin:4px 4px 0 15px"></i>
+                            </div>
+                        </ng-template>
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:10%"></th>
+                                <th style="width:90%">Nome</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-franchise>
+                            <tr>
+                                <td>
+                                    <p-checkbox name="franchisesList" value="{{franchise?.id || ''}}" [formControl]="userForm.controls['franquias']">
+                                    </p-checkbox>
+                                </td>
+                                <td>{{franchise?.name}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+
         <div class="form-group">
             <label>Ativo?</label>
             <label class="required-info-asterisk">*</label>
-            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}" formControlName="ativo"
-                name="ativo">
+            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}"
+                formControlName="ativo" name="ativo">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('perfil')">
                 Favor inserir o 'Perfil do Usuário'!
             </div>

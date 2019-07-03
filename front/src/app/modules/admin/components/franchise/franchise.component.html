@@ -24,7 +24,7 @@
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="franchise = null; showDialog(null)">Nova</button>
+              <button type="button" class="btn float-right layout-button" (click)="showDialog(null)">Nova</button>
             </div>
           </div>
 
@@ -47,18 +47,15 @@
                 <td>{{franchise.data_expiracao | dateFormat}}</td>
                 <td>{{franchise.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(franchise)">
+                  <a (click)="showDialog(franchise)" *ngIf="franchise.bloqueado !== true">
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteFranchise(franchise)">
+                  <a (click)="deleteFranchise(franchise)" *ngIf="franchise.bloqueado !== true">
                     <i class="pi pi-times"></i>
                   </a>
-                  <a (click)="switchActive(franchise)" title="{{franchise.ativo == true ? 'desativar' : 'ativar'}}">
+                  <a (click)="switchActive(franchise)" title="{{franchise.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="franchise.bloqueado !== true">
                     <i class="pi" [ngClass]="{'pi-lock': franchise.ativo == true, 'pi-unlock': franchise.ativo != true}"></i>
-                  </a>
-                  <a (click)="manageFranchise(c)" title="gerenciar franquia">
-                    <i class="pi pi-cog"></i>
-                  </a>
+                  </a>                 
                 </td>
               </tr>
             </ng-template>

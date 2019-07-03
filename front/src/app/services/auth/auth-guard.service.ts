@@ -23,10 +23,10 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/login']);
                 return false;
             } else {
-                this.authService.rolesPermissions.subscribe(roles => {
+                this.authService.getRolesPermissions().subscribe(roles => {
                     var role = (next.data || {}).role;
                     if (role && roles.indexOf(role || "") < 0) {
-                        this.router.navigate(['/acesso-negado']);
+                        this.router.navigate(['/acesso-negado']); 
                         return;
                     }
                     else

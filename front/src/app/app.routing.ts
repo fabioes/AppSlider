@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './modules/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ExpiredSessionComponent } from './components/expired-session/expired-session.component';
+import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,18 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'sessao-expirada',
+    component: ExpiredSessionComponent
+  },
+  {
+    path: 'acesso-negado',
+    component: AccessDeniedComponent
   },
   {
     path: 'adm',

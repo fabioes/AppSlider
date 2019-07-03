@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using AppSlider.Application.Role.Results;
+using AppSlider.Application.Role.Services.Get;
 using AppSlider.Application.User.Commands;
 using AppSlider.Application.User.Results;
 using AppSlider.Application.User.Services.Get;
@@ -17,10 +19,12 @@ namespace AppSlider.WebApi.Controllers.Users.Get
     public class UsersController : Controller
     {
         private readonly IUserGetService _userGetService;
-        
-        public UsersController(IUserGetService userGetService)
+        private readonly IRoleGetService _roleGetService;
+
+        public UsersController(IUserGetService userGetService, IRoleGetService roleGetService)
         {
-            _userGetService = userGetService;        
+            _userGetService = userGetService;
+            _roleGetService = roleGetService;
         }
 
         /// <summary>
@@ -43,6 +47,20 @@ namespace AppSlider.WebApi.Controllers.Users.Get
             var results = await _userGetService.GetAll();
 
             return Ok(new ApiReturnList<UserResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem as roles.
+        /// </summary>
+        [HttpGet("roles", Name = "GetRoles")]
+        [Authorize("Bearer")]
+        [AllowAnonymous]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<RoleResult>))]
+        public async Task<IActionResult> GetRoles()
+        {
+            var results = await _roleGetService.GetAll();
+
+            return Ok(new ApiReturnList<RoleResult> { Items = results, Success = true });
         }
     }
 }

@@ -20,14 +20,14 @@ namespace AppSlider.Application.Business.Services.Config
 
         public async Task<BusinessResult> SwitchActive(Guid id)
         {
-            UserConfigSwitchActiveValidations(id);
+            BusinessConfigSwitchActiveValidations(id);
 
             var business = await businessRepository.Get(id);
 
             if (business == null)
                 throw new BusinessException($"Erro na ativação / desativação do Negócio", new List<string> { "Negócio Inexistente!" }, "BusinessConfigService - Validations");
 
-            var domainBusiness = new BusinessEntity(business.Id, business.IdFather, business.IdType, business.IdCategory, business.Name, business.Description, business.IdLogo, business.ContactName, business.ContactEmail, business.ContactPhone, business.ContactAddress, business.ExpirationDate, !business.Active);
+            var domainBusiness = new BusinessEntity(business.Id, business.IdFather, business.IdType, business.IdCategory, business.Name, business.Description, business.IdLogo, business.ContactName, business.ContactEmail, business.ContactPhone, business.ContactAddress, business.ExpirationDate, !business.Active, business.Blocked);
 
             businessRepository.DetachBusiness(business);
 
@@ -38,7 +38,7 @@ namespace AppSlider.Application.Business.Services.Config
             return returnUser;
         }
 
-        private void UserConfigSwitchActiveValidations(Guid id)
+        private void BusinessConfigSwitchActiveValidations(Guid id)
         {
             var messageValidations = new List<String>();
 

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AppSlider.WebApi.Controllers.Users.Get
+namespace AppSlider.WebApi.Controllers.Business.Get
 {
     [Route("api/business")]
     public class BusinessController : Controller
@@ -23,7 +23,7 @@ namespace AppSlider.WebApi.Controllers.Users.Get
         }
 
         /// <summary>
-        /// Obtem um ou vários Usuários
+        /// Obtem um ou vários Negócios
         /// </summary>
         [HttpGet("{id?}")]
         [Authorize("Bearer")]
@@ -42,5 +42,48 @@ namespace AppSlider.WebApi.Controllers.Users.Get
 
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetByType/{type}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetByType(String type)
+        {
+            var results = await _businessGetService.GetByType(type);
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetByType/{franchiseId}/{type}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetByType(String franchiseId, String type)
+        {
+            var results = await _businessGetService.GetByFranchiseAndType(franchiseId, type);
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("GetForLoggedUser")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetForLoggedUser()
+        {
+            var results = await _businessGetService.GetForLoggedUser();
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+
     }
 }

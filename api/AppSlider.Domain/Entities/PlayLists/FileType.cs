@@ -1,8 +1,12 @@
-﻿namespace AppSlider.Domain.Entities.PlayLists
+﻿using System.ComponentModel;
+
+namespace AppSlider.Domain.Entities.PlayLists
 {
-    public enum PlayListFileType
+    public enum PlaylistFileType
     {
+        [Description("imagem")]
         Image = 1,
+        [Description("video")]
         Video = 2
     }
 }

@@ -11,7 +11,7 @@ export class CategoryService {
 
     constructor(private httpHelper: HttpHelper) { }
 
-    public getAllCategorys(): Observable<Array<Model.App.Category>> {
+    public getAllCategories(): Observable<Array<Model.App.Category>> {
         return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Category>>(environment.apiConfig.apiRoutes.category.default)
             .pipe(map(res => res.items));
     }

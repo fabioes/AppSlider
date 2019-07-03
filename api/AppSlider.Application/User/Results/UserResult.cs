@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace AppSlider.Application.User.Results
@@ -20,6 +22,9 @@ namespace AppSlider.Application.User.Results
         [JsonProperty("ativo")]
         public Boolean Active { get; private set; }
 
+        [JsonProperty("bloqueado")]
+        public Boolean Blocked { get; private set; }
+
         [JsonProperty("nome")]
         public String Name { get; private set; }
 
@@ -27,10 +32,10 @@ namespace AppSlider.Application.User.Results
         public String Email { get; private set; }
 
         [JsonProperty("franquias")]
-        public String Franchises { get; private set; }
+        public List<String> Franchises { get; private set; }
 
         [JsonProperty("roles")]
-        public String Roles { get; private set; }
+        public List<String> Roles { get; private set; }
 
         public static explicit operator UserResult(Domain.Entities.Users.User u)
         {
@@ -43,8 +48,9 @@ namespace AppSlider.Application.User.Results
                 Username = u.Username,
                 Email = u.Email,
                 Name = u.Name,
-                Franchises = u.Franchises,
-                Roles = u.Roles
+                Franchises = String.IsNullOrEmpty(u.Franchises) ? null : u.Franchises.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Roles = String.IsNullOrEmpty(u.Roles) ? null : u.Roles.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Blocked = u.Blocked
             };
         }
 
@@ -57,9 +63,10 @@ namespace AppSlider.Application.User.Results
                 u.Password,
                 u.Profile,
                 u.Email,
-                u.Franchises,
-                u.Roles,
-                u.Active
+                u.Franchises != null ? String.Join(",", u.Franchises) : null,
+                u.Roles != null ? String.Join(",", u.Roles) : null,
+                u.Active,
+                u.Blocked
             );
         }
     }
