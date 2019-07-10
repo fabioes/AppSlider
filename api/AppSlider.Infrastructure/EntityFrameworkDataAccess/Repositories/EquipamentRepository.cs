@@ -63,6 +63,7 @@
 
         public async Task<Equipament> Update(Equipament equipament)
         {
+            _context.DetachLocalIfExists(equipament);
             _context.Equipaments.Update(equipament);
             await _context.SaveChangesAsync();
 

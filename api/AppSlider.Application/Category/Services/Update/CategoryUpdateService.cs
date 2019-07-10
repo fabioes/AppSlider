@@ -11,7 +11,7 @@ namespace AppSlider.Application.Category.Services.Update
     public class CategoryUpdateService : ICategoryUpdateService
     {
         private readonly ICategoryRepository categoryRepository;
-        
+
         public CategoryUpdateService(ICategoryRepository categoryRepository)
         {
             this.categoryRepository = categoryRepository;
@@ -21,7 +21,7 @@ namespace AppSlider.Application.Category.Services.Update
         {
             await CategoryUpdateValidationsAsync(command);
 
-            var user = new Domain.Entities.Categories.Category(command.Id,  command.Name, command.Description, false);
+            var user = new Domain.Entities.Categories.Category(command.Id, command.Name, command.Description, false);
 
             await categoryRepository.Update(user);
 
@@ -47,14 +47,18 @@ namespace AppSlider.Application.Category.Services.Update
                 //Business Validations
                 var catetoryValidation = await categoryRepository.GetByName(command.Name);
 
-                if (catetoryValidation != null && catetoryValidation.Id != command.Id)
+                if (catetoryValidation != null)
                 {
-                    messageValidations.Add("Categoria já existente!");
-                }
 
-                categoryRepository.DetachCategory(catetoryValidation);
+                    if (catetoryValidation.Id != command.Id)
+                    {
+                        messageValidations.Add("Categoria já existente!");
+                    }
+
+                    categoryRepository.DetachCategory(catetoryValidation);
+                }
             }
-            
+
             if (messageValidations.Count > 0)
             {
                 throw new BusinessException($"Erro na atualização da categoria {command?.Name ?? ""}", messageValidations, "CategoryUpdateService - Validations");

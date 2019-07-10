@@ -11,10 +11,12 @@ namespace AppSlider.Application.User.Services.Get
     public class UserGetService : IUserGetService
     {
         private readonly IUserRepository userRepository;
-        
-        public UserGetService(IUserRepository userRepository)
+        private readonly IRoleRepository roleRepository;
+            
+        public UserGetService(IUserRepository userRepository, IRoleRepository roleRepository)
         {
             this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
         }
 
         public async Task<UserResult> Get(UserGetCommand command)
@@ -29,8 +31,11 @@ namespace AppSlider.Application.User.Services.Get
         public async Task<UserResult> GetByUsername(String username)
         {
             var user = await userRepository.GetByUsername(username);
+            var roles = await roleRepository.GetAll();
 
             var returnUser = (UserResult)user;
+
+            returnUser.SetRolesNames(roles?.Select(s => s.Name).ToList());
 
             return returnUser;
         }
@@ -38,9 +43,12 @@ namespace AppSlider.Application.User.Services.Get
         public async Task<List<UserResult>> GetAll()
         {
             var users = await userRepository.GetAll();
+            var roles = await roleRepository.GetAll();
 
             var returnUsers = users.Select(s => (UserResult)s).ToList();
-            
+
+            returnUsers.ForEach(f => f.SetRolesNames(roles?.Select(s => s.Name).ToList()));
+
             return returnUsers;
         }
     }

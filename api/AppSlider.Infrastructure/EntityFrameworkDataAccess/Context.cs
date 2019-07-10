@@ -1,6 +1,7 @@
 ﻿namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     public class Context : DbContext
     {
@@ -56,6 +57,21 @@
                .ToTable("Equipaments");
 
             modelBuilder.Seed();
+        }
+
+        public bool Exists<T>(T entity) where T : Domain.Entities.Entity
+        {
+            return this.Set<T>().Local.Any(e => e.Id == entity.Id);
+        }
+
+
+        public void DetachLocalIfExists<T>(T entity) where T : Domain.Entities.Entity
+        {
+            var local = this.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+
+            if (local == null) local = entity;
+
+            this.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
         }
     }
 }

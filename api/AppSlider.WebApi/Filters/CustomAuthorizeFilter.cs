@@ -85,6 +85,7 @@ namespace AppSlider.WebApi.Filters
                     _loggedUser.Id = user.Id;
                     _loggedUser.Franchises = user.Franchises;
                     _loggedUser.Roles = user.Roles;
+                    _loggedUser.RolesNames = user.RolesNames;
 
                     if (String.IsNullOrWhiteSpace(_loggedUser?.UserName))
                     {
@@ -127,7 +128,7 @@ namespace AppSlider.WebApi.Filters
 
 
             var role = customAuthorizeAttribute.ConstructorArguments.FirstOrDefault();
-            return role != null && (_loggedUser.Roles ?? new List<string>()).Contains(role.Value?.ToString() ?? "_");
+            return role != null && ((_loggedUser.Roles ?? new List<string>()).Contains(role.Value?.ToString() ?? "_") || (_loggedUser.RolesNames ?? new List<string>()).Contains(role.Value?.ToString() ?? "_"));
 
         }
     }

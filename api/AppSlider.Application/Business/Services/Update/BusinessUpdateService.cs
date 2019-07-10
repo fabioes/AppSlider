@@ -24,6 +24,8 @@ namespace AppSlider.Application.Business.Services.Update
 
             var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false);
 
+            businessRepository.DetachBusiness(business);
+
             await businessRepository.Update(business);
 
             var returnUser = (BusinessResult)business;

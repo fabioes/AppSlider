@@ -11,7 +11,7 @@
         {
             var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
 
-            optionsBuilder.UseMySql(ConnectionString);
+            optionsBuilder.UseLazyLoadingProxies().UseMySql(ConnectionString);
             //optionsBuilder.UseSqlServer(ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging(true);
 
@@ -25,7 +25,7 @@
             builder.RegisterAssemblyTypes(typeof(InfrastructureException).Assembly)
                 .Where(type => type.Namespace.Contains("EntityFrameworkDataAccess"))
                 .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
+                .SingleInstance();
         }
     }
 }

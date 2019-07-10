@@ -86,7 +86,7 @@ namespace AppSlider.WebApi.Controllers.Login
                 };
 
                 //Custom Claims                
-                var roles = await _rolesService.GetFromUser(loggedUser);
+                    var roles = await _rolesService.GetFromUser(loggedUser);
                 (securityToken as JwtSecurityToken).Payload["roles"] = roles.Select(s => s.Name).ToList();
 
                 var franchises = await _businessService.GetFromUser(loggedUser);

@@ -11,6 +11,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import {DropdownModule} from 'primeng/dropdown'
 import { FormsModule } from '@angular/forms';
 
+//directives
+import { PermissionMenuCheckDirective } from '../admin/directives/auth/permission-check.directive';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -23,12 +26,18 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+
+    //directives
+    PermissionMenuCheckDirective
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+
+    //directives
+    PermissionMenuCheckDirective
   ]
 })
 export class ComponentsModule { }

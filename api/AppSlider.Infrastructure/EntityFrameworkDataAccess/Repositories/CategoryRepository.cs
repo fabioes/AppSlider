@@ -55,7 +55,7 @@
 
         public async Task<Category> Update(Category category)
         {
-
+            _context.DetachLocalIfExists(category);
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
 

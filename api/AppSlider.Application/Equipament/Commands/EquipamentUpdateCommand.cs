@@ -22,7 +22,7 @@ namespace AppSlider.Application.Equipament.Commands
 
         public EquipamentUpdateCommand(Guid id, string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active)
         {
-            id = id;
+            Id = id;
             Name = name;
             Description = description;
             MacAddress = macAddress;

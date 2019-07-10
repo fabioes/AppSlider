@@ -28,6 +28,8 @@ import { ChartsModule } from 'ng2-charts';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 
+
+
 //primeng
 import { AccordionModule } from 'primeng/accordion';
 import { TableModule } from 'primeng/table';
@@ -42,7 +44,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { PhonePipe } from './shared/pipes/phone.pipe';
 import { DateFormat} from './shared/pipes/date-format.pipe'
 
-
+//directives
+import { PhoneMaskDirective } from './directives/masks/phone-mask.directive';
 
 @NgModule({
   imports: [
@@ -61,7 +64,7 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     FileUploadModule,
     DialogModule,
     ConfirmDialogModule,
-    CalendarModule
+    CalendarModule    
   ],
   declarations: [
     DashboardComponent,
@@ -86,7 +89,8 @@ import { DateFormat} from './shared/pipes/date-format.pipe'
     EquipamentFormComponent,
     IconsComponent,
     DateFormat,
-    PhonePipe
+    PhonePipe,
+    PhoneMaskDirective    
   ],
   entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent, EquipamentFormComponent]
 })

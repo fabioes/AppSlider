@@ -5,18 +5,33 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
-    charName: string
+    charName: string,
+    menuRole: string
 }
+
+// public const String ReadUser = "AppSlider.Read.User";
+//         public const String WriteUser = "AppSlider.Write.User";
+//         public const String ReadBusiness = "AppSlider.Read.Business";
+//         public const String WriteBusiness = "AppSlider.Write.Business";
+//         public const String ReadBusinessType = "AppSlider.Read.BusinessType";
+//         public const String WriteBusinessType = "AppSlider.Write.BusinessType";
+//         public const String ReadCategory = "AppSlider.Read.Category";
+//         public const String WriteCategory = "AppSlider.Write.Category";
+//         public const String ReadPlaylist = "AppSlider.Read.Playlist";
+//         public const String WritePlaylist = "AppSlider.Write.Playlist";
+//         public const String ReadEquipament = "AppSlider.Read.Equipament";
+//         public const String WriteEquipament = "AppSlider.Write.Equipament";
+
 export const ROUTES: RouteInfo[] = [
-    { path: '/adm/dashboard', title: 'Dashboard',  icon: 'design_app', class: '', charName: 'dashboard'},
-    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '', charName: 'usuarios' },
-    { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias' },
-    { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio' },
-    { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias' },
-    { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'business_bank', class: '', charName: 'estabelecimentos' },
-    { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'users_circle-08', class: '', charName: 'anunciantes' },
-    { path: '/adm/playlists', title: 'Playlists',  icon: 'media-1_button-play', class: '', charName: 'playlists' },
-    { path: '/adm/equipamentos', title: 'Equipamentos',  icon: 'tech_tablet', class: '', charName: 'equipamentos' },
+    //{ path: '/adm/dashboard', title: 'Dashboard',  icon: 'design_app', class: '', charName: 'dashboard'},
+    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '', charName: 'usuarios', menuRole: 'AppSlider.Read.User' },
+    { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias', menuRole: 'AppSlider.Read.Category' },
+    { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio', menuRole: 'AppSlider.Read.BusinessType' },
+    { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'business_bank', class: '', charName: 'estabelecimentos', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'users_circle-08', class: '', charName: 'anunciantes', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/playlists', title: 'Playlists',  icon: 'media-1_button-play', class: '', charName: 'playlists', menuRole: 'AppSlider.Read.Playlist' },
+    { path: '/adm/equipamentos', title: 'Equipamentos',  icon: 'tech_tablet', class: '', charName: 'equipamentos', menuRole: 'AppSlider.Read.Equipament' },
     
     // { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '', charName: 'icons' },
     // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },

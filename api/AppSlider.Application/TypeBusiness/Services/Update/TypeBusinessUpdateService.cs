@@ -11,7 +11,7 @@ namespace AppSlider.Application.TypeBusiness.Services.Update
     public class TypeBusinessUpdateService : ITypeBusinessUpdateService
     {
         private readonly IBusinessTypeRepository businessTypeRepository;
-        
+
         public TypeBusinessUpdateService(IBusinessTypeRepository businessTypeRepository)
         {
             this.businessTypeRepository = businessTypeRepository;
@@ -21,7 +21,7 @@ namespace AppSlider.Application.TypeBusiness.Services.Update
         {
             await TypeBusinessUpdateValidationsAsync(command);
 
-            var businessType = new Domain.Entities.Business.BusinessType(command.Id,  command.Name, command.Description, false);
+            var businessType = new Domain.Entities.Business.BusinessType(command.Id, command.Name, command.Description, false);
 
             await businessTypeRepository.Update(businessType);
 
@@ -47,14 +47,20 @@ namespace AppSlider.Application.TypeBusiness.Services.Update
                 //Business Validations
                 var businessTypeValidation = await businessTypeRepository.GetByName(command.Name);
 
-                if (businessTypeValidation != null && businessTypeValidation.Id != command.Id)
+                if (businessTypeValidation != null)
                 {
-                    messageValidations.Add("Tipo de Negócio já existente!");
+
+
+                    if (businessTypeValidation.Id != command.Id)
+                    {
+                        messageValidations.Add("Tipo de Negócio já existente!");
+                    }
+
+                    businessTypeRepository.DetachBusinessType(businessTypeValidation);
                 }
 
-                businessTypeRepository.DetachBusinessType(businessTypeValidation);
             }
-            
+
             if (messageValidations.Count > 0)
             {
                 throw new BusinessException($"Erro na atualização do Tipo de Negócio {command?.Name ?? ""}", messageValidations, "TypeBusinessUpdateService - Validations");

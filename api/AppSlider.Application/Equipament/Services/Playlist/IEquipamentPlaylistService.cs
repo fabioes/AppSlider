@@ -38,7 +38,7 @@ namespace AppSlider.Application.Equipament.Services.Playlist
 
             var midiaFoneUtilitiesPlaylist = await playlistRepository.GetMidiaFoneUtilitiesPlaylist();
 
-            if (midiaFoneUtilitiesPlaylist?.PlaylistFiles?.Any() != true)
+            if (midiaFoneUtilitiesPlaylist?.PlaylistFiles?.Any() == true)
             {
                 //make random order
                 var randomMidiaFoneOrdened = midiaFoneUtilitiesPlaylist.PlaylistFiles.OrderBy(x => Guid.NewGuid()).ToList(); // new List<PlayListFile>();

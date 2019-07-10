@@ -39,11 +39,8 @@
 
         <div class="form-group">
             <label>Estabelecimento para o equipamento</label>
-            <label class="required-info-asterisk">*</label>
-
-            <p-dropdown required="true" [options]="establishments" [filter]="true" placeholder="Selecione a Estabelecimento"
-                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_estabelecimento"
-                required></p-dropdown>
+            <p-dropdown [options]="establishments" [filter]="true" placeholder="Selecione a Estabelecimento" [style]="{'width':'100%', 'backgroud-color': 'white'}"
+                optionLabel="nome" formControlName="id_estabelecimento" ></p-dropdown>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('id_estabelecimento')">
                 Favor inserir o 'Estabelecimento para o Equipamento'!
             </div>
@@ -51,9 +48,9 @@
 
         <div class="form-group">
             <label>Playlist do Equipamento</label>
-            <p-dropdown required="true" [options]="establishments" [filter]="true" placeholder="Selecione a Playlist"
-                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_estabelecimento"
-                required>
+            <p-dropdown [options]="playlists" [filter]="true" placeholder="Selecione a Playlist"
+                [style]="{'width':'100%', 'backgroud-color': 'white'}" optionLabel="nome" formControlName="id_playlist"
+                >
             </p-dropdown>
         </div>
 

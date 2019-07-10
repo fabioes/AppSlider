@@ -45,6 +45,11 @@ export class AuthService {
 
     }
 
+    public getLoginProfile(): any {
+        let login = localStorage.getItem("current_user");
+        return login ? (<Model.Core.Login>JSON.parse(login)).perfil_usuario : null;
+    }
+
     public getOAuthToken(): any {
         let login = localStorage.getItem("current_user");
         return login ? (<Model.Core.Login>JSON.parse(login)).token : null;

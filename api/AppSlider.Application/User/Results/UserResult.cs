@@ -37,6 +37,14 @@ namespace AppSlider.Application.User.Results
         [JsonProperty("roles")]
         public List<String> Roles { get; private set; }
 
+        [JsonProperty("roles_names")]
+        public List<String> RolesNames { get; private set; }
+
+        public void SetRolesNames(List<String> names)
+        {
+            RolesNames = names;
+        }
+
         public static explicit operator UserResult(Domain.Entities.Users.User u)
         {
             return new UserResult

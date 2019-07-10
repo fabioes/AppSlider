@@ -10,29 +10,29 @@ namespace AppSlider.Domain.Entities.Equipaments
     public class Equipament : Entity, IAggregateRoot
     {
         
-        public String Name { get; set; }
+        public virtual String Name { get; set; }
 
-        public String Description { get; set; }
+        public virtual String Description { get; set; }
 
-        public String MacAddress { get; set; }
+        public virtual String MacAddress { get; set; }
 
-        public Guid IdFranchise { get; set; }
+        public virtual Guid IdFranchise { get; set; }
 
-        public Guid? IdEstablishment { get; set; }
+        public virtual Guid? IdEstablishment { get; set; }
 
-        public Guid? IdPlaylist { get; set; }
+        public virtual Guid? IdPlaylist { get; set; }
 
-        public Boolean Active { get; set; }
+        public virtual Boolean Active { get; set; }
 
 
         [ForeignKey("IdFranchise")]
-        public BusinessEntity Franchise { get; set; }
+        public virtual BusinessEntity Franchise { get; set; }
 
         [ForeignKey("IdEstablishment")]
-        public BusinessEntity Establishment { get; set; }
+        public virtual BusinessEntity Establishment { get; set; }
 
         [ForeignKey("IdPlaylist")]
-        public Playlist PlayList { get; set; }
+        public virtual Playlist PlayList { get; set; }
 
 
         public Equipament(Guid id, string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active) : this()

@@ -11,6 +11,7 @@ namespace AppSlider.Domain.Authentication
         public String Login { get; set; }
         public String Profile { get; set; }
         public List<String> Roles { get; set; }
+        public List<String> RolesNames { get; set; }
         public List<String> Franchises { get; set; }
     }
 }

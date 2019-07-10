@@ -35,7 +35,7 @@ export class EquipamentFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    
     this.equipamentForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
@@ -53,17 +53,27 @@ export class EquipamentFormComponent implements OnInit {
       this.establishments = res[0];
       this.playlists = res[1];
 
+      if ((this.equipament || <any>{}).id_estabelecimento)
+      this.equipament.id_estabelecimento = <any>(this.establishments || []).filter(f => f.id == this.equipament.id_estabelecimento)[0];
+
+      if ((this.equipament || <any>{}).id_playlist)
+      this.equipament.id_playlist = <any>(this.playlists || []).filter(f => f.id == this.equipament.id_playlist)[0];
+
       this.equipamentForm.patchValue(this.equipament || {});
     });
   }
 
   public save() {
-debugger;
+
     if (this.equipamentForm.invalid) return;
 
     this.equipament = this.equipamentForm.value;
 
-    this.equipament.id_estabelecimento = (<any>this.equipament.id_estabelecimento).id;
+    if(this.equipament.id_estabelecimento)
+      this.equipament.id_estabelecimento = (<any>this.equipament.id_estabelecimento).id;
+
+      if(this.equipament.id_playlist)
+      this.equipament.id_playlist = (<any>this.equipament.id_playlist).id;
 
     if (this.equipament.id) {
       this.businessTypeService.updateEquipament(this.equipament).subscribe(res => this.callbackAction('alterado', res));

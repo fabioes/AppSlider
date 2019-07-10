@@ -60,7 +60,7 @@
             {
                 var actualUser = await _context.Users.FindAsync(user.Id);
                 user.SetPassword(actualUser?.Password);
-                _context.Entry(actualUser).State = EntityState.Detached;
+                _context.DetachLocalIfExists(user);
             }
 
             _context.Users.Update(user);
