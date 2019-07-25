@@ -7,11 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.Business
 {
-    public class BusinessEntity : Entity, IAggregateRoot
+    public class BusinessEntity : Entity<Guid>, IAggregateRoot
     {
-        public virtual Guid? IdFather { get; protected set; }
-        public virtual Guid IdType { get; protected set; }
-        public virtual Guid? IdCategory { get; protected set; }
+        public virtual Guid? IdFather { get; set; } = Guid.NewGuid();
+        public virtual int IdType { get; set; }
+        public virtual int? IdCategory { get; set; }
         public virtual String Name { get; protected set; }
         public virtual String Description { get; protected set; }
         public virtual Guid? IdLogo { get; protected set; }
@@ -39,7 +39,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<Playlist> Playlists { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
+        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -57,7 +57,7 @@ namespace AppSlider.Domain.Entities.Business
             Blocked = blocked;
         }
 
-        public BusinessEntity(Guid? idFather, Guid idType, Guid? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
+        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
         {
             IdFather = idFather;
             IdType = idType;

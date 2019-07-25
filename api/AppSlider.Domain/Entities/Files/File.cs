@@ -2,12 +2,12 @@
 
 namespace AppSlider.Domain.Entities.Files
 {
-    public class File: Entity, IAggregateRoot
+    public class File: Entity<Guid>, IAggregateRoot
     {
-        public virtual String Name { get; protected set; }
-        public virtual Byte[] Data { get; protected set; }
-        public virtual String MineType { get; set; }
-        public virtual Int64 Size { get; set; }
+        public virtual string Name { get; protected set; }
+        public virtual byte[] Data { get; protected set; }
+        public virtual string MineType { get; set; }
+        public virtual long Size { get; set; }
 
         public File(Guid id, string name, byte[] data, string mineType, long size): this()
         {

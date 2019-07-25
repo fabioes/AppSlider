@@ -1,7 +1,11 @@
 ﻿namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
-    using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Linq;
+    using AppSlider.Domain.Entities;
+    using AppSlider.Domain.Entities.Business;
+    using AppSlider.Domain.Entities.Categories;
+    using Microsoft.EntityFrameworkCore;
 
     public class Context : DbContext
     {
@@ -39,7 +43,8 @@
                .ToTable("Files");
 
             modelBuilder.Entity<Domain.Entities.Business.BusinessEntity>()
-                .ToTable("Business")
+                
+                .ToTable("Business")                
                 .HasMany(m => m.ChildrenBusinessEntity)
                 .WithOne(o => o.BusinessEntityFather)
                 .HasForeignKey(fk => fk.IdFather);
@@ -56,22 +61,8 @@
             modelBuilder.Entity<Domain.Entities.Equipaments.Equipament>()
                .ToTable("Equipaments");
 
-            modelBuilder.Seed();
+            //modelBuilder.Seed();
         }
-
-        public bool Exists<T>(T entity) where T : Domain.Entities.Entity
-        {
-            return this.Set<T>().Local.Any(e => e.Id == entity.Id);
-        }
-
-
-        public void DetachLocalIfExists<T>(T entity) where T : Domain.Entities.Entity
-        {
-            var local = this.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
-
-            if (local == null) local = entity;
-
-            this.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
-        }
+       
     }
 }

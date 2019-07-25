@@ -16,10 +16,10 @@ namespace AppSlider.Application.Business.Results
         public virtual Guid? IdFather { get; set; }
 
         [JsonProperty("id_tipo")]
-        public virtual Guid IdType { get; set; }
+        public virtual int IdType { get; set; }
 
         [JsonProperty("id_categoria")]
-        public virtual Guid? IdCategory { get; set; }
+        public virtual int? IdCategory { get; set; }
 
         [JsonProperty("nome")]
         public virtual String Name { get; set; }

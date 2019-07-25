@@ -1,9 +1,7 @@
 ﻿namespace AppSlider.Domain
 {
-    using System;
-
-    internal interface IEntity
+    internal interface IEntity<TId>
     {
-        Guid Id { get; }
+        TId Id { get; }
     }
 }

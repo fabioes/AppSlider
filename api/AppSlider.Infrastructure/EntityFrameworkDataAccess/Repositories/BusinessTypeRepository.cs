@@ -55,7 +55,7 @@
 
         public async Task<BusinessType> Update(BusinessType businessType)
         {
-            _context.DetachLocalIfExists(businessType);
+            //_context.DetachLocalIfExists(businessType);
 
             _context.BusinessTypes.Update(businessType);
             await _context.SaveChangesAsync();

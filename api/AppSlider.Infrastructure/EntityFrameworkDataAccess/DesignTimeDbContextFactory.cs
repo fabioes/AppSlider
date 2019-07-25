@@ -23,7 +23,8 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
             
             var builder = new DbContextOptionsBuilder<Context>();
             builder.UseLazyLoadingProxies()
-                   .UseMySql("Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08;Connection Reset=false");
+                   //.UseMySql("Server=mysql.odoias.com.br;User Id=odoias08;Password=midiafone2121;Database=odoias08;Connection Reset=false");
+                   .UseMySql("Server=localhost;User Id=root;Password=1234;Database=midiafone;Connection Reset=false");
             return new Context(builder.Options);
            
         }

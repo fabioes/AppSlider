@@ -68,7 +68,7 @@
 
             DetachPlaylist(playlistAux);
 
-            _context.DetachLocalIfExists(playlist);
+            //_context.DetachLocalIfExists(playlist);
 
             _context.PlayLists.Update(playlist);
             await _context.SaveChangesAsync();

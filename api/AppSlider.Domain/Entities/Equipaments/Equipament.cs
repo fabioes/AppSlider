@@ -7,14 +7,14 @@ using System.Text;
 
 namespace AppSlider.Domain.Entities.Equipaments
 {
-    public class Equipament : Entity, IAggregateRoot
+    public class Equipament : Entity<Guid>, IAggregateRoot
     {
         
-        public virtual String Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public virtual String Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public virtual String MacAddress { get; set; }
+        public virtual string MacAddress { get; set; }
 
         public virtual Guid IdFranchise { get; set; }
 
@@ -22,7 +22,7 @@ namespace AppSlider.Domain.Entities.Equipaments
 
         public virtual Guid? IdPlaylist { get; set; }
 
-        public virtual Boolean Active { get; set; }
+        public virtual bool Active { get; set; }
 
 
         [ForeignKey("IdFranchise")]

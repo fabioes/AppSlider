@@ -6,7 +6,7 @@ namespace AppSlider.Application.TypeBusiness.Messages
     public class TypeBusinessUpdateRequest
     {
         [JsonProperty("id")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("nome")]
         public String Name { get; set; }

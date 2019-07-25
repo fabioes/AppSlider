@@ -2,13 +2,13 @@
 
 namespace AppSlider.Domain.Entities.Categories
 {
-    public class Category : Entity, IAggregateRoot
+    public class Category : Entity<int>, IAggregateRoot
     {
-        public virtual String Name { get; protected set; }
-        public virtual String Description { get; protected set; }
-        public virtual Boolean Blocked { get; protected set; }
+        public virtual string Name { get; protected set; }
+        public virtual string Description { get; protected set; }
+        public virtual bool Blocked { get; protected set; }
 
-        public Category(Guid id, string name, string description, Boolean blocked) : this()
+        public Category(int id, string name, string description, bool blocked) : this()
         {
             Id = id;
             Name = name;
@@ -16,7 +16,7 @@ namespace AppSlider.Domain.Entities.Categories
             Blocked = blocked;
         }
 
-        public Category(string name, string description, Boolean blocked) : this()
+        public Category(string name, string description, bool blocked) : this()
         {
             Name = name;
             Description = description;

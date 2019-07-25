@@ -1,7 +1,6 @@
 ﻿using AppSlider.Domain.Entities.Business;
 using AppSlider.Domain.Entities.Categories;
 using AppSlider.Domain.Entities.Equipaments;
-using AppSlider.Domain.Entities.Files;
 using AppSlider.Domain.Entities.PlayLists;
 using AppSlider.Domain.Entities.Roles;
 using AppSlider.Domain.Entities.Users;
@@ -47,7 +46,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 
             modelBuilder.Entity<Category>().Property(p => p.Name).HasMaxLength(200);
             modelBuilder.Entity<Category>().Property(p => p.Description).HasMaxLength(500);
-            
+
             modelBuilder.Entity<Equipament>().Property(p => p.Name).HasMaxLength(200);
             modelBuilder.Entity<Equipament>().Property(p => p.Description).HasMaxLength(500);
             modelBuilder.Entity<Equipament>().Property(p => p.MacAddress).HasMaxLength(200);
@@ -57,7 +56,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 
             //Has data ---> Seed Fact.
             modelBuilder.Entity<User>().HasData(
-                new User("Administrador", "admin", CriptoManager.CriptoSHA256("AdminAppSlider@123"), "sa", "", null, null, true, true)
+                new User(Guid.NewGuid(), "Administrador", "admin", CriptoManager.CriptoSHA256("AdminAppSlider@123"), "sa", "", null, null, true, true)
             );
 
             modelBuilder.Entity<Role>().HasData(
@@ -75,28 +74,28 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new Role("AppSlider.Write.Equipament", "Permissão de escrita para rotina de Equipamento.")
             );
 
-        var midiaFoneFranchiseCategory = new Category("MidiaFone", "Categoria MidiaFone.", true);
+            var midiaFoneFranchiseCategory = new Category(1,"MidiaFone", "Categoria MidiaFone.", true);
 
             modelBuilder.Entity<Category>().HasData(
                 midiaFoneFranchiseCategory
             );
 
-            var midiaFoneFranchiseType = new BusinessType("Franquia", "Franquia como Tipo de Negócio.", true);
+            var midiaFoneFranchiseType = new BusinessType(1, "Franquia", "Franquia como Tipo de Negócio.", true);
 
             modelBuilder.Entity<BusinessType>().HasData(
                 midiaFoneFranchiseType,
-                new BusinessType("Estabelecimento", "Estabelecimento como Tipo de Negócio.", true),
-                new BusinessType("Anunciante", "Anunciante como Tipo de Negócio.", true)
+                new BusinessType(2,"Estabelecimento", "Estabelecimento como Tipo de Negócio.", true),
+                new BusinessType(3,"Anunciante", "Anunciante como Tipo de Negócio.", true)
             );
 
-            var midiaFoneFranchise = new BusinessEntity(null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true, true);
+            var midiaFoneFranchise = new BusinessEntity(Guid.NewGuid(),null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true, true);
 
             modelBuilder.Entity<BusinessEntity>().HasData(
                 midiaFoneFranchise
             );
-            
+
             modelBuilder.Entity<Playlist>().HasData(
-                new Playlist("Curiosidades MidiaFone", true, DateTime.MaxValue, midiaFoneFranchise.Id, true));
+                new Playlist(Guid.NewGuid(),"Curiosidades MidiaFone", true, DateTime.MaxValue, midiaFoneFranchise.Id, true));
         }
     }
 }

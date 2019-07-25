@@ -6,7 +6,7 @@ namespace AppSlider.Application.Category.Messages
     public class CategoryUpdateRequest
     {
         [JsonProperty("id")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("nome")]
         public String Name { get; set; }

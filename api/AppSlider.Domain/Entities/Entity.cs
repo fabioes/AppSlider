@@ -4,24 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities
 {
-    public class Entity : IEntity
+    public abstract class Entity<TId> 
     {
-        private Guid? _id { get; set; }
+        public virtual TId Id { get; set; }
+        //private TId _id { get; set; }
 
-        public virtual Guid Id
-        {
-            get
-            {
-                if (!_id.HasValue)
-                    _id = Guid.NewGuid();
+        //public virtual TId Id
+        //{
+        //    get
+        //    {
+        //        if (!_id.HasValue)
+        //            _id = Guid.NewGuid();
 
-                return _id.Value;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
+        //        return _id.Value;
+        //    }
+        //    set
+        //    {
+        //        _id = value;
+        //    }
+        //}
 
         private DateTime? _dataCreated { get; set; }
 
@@ -39,5 +40,7 @@ namespace AppSlider.Domain.Entities
                 _dataCreated = value;
             }
         }
+
+        
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.PlayLists
 {
-    public class Playlist : Entity, IAggregateRoot
+    public class Playlist : Entity<Guid>, IAggregateRoot
     {
         public virtual String Name { get; protected set; }
         public virtual Boolean Active { get; protected set; }

@@ -6,7 +6,7 @@ namespace AppSlider.Application.TypeBusiness.Results
     public class TypeBusinessResult
     {
         [JsonProperty("id")]
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
 
         [JsonProperty("nome")]
         public String Name { get; private set; }

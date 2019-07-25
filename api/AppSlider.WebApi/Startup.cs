@@ -134,8 +134,10 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            string midiafone = @"/midiafoneapi";
             if (env.IsDevelopment())
             {
+                midiafone = string.Empty;
                 app.UseDeveloperExceptionPage();
             }
 
@@ -146,8 +148,7 @@
             app.UseSwagger()
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint("/midiafoneapi/swagger/v1/swagger.json", "My API V1");
-                   //c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                   c.SwaggerEndpoint($@"{midiafone}/swagger/v1/swagger.json", "Midiafone API V1");            
                });
         }
     }

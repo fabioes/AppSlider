@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace AppSlider.Domain.Entities.Business
+﻿namespace AppSlider.Domain.Entities.Business
 {
-    public class BusinessType : Entity, IAggregateRoot
+    public class BusinessType : Entity<int>, IAggregateRoot
     {
-        public virtual String Name { get; protected set; }
-        public virtual String Description { get; protected set; }
-        public virtual Boolean Blocked { get; protected set; }
+        public virtual string Name { get; protected set; }
+        public virtual string Description { get; protected set; }
+        public virtual bool Blocked { get; protected set; }
 
-        public BusinessType(Guid id, string name, string description, Boolean blocked) : this()
+        public BusinessType(int id, string name, string description, bool blocked) : this()
         {
             Id = id;
             Name = name;
@@ -16,7 +14,7 @@ namespace AppSlider.Domain.Entities.Business
             Blocked = blocked;
         }
 
-        public BusinessType(string name, string description, Boolean blocked) : this()
+        public BusinessType(string name, string description, bool blocked) : this()
         {
             Name = name;
             Description = description;

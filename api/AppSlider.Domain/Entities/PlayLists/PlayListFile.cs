@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.PlayLists
 {
-    public class PlaylistFile : Entity, IAggregateRoot
+    public class PlaylistFile : Entity<Guid>, IAggregateRoot
     {
         public virtual Guid IdPlayList { get; protected set; }
         public virtual PlaylistFileType PlaylistFileType { get; set; }
 
         [Required]
         public virtual Guid IdFile { get; protected set; }
-        public virtual Int16 Duration { get; set; }
+        public virtual short Duration { get; set; }
 
         [ForeignKey("IdPlayList")]
         public virtual Playlist Playlist { get; set; }

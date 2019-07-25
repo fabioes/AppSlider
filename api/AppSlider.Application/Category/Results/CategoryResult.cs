@@ -6,7 +6,7 @@ namespace AppSlider.Application.Category.Results
     public class CategoryResult
     {
         [JsonProperty("id")]
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
 
         [JsonProperty("nome")]
         public String Name { get; private set; }

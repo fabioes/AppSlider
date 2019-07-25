@@ -9,10 +9,10 @@ namespace AppSlider.Application.Business.Commands
         public Guid? IdFather { get; set; }
 
         [JsonProperty("id_tipo")]
-        public Guid IdType { get; set; }
+        public int IdType { get; set; }
 
         [JsonProperty("id_categoria")]
-        public Guid? IdCategory { get; set; }
+        public int? IdCategory { get; set; }
 
         [JsonProperty("nome")]
         public String Name { get; set; }

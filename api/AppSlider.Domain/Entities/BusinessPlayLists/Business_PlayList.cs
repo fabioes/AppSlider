@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppSlider.Domain.Entities.BusinessPlayLists
 {
-    public class BusinessPlayList : Entity, IAggregateRoot
+    public class BusinessPlayList : Entity<Guid>, IAggregateRoot
     {
         public virtual Guid IdBusiness { get; protected set; }
         public virtual Guid IdPlayList { get; protected set; }
