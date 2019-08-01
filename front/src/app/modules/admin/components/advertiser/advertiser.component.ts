@@ -4,6 +4,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../services/business/business.service';
 import { AdvertiserFormComponent } from './advertiser-form/advertiser-form.component';
+import { PlaylistFilesComponent } from '../playlist/playlist-files/playlist-files.component';
 
 
 @Component({
@@ -67,7 +68,25 @@ export class AdvertiserComponent implements OnInit {
       console.log(err);
     });
   }
+  filesDialog(advertiser: Model.App.Business){
+    const modalRef = this.modalService.open(PlaylistFilesComponent, {
+      backdrop: 'static',
+      size: 'lg'
+    });
 
+    modalRef.componentInstance.name = 'Playlist Itens';
+
+    modalRef.componentInstance.business = advertiser;
+
+    modalRef.result.then((res: Model.App.Playlist) => {
+      if (res == null) return;
+
+      //this.getPlaylists();
+
+    }).catch(err => {
+      console.log(err);
+    });
+  }
   deleteFranchise(advertiser) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar o Anunciante ' + advertiser.nome + '?',

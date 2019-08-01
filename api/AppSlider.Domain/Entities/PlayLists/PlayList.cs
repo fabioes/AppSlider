@@ -7,33 +7,33 @@ namespace AppSlider.Domain.Entities.PlayLists
 {
     public class Playlist : Entity<Guid>, IAggregateRoot
     {
-        public virtual String Name { get; protected set; }
-        public virtual Boolean Active { get; protected set; }
-        public virtual Boolean Blocked { get; protected set; }
+        public virtual string Name { get; protected set; }
+        public virtual bool Active { get; protected set; }
+        public virtual bool Blocked { get; protected set; }
         public virtual DateTime Expirate { get; set; }
-        public virtual Guid FranchiseId { get; set; }
+        public virtual Guid BusinessId { get; set; }
 
         public virtual ICollection<PlaylistFile> PlaylistFiles { get; set; }
 
-        [ForeignKey("FranchiseId")]
+        [ForeignKey("BusinessId")]
         public virtual BusinessEntity Franchise { get; set; }
 
-        public Playlist(Guid id, string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
+        public Playlist(Guid id, string name, bool active, DateTime expirate, Guid busniessId, bool blocked) : this()
         {
             Id = id;
             Name = name;
             Active = active;
             Expirate = expirate;
-            FranchiseId = franchiseId;
+            BusinessId = busniessId;
             Blocked = blocked;
         }
 
-        public Playlist(string name, Boolean active, DateTime expirate, Guid franchiseId, Boolean blocked) : this()
+        public Playlist(string name, bool active, DateTime expirate, Guid franchiseId, bool blocked) : this()
         {
             Name = name;
             Active = active;
             Expirate = expirate;
-            FranchiseId = franchiseId;
+            BusinessId = franchiseId;
             Blocked = blocked;
         }
 

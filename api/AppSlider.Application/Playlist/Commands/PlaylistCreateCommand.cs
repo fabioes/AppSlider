@@ -1,23 +1,20 @@
-﻿using AppSlider.Domain.Entities.PlayLists;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AppSlider.Application.Playlist.Commands
 {
     public class PlaylistCreateCommand
     {
         [JsonProperty("nome")]
-        public virtual String Name { get; set; }
+        public virtual string Name { get; set; }
 
         [JsonProperty("ativa")]
-        public virtual Boolean Active { get; set; }
+        public virtual bool Active { get; set; }
 
         [JsonProperty("data_expiracao")]
         public virtual DateTime Expirate { get; set; }
 
-        [JsonProperty("id_franquia")]
-        public virtual Guid FranchiseId { get; set; }
+        [JsonProperty("id_business")]
+        public virtual Guid BusinessId { get; set; }
     }
 }

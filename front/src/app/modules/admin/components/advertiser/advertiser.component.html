@@ -1,5 +1,4 @@
-<div class="panel-header panel-header-sm">
-</div>
+<div class="panel-header panel-header-sm"></div>
 <div class="main-content">
   <div class="row">
     <div class="col-md-12">
@@ -8,26 +7,42 @@
           <div class="row">
             <div class="col-4 col-xl-5">
               <h5 class="title">Anunciante</h5>
-              <p class="subtitle">Mantenha as informações dos anunciantes do sistema!</p>
+              <p class="subtitle">
+                Mantenha as informações dos anunciantes do sistema!
+              </p>
             </div>
             <div class="search-container col-6 col-xl-5">
               <form (ngSubmit)="searchSubmit($event)">
                 <div class="input-group no-border">
-                  <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="searchSubmit($event)"
-                    placeholder="buscar anunciantes?...">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="searchTerm"
+                    [(ngModel)]="searchTerm"
+                    (ngModelChange)="searchSubmit($event)"
+                    placeholder="buscar anunciantes?..."
+                  />
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <i class="now-ui-icons ui-1_zoom-bold" (click)="searchSubmit($event)"></i>
+                      <i
+                        class="now-ui-icons ui-1_zoom-bold"
+                        (click)="searchSubmit($event)"
+                      ></i>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="showDialog(null)">Novo</button>
+              <button
+                type="button"
+                class="btn float-right layout-button"
+                (click)="showDialog(null)"
+              >
+                Novo
+              </button>
             </div>
           </div>
-
         </div>
         <div class="card-body">
           <p-table [value]="advertisersGrid" [paginator]="true" [rows]="10">
@@ -42,20 +57,40 @@
             </ng-template>
             <ng-template pTemplate="body" let-advertiser>
               <tr>
-                <td>{{advertiser.nome}}</td>
-                <td>{{advertiser.descricao}}</td>
-                <td>{{advertiser.data_expiracao | dateFormat}}</td>
-                <td>{{advertiser.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(advertiser)" *ngIf="advertiser.bloqueado !== true">
+                  <a (click)="filesDialog(advertiser)">{{ advertiser.nome }}</a>
+                </td>
+                <td>{{ advertiser.descricao }}</td>
+                <td>{{ advertiser.data_expiracao | dateFormat }}</td>
+                <td>{{ advertiser.ativo ? "sim" : "não" }}</td>
+                <td>
+                  <a
+                    (click)="showDialog(advertiser)"
+                    *ngIf="advertiser.bloqueado !== true"
+                  >
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteFranchise(advertiser)" *ngIf="advertiser.bloqueado !== true">
+                  <a
+                    (click)="deleteFranchise(advertiser)"
+                    *ngIf="advertiser.bloqueado !== true"
+                  >
                     <i class="pi pi-times"></i>
                   </a>
-                  <a (click)="switchActive(advertiser)" title="{{advertiser.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="advertiser.bloqueado !== true">
-                    <i class="pi" [ngClass]="{'pi-lock': advertiser.ativo == true, 'pi-unlock': advertiser.ativo != true}"></i>
-                  </a>                 
+                  <a
+                    (click)="switchActive(advertiser)"
+                    title="{{
+                      advertiser.ativo == true ? 'desativar' : 'ativar'
+                    }}"
+                    *ngIf="advertiser.bloqueado !== true"
+                  >
+                    <i
+                      class="pi"
+                      [ngClass]="{
+                        'pi-lock': advertiser.ativo == true,
+                        'pi-unlock': advertiser.ativo != true
+                      }"
+                    ></i>
+                  </a>
                 </td>
               </tr>
             </ng-template>
@@ -64,5 +99,8 @@
       </div>
     </div>
   </div>
-  <p-confirmDialog header="Tem certeza?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <p-confirmDialog
+    header="Tem certeza?"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
 </div>

@@ -40,9 +40,9 @@ namespace AppSlider.Application.PlaylistFile.Services
             return returnPlaylistFile;
         }
 
-        public async Task<Boolean> ProcessDelete(Guid playlistId, Guid playlistFileId)
+        public async Task<Boolean> ProcessDelete(Guid idBusiness, Guid playlistFileId)
         {            
-            await playlistRepository.DeletePlaylistItem(playlistId, playlistFileId);
+            await playlistRepository.DeletePlaylistItem(idBusiness, playlistFileId);
 
             return true;
         }

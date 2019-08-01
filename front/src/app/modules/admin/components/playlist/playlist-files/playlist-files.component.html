@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3>Itens da Playlist {{playlist?.nome}}</h3>
+    <h3>Itens da Playlist {{business?.nome}}</h3>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -8,7 +8,8 @@
 
     <form [formGroup]="playlistFilesForm">
 
-        <input formControlName="id_playlist" type="hidden">
+        <input formControlName="business_id" type="hidden">
+        <input formControlName="business_type" type="hidden">
 
         <div class="form-group">
             <label>Tipo do Item da playlist</label>
@@ -46,7 +47,7 @@
     </div>
     <br />
     <div>
-        <p-table [value]="playlist?.playlist_itens" [paginator]="true" [rows]="10">
+        <p-table [value]="playlists?.playlist_itens" [paginator]="true" [rows]="10">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Vizualização</th>

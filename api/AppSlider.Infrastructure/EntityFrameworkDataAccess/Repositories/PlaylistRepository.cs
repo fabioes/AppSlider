@@ -57,8 +57,13 @@
 
         public async Task<ICollection<Playlist>> GetByFranchise(Guid franchiseId)
         {
-            var playlists = await _context.PlayLists.Where(w => w.FranchiseId == franchiseId).ToListAsync();
+            var playlists = await _context.PlayLists.Where(w => w.BusinessId == franchiseId).ToListAsync();
             return playlists;
+        }
+        public async Task<Playlist> GetByBusiness(Guid businessId)
+        {
+            var playlist = await _context.PlayLists.FirstOrDefaultAsync(w => w.BusinessId == businessId);
+            return playlist;
         }
 
         public async Task<Playlist> Update(Playlist playlist)
@@ -94,9 +99,9 @@
             return playListFile;
         }
 
-        public async Task<Playlist> DeletePlaylistItem(Guid playListId, Guid playListFileId)
+        public async Task<Playlist> DeletePlaylistItem(Guid businessId, Guid playListFileId)
         {
-            var playlist = await Get(playListId);
+            var playlist = await _context.PlayLists.FirstOrDefaultAsync(x => x.BusinessId == businessId);
 
             var playlistFile = playlist?.PlaylistFiles?.FirstOrDefault(f => f.Id == playListFileId);
 

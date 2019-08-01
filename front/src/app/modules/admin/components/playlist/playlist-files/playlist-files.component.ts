@@ -20,13 +20,16 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 export class PlaylistFilesComponent implements OnInit {
 
   @Input() playlist: Model.App.Playlist;
+  @Input() business: Model.App.Business;
   @ViewChild('fileUpload') private fileUpload: FileUpload;
   playlistFilesForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
   franchise: Model.App.UserFranchise;
   getFileUrl = environment.apiConfig.baseUrl + environment.apiConfig.apiRoutes.files.default + '/';
   showFileError: boolean = false;
-
+  playlists: Model.App.Playlist;
+  playlistsGrid: Model.App.Playlist;
+  searchTerm: string;
   types = [{
     name: 'Imagem',
     value: 'imagem'
@@ -47,20 +50,24 @@ export class PlaylistFilesComponent implements OnInit {
   ) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
+
   }
 
   ngOnInit() {
 
     this.playlistFilesForm = this.fb.group({
-      id_playlist: [this.playlist.id],
+      business_id: [this.business.id],
+      business_type: [this.business.id_tipo],
       tipo: ['', Validators.required],
       tempo_duracao: [5, Validators.required]
     });
+    this.getPlaylists();
+
   }
 
 
   public save() {
-    
+
     if (this.playlistFilesForm.invalid) return;
 
     if (!this.fileUpload.files || this.fileUpload.files.length == 0 || !this.fileUpload.files[0]) {
@@ -80,11 +87,11 @@ export class PlaylistFilesComponent implements OnInit {
 
   deleteItem(playListItem) {
     this.confirmationService.confirm({
-      message: 'Tem certeza que deseja remover o item da Playlist ' + this.playlist.nome + '?',
+      message: 'Tem certeza que deseja remover o item da Playlist?',
       header: 'Confirma a remoção?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.playlistService.removeItem(this.playlist.id, playListItem.id).subscribe(() => {
+        this.playlistService.removeItem(this.business.id, playListItem.id).subscribe(() => {
           this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Item da Playlist <b> ' + this.playlist.nome + ' </b> foi removido com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
@@ -103,7 +110,27 @@ export class PlaylistFilesComponent implements OnInit {
   public isFieldInvalid(field: string) {
     return this.globalService.isFieldInvalid(field, this.playlistFilesForm);
   }
+  private getPlaylists() {
+    //TODO: make retrive routines for Attendant by API request
+    console.log('entrou');
+    return this.playlistService.getByBusiness(this.business.id).subscribe(res => {
 
+      this.playlists = res;
+      console.log(res);
+      if (this.searchTerm)
+        this.searchSubmit(null);
+      else
+        this.playlistsGrid = this.playlists;
+    });
+  }
+
+  searchSubmit($event) {
+
+    if (!this.searchTerm)
+      this.getPlaylists();
+
+   // this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+  }
 
   public callbackAction(action, res) {
 
@@ -114,14 +141,15 @@ export class PlaylistFilesComponent implements OnInit {
       toastClass: "alert alert-success alert-with-icon",
       positionClass: 'toast-top-right'
     });
+    console.log(res);
 
     this.playlistFilesForm.get('tipo').setValue(null);
     this.playlistFilesForm.get('tempo_duracao').setValue(5);
     this.fileUpload.clear();
 
-    if(!this.playlist.playlist_itens) this.playlist.playlist_itens = [];
+    if (!this.playlist.playlist_itens) this.playlist.playlist_itens = [];
 
-    this.playlist.playlist_itens.push(res);
+    this.getPlaylists();
   }
 
 }

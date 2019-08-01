@@ -71,6 +71,7 @@ namespace AppSlider.WebApi.Controllers.Business.Get
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }
 
+
         /// <summary>
         /// Obtem um ou vários Negócios por tipo
         /// </summary>

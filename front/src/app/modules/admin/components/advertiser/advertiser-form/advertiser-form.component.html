@@ -1,87 +1,153 @@
 <div class="modal-header">
-    <h3>{{!advertiser?.id ? 'novo Anunciante?' : 'editando anunciante ' + advertiser?.nome}}</h3>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <h3>
+    {{
+      !advertiser?.id
+        ? "novo Anunciante?"
+        : "editando anunciante " + advertiser?.nome
+    }}
+  </h3>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(null)"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
-    <p>preencha as informações relevantes do anunciante {{advertiser?.id ? advertiser.nome : ''}}</p>
+  <p>
+    preencha as informações relevantes do anunciante
+    {{ advertiser?.id ? advertiser.nome : "" }}
+  </p>
 
-    <form [formGroup]="advertiserForm">
+  <form [formGroup]="advertiserForm">
+    <input formControlName="id" type="hidden" />
+    <input formControlName="id_tipo" type="hidden" />
+    <input formControlName="id_pai" type="hidden" />
 
-        <input formControlName="id" type="hidden">
-        <input formControlName="id_tipo" type="hidden">
-        <input formControlName="id_pai" type="hidden">
-        
-        <div class="form-group">
-            <label>Nome do Anunciante</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
-                placeholder="digite o nome do anunciante" name="nome" maxlength="200" required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
-                Favor inserir o 'Nome do Anunciante'!
-            </div>
-        </div>
+    <div class="form-group">
+      <label>Nome do Anunciante</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('nome') }"
+        formControlName="nome"
+        placeholder="digite o nome do anunciante"
+        name="nome"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+        Favor inserir o 'Nome do Anunciante'!
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Estabelecimentos do Anunciante</label>
+      <p-multiSelect
+        [style]="{ width: '100%' }"
+        [options]="establishments"
+        formControlName="establishments"
+        optionLabel="nome"
+        maxSelectedLabels="3"
+        (onChange)="getCheckboxScope($event)"
+        selectedItemsLabel="{0} Estabelecimentos Selecionados"
+        defaultLabel="Selecione..."
+      >
+      </p-multiSelect>
+    </div>
+    <div class="form-group">
+      <label>Nome do Contato da Anunciante</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_nome') }"
+        formControlName="contato_nome"
+        placeholder="digite o nome do contato do anunciante"
+        name="contato_nome"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_nome')">
+        Favor inserir o 'Nome do Contato do Anunciante'!
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Descrição do Anunciante</label>
-            <label class="required-info-asterisk">*</label>
-            <textarea class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
-                placeholder="digite a descrição do anunciante" maxlength="500" name="descricao"></textarea>
-        </div>
+    <div class="form-group">
+      <label>E-mail do Contato do Anunciante</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        type="email"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_email') }"
+        formControlName="contato_email"
+        placeholder="digite o e-mail do contato do anunciante"
+        name="contato_email"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_email')">
+        Favor inserir o 'E-mail do Contato do Anunciante'!
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Nome do Contato da Anunciante</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_nome')}" formControlName="contato_nome"
-                placeholder="digite o nome do contato do anunciante" name="contato_nome" maxlength="200" required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_nome')">
-                Favor inserir o 'Nome do Contato do Anunciante'!
-            </div>
-        </div>
+    <div class="form-group">
+      <label>Telefone do Contato do Anunciante</label>
+      <input
+        phone
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_telefone') }"
+        formControlName="contato_telefone"
+        placeholder="digite o telefone do contato do anunciante"
+        name="contato_telefone"
+        maxlength="50"
+      />
+    </div>
 
-        <div class="form-group">
-            <label>E-mail do Contato do Anunciante</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" type="email" [ngClass]="{'is-invalid': isFieldInvalid('contato_email')}"
-                formControlName="contato_email" placeholder="digite o e-mail do contato do anunciante" name="contato_email"
-                maxlength="200"
-                required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_email')">
-                Favor inserir o 'E-mail do Contato do Anunciante'!
-            </div>
-        </div>
+    <div class="form-group">
+      <label>Endereço do Contato do Anunciante</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_endereco') }"
+        formControlName="contato_endereco"
+        placeholder="digite o endereço do contato do anunciante"
+        name="contato_endereco"
+        maxlength="300"
+      />
+    </div>
 
-        <div class="form-group">
-            <label>Telefone do Contato do Anunciante</label>
-            <input phone class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_telefone')}" formControlName="contato_telefone"
-                placeholder="digite o telefone do contato do anunciante" name="contato_telefone" maxlength="50">
-        </div>
+    <div class="form-group date-group">
+      <label>Data de expiração</label>
+      <p-calendar
+        [locale]="pt"
+        placeholder="data de expiração"
+        (onSelect)="setDateValue($event)"
+        formControlName="dateTemp"
+        dateFormat="dd/M/yy"
+      >
+      </p-calendar>
+    </div>
 
-        <div class="form-group">
-            <label>Endereço do Contato do Anunciante</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_endereco')}" formControlName="contato_endereco"
-                placeholder="digite o endereço do contato do anunciante" name="contato_endereco" maxlength="300">
-        </div>
-
-        <div class="form-group date-group">
-            <label>Data de expiração</label>
-            <p-calendar [locale]="pt" placeholder="data de expiração" 
-                (onSelect)="setDateValue($event)" formControlName="dateTemp" dateFormat="dd/M/yy">
-            </p-calendar>
-        </div>
-
-        <div class="form-group">
-            <label>Ativo?</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}"
-                formControlName="ativo" name="ativo">
-        </div>
-
-    </form>
-
+    <div class="form-group">
+      <label>Ativo?</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        type="checkbox"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('ativo') }"
+        formControlName="ativo"
+        name="ativo"
+      />
+    </div>
+  </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn bg-dark" [disabled]="!advertiserForm.valid" (click)="save()">
-        {{advertiser?.id ? 'Salvar' : 'Cadastrar' }}</button>
+  <button
+    type="button"
+    class="btn bg-dark"
+    [disabled]="!advertiserForm.valid"
+    (click)="save()"
+  >
+    {{ advertiser?.id ? "Salvar" : "Cadastrar" }}
+  </button>
 </div>

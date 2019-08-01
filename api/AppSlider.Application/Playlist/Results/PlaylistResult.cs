@@ -40,7 +40,7 @@ namespace AppSlider.Application.Playlist.Results
                 PlaylistFiles = playlist.PlaylistFiles?.Select(s => (PlaylistFileResult)s)?.ToList(),
                 Expirate = playlist.Expirate,
                 Blocked = playlist.Blocked,
-                FranchiseId = playlist.FranchiseId
+                FranchiseId = playlist.BusinessId
             };
         }
 

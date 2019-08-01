@@ -1,5 +1,4 @@
-<div class="panel-header panel-header-sm">
-</div>
+<div class="panel-header panel-header-sm"></div>
 <div class="main-content">
   <div class="row">
     <div class="col-md-12">
@@ -8,26 +7,42 @@
           <div class="row">
             <div class="col-4 col-xl-5">
               <h5 class="title">Estabelecimento</h5>
-              <p class="subtitle">Mantenha as informações dos estabelecimentos do sistema!</p>
+              <p class="subtitle">
+                Mantenha as informações dos estabelecimentos do sistema!
+              </p>
             </div>
             <div class="search-container col-6 col-xl-5">
               <form (ngSubmit)="searchSubmit($event)">
                 <div class="input-group no-border">
-                  <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="searchSubmit($event)"
-                    placeholder="buscar estabelecimentos?...">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="searchTerm"
+                    [(ngModel)]="searchTerm"
+                    (ngModelChange)="searchSubmit($event)"
+                    placeholder="buscar estabelecimentos?..."
+                  />
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <i class="now-ui-icons ui-1_zoom-bold" (click)="searchSubmit($event)"></i>
+                      <i
+                        class="now-ui-icons ui-1_zoom-bold"
+                        (click)="searchSubmit($event)"
+                      ></i>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
             <div class="actions-container col-2 col-xl-2">
-              <button type="button" class="btn float-right layout-button" (click)="showDialog(null)">Novo</button>
+              <button
+                type="button"
+                class="btn float-right layout-button"
+                (click)="showDialog(null)"
+              >
+                Novo
+              </button>
             </div>
           </div>
-
         </div>
         <div class="card-body">
           <p-table [value]="establishmentsGrid" [paginator]="true" [rows]="10">
@@ -42,20 +57,42 @@
             </ng-template>
             <ng-template pTemplate="body" let-establishment>
               <tr>
-                <td>{{establishment.nome}}</td>
-                <td>{{establishment.descricao}}</td>
-                <td>{{establishment.data_expiracao | dateFormat}}</td>
-                <td>{{establishment.ativo ? 'sim' : 'não'}}</td>
                 <td>
-                  <a (click)="showDialog(establishment)" *ngIf="establishment.bloqueado !== true">
+                  <a (click)="filesDialog(establishment)">{{
+                    establishment.nome
+                  }}</a>
+                </td>
+                <td>{{ establishment.descricao }}</td>
+                <td>{{ establishment.data_expiracao | dateFormat }}</td>
+                <td>{{ establishment.ativo ? "sim" : "não" }}</td>
+                <td>
+                  <a
+                    (click)="showDialog(establishment)"
+                    *ngIf="establishment.bloqueado !== true"
+                  >
                     <i class="pi pi-pencil"></i>
                   </a>
-                  <a (click)="deleteFranchise(establishment)" *ngIf="establishment.bloqueado !== true">
+                  <a
+                    (click)="deleteFranchise(establishment)"
+                    *ngIf="establishment.bloqueado !== true"
+                  >
                     <i class="pi pi-times"></i>
                   </a>
-                  <a (click)="switchActive(establishment)" title="{{establishment.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="establishment.bloqueado !== true">
-                    <i class="pi" [ngClass]="{'pi-lock': establishment.ativo == true, 'pi-unlock': establishment.ativo != true}"></i>
-                  </a>                 
+                  <a
+                    (click)="switchActive(establishment)"
+                    title="{{
+                      establishment.ativo == true ? 'desativar' : 'ativar'
+                    }}"
+                    *ngIf="establishment.bloqueado !== true"
+                  >
+                    <i
+                      class="pi"
+                      [ngClass]="{
+                        'pi-lock': establishment.ativo == true,
+                        'pi-unlock': establishment.ativo != true
+                      }"
+                    ></i>
+                  </a>
                 </td>
               </tr>
             </ng-template>
@@ -64,5 +101,8 @@
       </div>
     </div>
   </div>
-  <p-confirmDialog header="Tem certeza?" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <p-confirmDialog
+    header="Tem certeza?"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
 </div>

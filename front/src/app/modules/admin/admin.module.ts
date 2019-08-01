@@ -39,6 +39,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { CalendarModule } from 'primeng/calendar';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 //pipes
 import { PhonePipe } from './shared/pipes/phone.pipe';
@@ -64,7 +65,8 @@ import { PhoneMaskDirective } from './directives/masks/phone-mask.directive';
     FileUploadModule,
     DialogModule,
     ConfirmDialogModule,
-    CalendarModule    
+    CalendarModule,
+    MultiSelectModule,
   ],
   declarations: [
     DashboardComponent,

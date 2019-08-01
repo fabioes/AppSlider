@@ -2,12 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../../services/business/business.service';
 import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 import { FranchiseService } from '../../../services/franchise/franchise.service';
 import { CategoryService } from '../../../services/category/category.service';
+import { PlaylistFilesComponent } from '../../playlist/playlist-files/playlist-files.component';
+import { PlaylistService } from '../../../services/playlist/playlist.service';
 
 @Component({
   selector: 'establishment-form',
@@ -21,6 +23,10 @@ export class EstablishmentFormComponent implements OnInit {
   pt = this.globalService.getPrimeCalendarPtConfig();
   franchise: Model.App.UserFranchise;
   categories: Array<Model.App.Category>;
+  playlists: Array<Model.App.Playlist>;
+  playlistsGrid: Array<Model.App.Playlist>;
+  searchTerm: string;
+  imageSrc: string;
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -30,6 +36,8 @@ export class EstablishmentFormComponent implements OnInit {
     private businessTypeService: BusinessTypeService,
     private franchiseService: FranchiseService,
     private categoryService: CategoryService,
+    private playlistService: PlaylistService,
+    private modalService: NgbModal,
   ) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
@@ -112,4 +120,55 @@ export class EstablishmentFormComponent implements OnInit {
     this.establishmentForm.get('data_expiracao').setValue(date);
   }
 
+  searchSubmit($event) {
+
+    if (!this.searchTerm)
+      this.getPlaylists();
+
+    this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+  }
+
+  filesDialog(){
+    const modalRef = this.modalService.open(PlaylistFilesComponent, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+
+    modalRef.componentInstance.name = 'Playlist Itens';
+
+    
+
+    modalRef.result.then((res: Model.App.Playlist) => {
+      if (res == null) return;
+
+      this.getPlaylists();
+
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+  
+  private getPlaylists() {
+    //TODO: make retrive routines for Attendant by API request
+
+    return this.playlistService.getByFranchise().subscribe(res => {
+
+      this.playlists = res;
+
+      if (this.searchTerm)
+        this.searchSubmit(null);
+      else
+        this.playlistsGrid = this.playlists;
+    });
+  }
+  readURL(event): void {
+    if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+
+        const reader = new FileReader();
+        reader.onload = e => this.imageSrc = reader.result.toString();
+
+        reader.readAsDataURL(file);
+    }
+}
 }

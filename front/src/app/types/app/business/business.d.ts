@@ -20,4 +20,5 @@ declare namespace Model.App {
         pai: Model.App.Business,
         filhos: Array<Model.App.Business>,
     }
+    
 }

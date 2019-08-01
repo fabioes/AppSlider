@@ -40,7 +40,7 @@ namespace AppSlider.WebApi.Controllers.Playlist.Create
                 Name = request.Name,
                 Active = request.Active,
                 Expirate = request.Expirate ?? DateTime.MaxValue,
-                FranchiseId = request.FranchiseId                
+                BusinessId = request.FranchiseId                
             });
 
             return Ok(new ApiReturnItem<PlaylistResult> { Item = result, Success = true });

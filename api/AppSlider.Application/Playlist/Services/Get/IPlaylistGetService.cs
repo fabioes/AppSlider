@@ -10,6 +10,7 @@ namespace AppSlider.Application.Playlist.Services.Get
         Task<PlaylistResult> Get(Guid id);
 
         Task<List<PlaylistResult>> GetByFranchise(Guid franchiseId);
+        Task<PlaylistResult> GetByBusiness(Guid businessId);
 
         Task<List<PlaylistResult>> GetAll();
     }

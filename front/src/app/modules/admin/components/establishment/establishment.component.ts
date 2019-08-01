@@ -4,6 +4,8 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../services/business/business.service';
 import { EstablishmentFormComponent } from './establishment-form/establishment-form.component';
+import { PlaylistFilesComponent } from '../playlist/playlist-files/playlist-files.component';
+import { PlaylistService } from '../../services/playlist/playlist.service';
 
 
 @Component({
@@ -16,9 +18,13 @@ export class EstablishmentComponent implements OnInit {
   establishments: Array<Model.App.Business>;
   establishmentsGrid: Array<Model.App.Business>;
   searchTerm: string;
+  playlists: Array<Model.App.Playlist>;
+  playlistsGrid: Array<Model.App.Playlist>;
+
 
   constructor(private businessService: BusinessService,
     private confirmationService: ConfirmationService,
+    private playlistService: PlaylistService,
     private modalService: NgbModal,
     private toastrService: ToastrService) { }
 
@@ -39,15 +45,6 @@ export class EstablishmentComponent implements OnInit {
         this.establishmentsGrid = this.establishments;
     });
   }
-
-  searchSubmit($event) {
-
-    if (!this.searchTerm)
-      this.getEstablishments();
-
-    this.establishmentsGrid = this.establishments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
-  }
-
   showDialog(establishment: Model.App.Business) {
     const modalRef = this.modalService.open(EstablishmentFormComponent, {
       backdrop: 'static',
@@ -66,6 +63,47 @@ export class EstablishmentComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     });
+  }
+
+  filesDialog(business: Model.App.Business){
+    const modalRef = this.modalService.open(PlaylistFilesComponent, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+
+    modalRef.componentInstance.name = 'Playlist Itens';
+
+    modalRef.componentInstance.business = business;   
+
+    modalRef.result.then((res: Model.App.Business) => {
+      if (res == null) return;
+
+      this.getPlaylists();
+
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+  private getPlaylists() {
+    //TODO: make retrive routines for Attendant by API request
+    console.log('entrou');
+    return this.playlistService.getAllPlaylists().subscribe(res => {
+
+      this.playlists = res;
+      console.log(res);
+      if (this.searchTerm)
+        this.searchSubmit(null);
+      else
+        this.playlistsGrid = this.playlists;
+    });
+  }
+
+  searchSubmit($event) {
+
+    if (!this.searchTerm)
+      this.getPlaylists();
+
+    this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
   deleteFranchise(establishment) {

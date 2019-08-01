@@ -33,6 +33,7 @@ export const environment = {
         default: "/playlist",
         switchActive: "/playlist/switch_active",
         getByFranchise: "/playlist/GetByFranchise",
+        getByBusiness: "/playlist/business",
         playlistItem: "/playlist_file"
       },
       files:{

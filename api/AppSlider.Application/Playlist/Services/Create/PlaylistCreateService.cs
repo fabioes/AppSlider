@@ -1,11 +1,7 @@
 ﻿using AppSlider.Application.Playlist.Commands;
 using AppSlider.Application.Playlist.Results;
-using AppSlider.Application.TypeBusiness.Commands;
-using AppSlider.Application.TypeBusiness.Results;
 using AppSlider.Domain;
-using AppSlider.Domain.Entities.PlayLists;
 using AppSlider.Domain.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,7 +20,7 @@ namespace AppSlider.Application.Playlist.Services.Create
         {
             PlaylistCreateValidations(command);
 
-            var playlist = new Domain.Entities.PlayLists.Playlist(command.Name, command.Active, command.Expirate, command.FranchiseId, false);
+            var playlist = new Domain.Entities.PlayLists.Playlist(command.Name, command.Active, command.Expirate, command.BusinessId, false);
 
             await playlistRepository.Add(playlist);
 
@@ -36,19 +32,12 @@ namespace AppSlider.Application.Playlist.Services.Create
 
         private void PlaylistCreateValidations(PlaylistCreateCommand command)
         {
-            var messageValidations = new List<String>();
+            var messageValidations = new List<string>();
 
             if (command == null)
             {
                 messageValidations.Add("Favor informar os dados da Playlist!");
-            }
-            else
-            {
-                if (String.IsNullOrWhiteSpace(command.Name))
-                    messageValidations.Add("Na criação de uma Playlist o 'Nome' é obrigatorio!");
-
-                
-            }
+            }      
             
             if (messageValidations.Count > 0)
             {

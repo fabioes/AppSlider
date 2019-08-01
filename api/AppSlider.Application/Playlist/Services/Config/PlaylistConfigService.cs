@@ -29,7 +29,7 @@ namespace AppSlider.Application.Playlist.Services.Config
             if (playlist == null)
                 throw new BusinessException($"Erro na ativação / desativação da Playlist", new List<string> { "Playlist Inexistente!" }, "PlaylistConfigService - Validations");
 
-            var domainPlaylist = new Domain.Entities.PlayLists.Playlist(playlist.Id, playlist.Name, !playlist.Active, playlist.Expirate, playlist.FranchiseId, playlist.Blocked);
+            var domainPlaylist = new Domain.Entities.PlayLists.Playlist(playlist.Id, playlist.Name, !playlist.Active, playlist.Expirate, playlist.BusinessId, playlist.Blocked);
 
             playlistRepository.DetachPlaylist(playlist);
 

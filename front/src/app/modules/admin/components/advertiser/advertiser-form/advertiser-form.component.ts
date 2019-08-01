@@ -7,6 +7,7 @@ import { BusinessService } from '../../../services/business/business.service';
 import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 import { FranchiseService } from '../../../services/franchise/franchise.service';
+import { SelectItem } from 'primeng/components/common/selectitem';
 
 @Component({
   selector: 'advertiser-form',
@@ -19,6 +20,9 @@ export class AdvertiserFormComponent implements OnInit {
   advertiserForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
   franchise: Model.App.UserFranchise;
+  establishments: Array<Model.App.Business>; 
+  searchTerm: string;
+  selectedScopes: any[] = [];
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -26,9 +30,11 @@ export class AdvertiserFormComponent implements OnInit {
     private businessService: BusinessService,
     private toastrService: ToastrService,
     private businessTypeService: BusinessTypeService,
-    private franchiseService : FranchiseService) {
+    private franchiseService: FranchiseService) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
+ 
+    this.getEstablishments();
   }
 
   ngOnInit() {
@@ -47,7 +53,8 @@ export class AdvertiserFormComponent implements OnInit {
       contato_endereco: [''],
       data_expiracao: [''],
       ativo: [true],
-      dateTemp: [null]
+      dateTemp: [null],
+      establishments: []
     });
 
     this.advertiserForm.patchValue(this.advertiser || {});
@@ -56,8 +63,8 @@ export class AdvertiserFormComponent implements OnInit {
       this.advertiserForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Anunciante')[0]).id);
     });
 
-    if((this.advertiser || <Model.App.Business>{}).data_expiracao)
-    this.advertiserForm.get('dateTemp').setValue(new Date(this.advertiser.data_expiracao));
+    if ((this.advertiser || <Model.App.Business>{}).data_expiracao)
+      this.advertiserForm.get('dateTemp').setValue(new Date(this.advertiser.data_expiracao));
 
   }
 
@@ -98,5 +105,21 @@ export class AdvertiserFormComponent implements OnInit {
     let date = moment(event).format();
     this.advertiserForm.get('data_expiracao').setValue(date);
   }
+  getCheckboxScope(event) {
+    this.selectedScopes.push(event);
+    console.log(this.advertiserForm.get('establishments'));
+  }
+  getEstablishments() {
+    //TODO: make retrive routines for Attendant by API request
 
+    return this.businessService.getByFranchiseAndType("Estabelecimento").subscribe(res => {
+
+      this.establishments = res;
+
+      // if (this.searchTerm)
+      //   this.searchSubmit(null);
+      // else
+      //this.establishmentsGrid = this.establishments;
+    });
+  }
 }

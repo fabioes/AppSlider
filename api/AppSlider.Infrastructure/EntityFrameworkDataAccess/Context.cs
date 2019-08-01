@@ -1,10 +1,6 @@
 ﻿namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
-    using System;
-    using System.Linq;
-    using AppSlider.Domain.Entities;
     using AppSlider.Domain.Entities.Business;
-    using AppSlider.Domain.Entities.Categories;
     using Microsoft.EntityFrameworkCore;
 
     public class Context : DbContext
@@ -17,9 +13,9 @@
         public DbSet<Domain.Entities.Users.User> Users { get; set; }
         public DbSet<Domain.Entities.Roles.Role> Roles { get; set; }
         public DbSet<Domain.Entities.Categories.Category> Categories { get; set; }
-        public DbSet<Domain.Entities.Business.BusinessType> BusinessTypes { get; set; }
+        public DbSet<BusinessType> BusinessTypes { get; set; }
         public DbSet<Domain.Entities.Files.File> Files { get; set; }
-        public DbSet<Domain.Entities.Business.BusinessEntity> Business { get; set; }
+        public DbSet<BusinessEntity> Business { get; set; }
         public DbSet<Domain.Entities.PlayLists.Playlist> PlayLists { get; set; }
         public DbSet<Domain.Entities.PlayLists.PlaylistFile> PlayListFiles { get; set; }
         public DbSet<Domain.Entities.BusinessPlayLists.BusinessPlayList> BusinessPlayLists { get; set; }
@@ -42,7 +38,7 @@
             modelBuilder.Entity<Domain.Entities.Files.File>()
                .ToTable("Files");
 
-            modelBuilder.Entity<Domain.Entities.Business.BusinessEntity>()
+            modelBuilder.Entity<BusinessEntity>()
                 
                 .ToTable("Business")                
                 .HasMany(m => m.ChildrenBusinessEntity)

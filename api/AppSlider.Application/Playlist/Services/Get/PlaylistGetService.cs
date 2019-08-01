@@ -33,6 +33,12 @@ namespace AppSlider.Application.Playlist.Services.Get
 
             return returnPlaylists;
         }
+        public async Task<PlaylistResult> GetByBusiness(Guid businessId)
+        {
+            var playlist = await playlistRepository.GetByBusiness(businessId);           
+
+            return (PlaylistResult)playlist;
+        }
 
         public async Task<List<PlaylistResult>> GetAll()
         {

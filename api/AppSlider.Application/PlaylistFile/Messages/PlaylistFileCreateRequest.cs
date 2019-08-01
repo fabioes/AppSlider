@@ -7,11 +7,13 @@ namespace AppSlider.Application.PlaylistFile.Messages
     {
         [JsonProperty("id_playlist")]
         public virtual Guid IdPlayList { get; set; }
-
+        [JsonProperty("business_id")]
+        public virtual Guid IdBusiness { get; set; }
+        [JsonProperty("business_type")]
+        public virtual int IdType { get; set; }
         [JsonProperty("tipo")]
-        public virtual String PlayListFileType { get; set; }
-
+        public virtual string PlayListFileType { get; set; }
         [JsonProperty("tempo_duracao")]
-        public virtual Int16 Duration { get; set; }
+        public virtual short Duration { get; set; }
     }
 }

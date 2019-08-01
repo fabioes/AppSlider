@@ -60,7 +60,19 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
 
             return Ok(new ApiReturnList<PlaylistResult> { Items = results, Success = true });
         }
+        /// <summary>
+        /// Obtem as Playlists de uma dada franquia
+        /// </summary>
+        [HttpGet("business/{idBusiness}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadPlaylist)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistResult>))]
+        public async Task<IActionResult> GetByBusiness(Guid idBusiness)
+        {
+            var results = await _playlistGetService.GetByBusiness(idBusiness);
 
+            return Ok(new ApiReturnItem<PlaylistResult> { Item = results, Success = true });
+        }
         /// <summary>
         /// Obtem Playlist de um equipamento.
         /// </summary>
