@@ -26,7 +26,7 @@ export class EstablishmentFormComponent implements OnInit {
   playlists: Array<Model.App.Playlist>;
   playlistsGrid: Array<Model.App.Playlist>;
   searchTerm: string;
-  imageSrc: string;
+  imageSrc: string; 
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -50,7 +50,7 @@ export class EstablishmentFormComponent implements OnInit {
     this.establishmentForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
-      descricao: [''],
+      CNPJ: [''],
       id_pai: [this.franchise.id],
       id_tipo: ['', Validators.required],
       id_categoria: [''],

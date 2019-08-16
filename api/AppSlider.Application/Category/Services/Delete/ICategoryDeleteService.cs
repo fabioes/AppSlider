@@ -5,6 +5,6 @@ namespace AppSlider.Application.Category.Services.Delete
 {
     public interface ICategoryDeleteService
     {
-        Task<Boolean> Process(Guid id);
+        Task<Boolean> Process(int id);
     }
 }

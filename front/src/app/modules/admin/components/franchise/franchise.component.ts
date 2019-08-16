@@ -45,7 +45,7 @@ export class FranchiseComponent implements OnInit {
     if (!this.searchTerm)
       this.getFranchises();
 
-    this.franchisesGrid = this.franchises.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.franchisesGrid = this.franchises.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 );
   }
 
   showDialog(franchise: Model.App.Business) {

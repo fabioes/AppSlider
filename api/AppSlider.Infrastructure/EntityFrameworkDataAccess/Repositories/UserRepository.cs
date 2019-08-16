@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using AppSlider.Domain.Repositories;
     using AppSlider.Domain.Entities.Users;
+    using System.Linq;
 
     public class UserRepository : IUserRepository
     {
@@ -60,7 +61,11 @@
             {
                 var actualUser = await _context.Users.FindAsync(user.Id);
                 user.SetPassword(actualUser?.Password);
-                //_context.DetachLocalIfExists(user);
+                var local = _context.Set<User>().Local.FirstOrDefault(e => e.Id == user.Id);
+
+                if (local == null) local = user;
+
+                _context.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
             }
 
             _context.Users.Update(user);

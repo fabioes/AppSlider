@@ -7,7 +7,7 @@
 
     public interface ICategoryRepository
     {
-        Task<Category> Get(Guid id);
+        Task<Category> Get(int id);
         Task<ICollection<Category>> GetAll();
         Task<Category> GetByName(String name);
         Task<Category> Add(Category category);

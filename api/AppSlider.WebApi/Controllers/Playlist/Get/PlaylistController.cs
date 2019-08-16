@@ -64,7 +64,7 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
         /// Obtem as Playlists de uma dada franquia
         /// </summary>
         [HttpGet("business/{idBusiness}")]
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [CustomAuthorize(AppSliderRoles.ReadPlaylist)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<PlaylistResult>))]
         public async Task<IActionResult> GetByBusiness(Guid idBusiness)

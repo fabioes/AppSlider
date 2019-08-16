@@ -29,9 +29,9 @@ namespace AppSlider.WebApi.Controllers.Categories.Get
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.ReadCategory)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<CategoryResult>))]
-        public async Task<IActionResult> Get(Guid? id)
+        public async Task<IActionResult> Get(int? id)
         {
-            if (id.HasValue && id.Value != new Guid())
+            if (id.HasValue && id.Value != 0)
             {
                 var result = await categoryGetService.Get(id.Value);
 

@@ -16,7 +16,7 @@ namespace AppSlider.Application.Category.Services.Get
             this.categoryRepository = categoryRepository;
         }
 
-        public async Task<CategoryResult> Get(Guid id)
+        public async Task<CategoryResult> Get(int id)
         {
             var user = await categoryRepository.Get(id);
 

@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using AppSlider.Domain.Entities.Categories;
     using AppSlider.Domain.Repositories;
+    using System.Linq;
 
     public class CategoryRepository : ICategoryRepository
     {
@@ -33,7 +34,7 @@
             return true;
         }
 
-        public async Task<Category> Get(Guid id)
+        public async Task<Category> Get(int id)
         {
             var user = await _context.Categories.FindAsync(id);
 
@@ -55,7 +56,13 @@
 
         public async Task<Category> Update(Category category)
         {
-            //_context.DetachLocalIfExists(category);
+          
+                var local = _context.Set<Category>().Local.FirstOrDefault(e => e.Id == category.Id);
+
+                if (local == null) local = category;
+
+                _context.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
+      
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
 

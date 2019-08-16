@@ -65,7 +65,7 @@
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {
-            //_context.DetachLocalIfExists(businessEntity);
+            _context.DetachLocalIfExistsGuid(businessEntity);
             _context.Business.Update(businessEntity);
             await _context.SaveChangesAsync();
 

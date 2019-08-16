@@ -46,7 +46,7 @@ export class AdvertiserComponent implements OnInit {
     if (!this.searchTerm)
       this.getAdvertisers();
 
-    this.advertisersGrid = this.advertisers.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.advertisersGrid = this.advertisers.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 );
   }
 
   showDialog(advertiser: Model.App.Business) {

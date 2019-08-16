@@ -30,9 +30,9 @@ namespace AppSlider.WebApi.Controllers.Categories.Delete
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.WriteCategory)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<Object>))]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (!id.HasValue || id.Value == new Guid()) throw new BusinessException("Favor informar o Id da Categoria!");
+            if (!id.HasValue || id.Value == 0) throw new BusinessException("Favor informar o Id da Categoria!");
 
             var result = await _categoryDeleteService.Process(id.Value);
 

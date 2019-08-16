@@ -1,86 +1,163 @@
 <div class="modal-header">
-    <h3>{{!franchise?.id ? 'nova franquia?' : 'editando franquia ' + franchise?.nome}}</h3>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <h3>
+    {{
+      !franchise?.id ? "nova franquia?" : "editando franquia " + franchise?.nome
+    }}
+  </h3>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(null)"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 <div class="modal-body">
-    <p>preencha as informações relevantes da franquia {{franchise?.id ? franchise.nome : ''}}</p>
+  <p>
+    preencha as informações relevantes da franquia
+    {{ franchise?.id ? franchise.nome : "" }}
+  </p>
 
-    <form [formGroup]="franchiseForm">
+  <form [formGroup]="franchiseForm">
+    <input formControlName="id" type="hidden" />
+    <input formControlName="id_tipo" type="hidden" />
 
-        <input formControlName="id" type="hidden">
-        <input formControlName="id_tipo" type="hidden">
-        
+    <div class="row">
+      <div class="col-md-6">
         <div class="form-group">
-            <label>Nome da franquia</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('nome')}" formControlName="nome"
-                placeholder="digite o nome da franquia" name="nome" maxlength="200" required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
-                Favor inserir o 'Nome da Franquia'!
-            </div>
+          <label>Razão Social</label>
+          <label class="required-info-asterisk">*</label>
+          <input
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('nome') }"
+            formControlName="nome"
+            placeholder="digite a razão social"
+            name="nome"
+            maxlength="200"
+            required
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+            Favor inserir o Razão Social!
+          </div>
         </div>
-
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
-            <label>Descrição da Franquia</label>
-            <label class="required-info-asterisk">*</label>
-            <textarea class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('descricao')}" formControlName="descricao"
-                placeholder="digite a descrição da franquia" maxlength="500" name="descricao"></textarea>
+          <label>CNPJ</label>
+          <label class="required-info-asterisk">*</label>
+          <input
+            class="form-control"
+            [ngClass]="{ 'is-invalid': isFieldInvalid('CNPJ') }"
+            formControlName="CNPJ"
+            placeholder="digite o CNPJ"
+            name="nome"
+            maxlength="200"
+            required
+          />
         </div>
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Nome do Contato da Franquia</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_nome')}" formControlName="contato_nome"
-                placeholder="digite o nome do contato da franquia" name="contato_nome" maxlength="200" required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_nome')">
-                Favor inserir o 'Nome do Contato da Franquia'!
-            </div>
-        </div>
+    <div class="form-group">
+      <label>Nome do Responsável</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_nome') }"
+        formControlName="contato_nome"
+        placeholder="digite o nome do contato da franquia"
+        name="contato_nome"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_nome')">
+        Favor inserir o 'Nome do Contato da Franquia'!
+      </div>
+    </div>
+    <div class="form-group">
+      <label>E-mail</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        type="email"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_email') }"
+        formControlName="contato_email"
+        placeholder="digite o e-mail do contato da franquia"
+        name="contato_email"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_email')">
+        Favor inserir o 'E-mail do Contato da Franquia'!
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>E-mail do Contato da Franquia</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" type="email" [ngClass]="{'is-invalid': isFieldInvalid('contato_email')}"
-                formControlName="contato_email" placeholder="digite o e-mail do contato da franquia" name="contato_email"
-                maxlength="200"
-                required>
-            <div class="invalid-feedback" *ngIf="isFieldInvalid('contato_email')">
-                Favor inserir o 'E-mail do Contato da Franquia'!
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Telefone do Contato da Franquia</label>
-            <input phone class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_telefone')}" formControlName="contato_telefone"
-                placeholder="digite o telefone do contato da franquia" name="contato_telefone" maxlength="50">
-        </div>
-
-        <div class="form-group">
-            <label>Endereço do Contato da Franquia</label>
-            <input class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('contato_endereco')}" formControlName="contato_endereco"
-                placeholder="digite o endereço do contato da franquia" name="contato_endereco" maxlength="300">
-        </div>
-
-        <div class="form-group date-group">
-            <label>Data de expiração</label>
-            <p-calendar [locale]="pt" placeholder="data de expiração" 
-                (onSelect)="setDateValue($event)" formControlName="dateTemp" dateFormat="dd/M/yy">
-            </p-calendar>
-        </div>
-
-        <div class="form-group">
-            <label>Ativa?</label>
-            <label class="required-info-asterisk">*</label>
-            <input class="form-control" type="checkbox" [ngClass]="{'is-invalid': isFieldInvalid('ativo')}"
-                formControlName="ativo" name="ativo">
-        </div>
-
-    </form>
-
+    <div class="form-group">
+      <label>Endereço</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_endereco') }"
+        formControlName="contato_endereco"
+        placeholder="digite o endereço do contato da franquia"
+        name="contato_endereco"
+        maxlength="300"
+      />
+    </div>
+    <div class="form-group">
+      <label>CEP</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_endereco') }"
+        formControlName="contato_endereco"
+        placeholder="digite o endereço do contato da franquia"
+        name="contato_endereco"
+        maxlength="300"
+      />
+    </div>
+    <div class="form-group">
+      <label>Telefone</label>
+      <input
+        phone
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_telefone') }"
+        formControlName="contato_telefone"
+        placeholder="digite o telefone do contato da franquia"
+        name="contato_telefone"
+        maxlength="50"
+      />
+    </div>
+    <div class="form-group date-group">
+      <label>Data de expiração</label>
+      <p-calendar
+        [locale]="pt"
+        placeholder="data de expiração"
+        (onSelect)="setDateValue($event)"
+        formControlName="dateTemp"
+        dateFormat="dd/M/yy"
+      >
+      </p-calendar>
+    </div>
+    <div class="form-group">
+      <label>Ativa?</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        type="checkbox"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('ativo') }"
+        formControlName="ativo"
+        name="ativo"
+      />
+    </div>
+  </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn bg-dark" [disabled]="!franchiseForm.valid" (click)="save()">
-        {{franchise?.id ? 'Salvar' : 'Cadastrar' }}</button>
+  <button
+    type="button"
+    class="btn bg-dark"
+    [disabled]="!franchiseForm.valid"
+    (click)="save()"
+  >
+    {{ franchise?.id ? "Salvar" : "Cadastrar" }}
+  </button>
 </div>

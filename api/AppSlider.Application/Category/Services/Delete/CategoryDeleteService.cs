@@ -15,7 +15,7 @@ namespace AppSlider.Application.Category.Services.Delete
             this.categoryRepository = categoryRepository;            
         }
 
-        public async Task<Boolean> Process(Guid id)
+        public async Task<Boolean> Process(int id)
         {
             CategoryDeleteValidations(id);
 
@@ -30,11 +30,11 @@ namespace AppSlider.Application.Category.Services.Delete
         }
 
 
-        private void CategoryDeleteValidations(Guid id)
+        private void CategoryDeleteValidations(int id)
         {
             var messageValidations = new List<String>();
 
-            if (id == new Guid())
+            if (id == 0)
             {
                 messageValidations.Add("Favor informar o Id da Categoria que deseja excluir!");
             }

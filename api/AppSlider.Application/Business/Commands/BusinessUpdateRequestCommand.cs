@@ -21,6 +21,9 @@ namespace AppSlider.Application.Business.Commands
         [JsonProperty("nome")]
         public String Name { get; set; }
 
+        [JsonProperty("CNPJ")]
+        public long CNPJ { get; set; }
+
         [JsonProperty("descricao")]
         public String Description { get; set; }
 

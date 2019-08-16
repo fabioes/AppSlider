@@ -7,7 +7,7 @@ namespace AppSlider.Application.Category.Services.Get
 {
     public interface ICategoryGetService
     {
-        Task<CategoryResult> Get(Guid id);
+        Task<CategoryResult> Get(int id);
 
         Task<CategoryResult> GetByName(String name);
 

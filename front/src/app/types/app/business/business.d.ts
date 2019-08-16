@@ -2,7 +2,7 @@ declare namespace Model.App {
     export interface Business {
         id: string,
         nome: string,
-        descricao: string,
+        CNPJ: number,
         id_pai: string,
         id_tipo: string,
         id_categoria: string,

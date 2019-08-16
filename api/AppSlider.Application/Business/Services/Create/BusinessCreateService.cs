@@ -12,7 +12,7 @@ namespace AppSlider.Application.Business.Services.Create
     public class BusinessCreateService : IBusinessCreateService
     {
         private readonly IBusinessRepository businessRepository;
-        
+
         public BusinessCreateService(IBusinessRepository businessRepository)
         {
             this.businessRepository = businessRepository;
@@ -22,7 +22,7 @@ namespace AppSlider.Application.Business.Services.Create
         {
             UserCreateValidations(command);
 
-            var business = new BusinessEntity(command.IdFather, command.IdType, command.IdCategory, command.Name, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false);
+            var business = new BusinessEntity(command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false);
 
             await businessRepository.Add(business);
 

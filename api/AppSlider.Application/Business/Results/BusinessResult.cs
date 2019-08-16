@@ -24,6 +24,9 @@ namespace AppSlider.Application.Business.Results
         [JsonProperty("nome")]
         public virtual String Name { get; set; }
 
+        [JsonProperty("CNPJ")]
+        public virtual long CNPJ { get; set; }
+
         [JsonProperty("descricao")]
         public virtual String Description { get; set; }
 
@@ -85,7 +88,8 @@ namespace AppSlider.Application.Business.Results
                 IdFather = b.IdFather,
                 IdLogo = b.IdLogo,
                 IdType = b.IdType,
-                Name = b.Name,
+                Name = b.LegalName,
+                CNPJ = b.CNPJ,
                 Type = (TypeBusinessResult)b.Type,
                 Blocked = b.Blocked
             };
@@ -93,7 +97,7 @@ namespace AppSlider.Application.Business.Results
 
         public static explicit operator Domain.Entities.Business.BusinessEntity(BusinessResult b)
         {
-            return b == null ? null : new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress, b.ExpirationDate, b.Active, b.Blocked);
+            return b == null ? null : new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name,b.CNPJ, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress, b.ExpirationDate, b.Active, b.Blocked);
 
         }
         

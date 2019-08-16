@@ -32,7 +32,7 @@ export class FranchiseFormComponent implements OnInit {
     this.franchiseForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
-      descricao: [''],
+      CNPJ: [''],
       //id_pai: string,
       id_tipo: ['', Validators.required],
       //id_categoria: string,

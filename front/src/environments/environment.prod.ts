@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiConfig: {
-    baseUrl: "http://www.odoias.com.br/midiafoneapi/api",
+    baseUrl: "http://www.midiafone.com.br/midiafoneapi/api",
     apiRoutes: {
       login: {
         default: "/login"
@@ -28,6 +28,7 @@ export const environment = {
         default: "/playlist",
         switchActive: "/playlist/switch_active",
         getByFranchise: "/playlist/GetByFranchise",
+        getByBusiness: "/playlist/business",
         playlistItem: "/playlist_file"
       },
       files: {
