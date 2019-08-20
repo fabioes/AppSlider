@@ -33,11 +33,12 @@ export class PlaylistFilesComponent implements OnInit {
   types = [{
     name: 'Imagem',
     value: 'imagem'
-  },
-  {
-    name: 'Vídeo',
-    value: 'video'
-  }];
+  }
+  // {
+  //   name: 'Vídeo',
+  //   value: 'video'
+  // }
+];
 
 
   constructor(public activeModal: NgbActiveModal,

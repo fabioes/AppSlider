@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
@@ -6,6 +6,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../../services/business/business.service';
 import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'franchise-form',
@@ -17,7 +18,8 @@ export class FranchiseFormComponent implements OnInit {
   @Input() franchise: Model.App.Business;
   franchiseForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
-
+  file: any;
+  @ViewChild('fileUpload') private fileUpload: ElementRef;
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -29,6 +31,18 @@ export class FranchiseFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.franchise) {
+      this.file = '/assets/img/noimage-portfolio-2000x1125.png';
+    } else {
+      if (!this.franchise.file) {
+        this.file = '/assets/img/noimage-portfolio-2000x1125.png';
+      }
+      else {
+        this.file = 'data:image/jpeg;base64,' + this.franchise.file;
+      }
+    }
+
+
     this.franchiseForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
@@ -36,7 +50,6 @@ export class FranchiseFormComponent implements OnInit {
       //id_pai: string,
       id_tipo: ['', Validators.required],
       //id_categoria: string,
-      //id_logo: string,
       contato_nome: ['', Validators.required],
       contato_email: ['', Validators.required],
       contato_telefone: [''],
@@ -53,8 +66,8 @@ export class FranchiseFormComponent implements OnInit {
       this.franchiseForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Franquia')[0]).id);
     });
 
-    if((this.franchise || <Model.App.Business>{}).data_expiracao)
-    this.franchiseForm.get('dateTemp').setValue(new Date(this.franchise.data_expiracao));
+    if ((this.franchise || <Model.App.Business>{}).data_expiracao)
+      this.franchiseForm.get('dateTemp').setValue(new Date(this.franchise.data_expiracao));
 
   }
 
@@ -63,12 +76,12 @@ export class FranchiseFormComponent implements OnInit {
     if (this.franchiseForm.invalid) return;
 
     this.franchise = this.franchiseForm.value;
-
+    let file: File = this.fileUpload.nativeElement.files[0];
     if (this.franchise.id) {
-      this.businessService.updateBusiness(this.franchise).subscribe(res => this.callbackAction('alterada', res));
+      this.businessService.updateFranchise(this.franchise, file).subscribe(res => this.callbackAction('alterada', res));
     }
     else {
-      this.businessService.createBusiness(this.franchise).subscribe(res => this.callbackAction('criada', res));
+      this.businessService.createFranchise(this.franchise, file).subscribe(res => this.callbackAction('criada', res));
     }
   }
 

@@ -7,45 +7,48 @@ namespace AppSlider.Application.Business.Commands
     public class BusinessUpdateRequestCommand
     {
         [JsonProperty("id")]
-        public Guid Id { get; set; }
+        public virtual Guid Id { get; set; }
 
         [JsonProperty("id_pai")]
-        public Guid? IdFather { get; set; }
+        public virtual Guid? IdFather { get; set; }
 
         [JsonProperty("id_tipo")]
-        public int IdType { get; set; }
+        public virtual int IdType { get; set; }
 
         [JsonProperty("id_categoria")]
-        public int? IdCategory { get; set; }
+        public virtual int? IdCategory { get; set; }
 
         [JsonProperty("nome")]
-        public String Name { get; set; }
+        public virtual String Name { get; set; }
 
         [JsonProperty("CNPJ")]
-        public long CNPJ { get; set; }
+        public virtual long? CNPJ { get; set; }
 
         [JsonProperty("descricao")]
-        public String Description { get; set; }
+        public virtual String Description { get; set; }
 
         [JsonProperty("id_logo")]
-        public Guid? IdLogo { get; set; }
+        public virtual Guid? IdLogo { get; set; }
 
         [JsonProperty("contato_nome")]
-        public String ContactName { get; set; }
+        public virtual String ContactName { get; set; }
 
         [JsonProperty("contato_email")]
-        public String ContactEmail { get; set; }
+        public virtual String ContactEmail { get; set; }
 
         [JsonProperty("contato_telefone")]
-        public String ContactPhone { get; set; }
+        public virtual String ContactPhone { get; set; }
 
         [JsonProperty("contato_endereco")]
-        public String ContactAddress { get; set; }
+        public virtual String ContactAddress { get; set; }
 
         [JsonProperty("data_expiracao")]
-        public DateTime? ExpirationDate { get; set; }
+        public virtual DateTime? ExpirationDate { get; set; }
 
         [JsonProperty("ativo")]
-        public Boolean Active { get; set; }
+        public virtual Boolean Active { get; set; }
+
+        [JsonIgnore]
+        public virtual byte[] File{ get; set; }
     }
 }

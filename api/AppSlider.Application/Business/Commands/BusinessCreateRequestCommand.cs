@@ -18,7 +18,7 @@ namespace AppSlider.Application.Business.Commands
         public String Name { get; set; }
 
         [JsonProperty("CNPJ")]
-        public long CNPJ { get; set; }
+        public long? CNPJ { get; set; }
 
         [JsonProperty("descricao")]
         public String Description { get; set; }
@@ -40,8 +40,11 @@ namespace AppSlider.Application.Business.Commands
 
         [JsonProperty("data_expiracao")]
         public DateTime? ExpirationDate { get; set; }
-        
+
         [JsonProperty("ativo")]
         public Boolean Active { get; set; }
+
+        [JsonProperty("file")]
+        public byte[] File { get; set; }
     }
 }

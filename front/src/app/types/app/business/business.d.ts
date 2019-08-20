@@ -16,9 +16,9 @@ declare namespace Model.App {
         bloqueado: boolean,
         categoria:Model.App.Category,
         tipo: Model.App.BusinessType,
-        //logo:Model.App.Logo,
+        file:any,
         pai: Model.App.Business,
         filhos: Array<Model.App.Business>,
     }
-    
+
 }

@@ -8,8 +8,14 @@ p.subtitle{
 // .btn-primary{
 //     background-color: black;
 // }
+.btn{
+  background-color: #979797!important;
+}
+.btn:hover{
+  background-color: #b7b7b7!important;
+}
 
-.search-container{    
+.search-container{
     padding-top: 10px;
 
     i.ui-1_zoom-bold{
@@ -32,7 +38,7 @@ p.subtitle{
     background-color: rgba(180,180,180,.5) !important;
 
     & > div{
-        background-color: #f96332 !important;        
+        background-color: #f96332 !important;
     }
 }
 
@@ -77,11 +83,11 @@ p-dropdown{
     .ui-dropdown-filter-container{
         background-color: white;
     }
-    
+
     .ui-dropdown {
         border: 1px solid lightgray;
         border-radius: 30px;
-        
+
         .ui-dropdown-label.ui-placeholder, .ui-dropdown-label{
             font-size: 0.79rem;
             padding: 9px 20px;
@@ -100,7 +106,7 @@ p-dropdown{
                 text-indent: 0;
                 border-bottom: 1px solid lightgray;
                 padding: 8px 20px;
-                
+
                 &:last-child{
                     border-bottom: none;
                 }
@@ -159,7 +165,7 @@ p-calendar{
         height: 25px;
         position: absolute;
         margin: -5px 15px;
-    }    
+    }
 }
 
 .ui-confirmdialog{

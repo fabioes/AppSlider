@@ -36,6 +36,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 
             modelBuilder.Entity<BusinessEntity>().Property(p => p.LegalName).HasMaxLength(200).HasColumnName("Name");
             modelBuilder.Entity<BusinessEntity>().Property(p => p.CNPJ);
+            modelBuilder.Entity<BusinessEntity>().Property(p => p.File);
             modelBuilder.Entity<BusinessEntity>().Property(p => p.Description).HasMaxLength(500);
             modelBuilder.Entity<BusinessEntity>().Property(p => p.ContactName).HasMaxLength(200);
             modelBuilder.Entity<BusinessEntity>().Property(p => p.ContactEmail).HasMaxLength(200);

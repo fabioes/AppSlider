@@ -22,7 +22,21 @@
   <form [formGroup]="franchiseForm">
     <input formControlName="id" type="hidden" />
     <input formControlName="id_tipo" type="hidden" />
-
+    <div class="image-upload">
+      <label>
+        <img
+          id="blah"
+          [src]="file"
+          width="140"
+          height="120"
+        />
+        <input
+          type="file"
+          #fileUpload
+          onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
+        />
+      </label>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">

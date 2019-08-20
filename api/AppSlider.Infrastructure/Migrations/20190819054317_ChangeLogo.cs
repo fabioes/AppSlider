@@ -3,20 +3,19 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AppSlider.Infrastructure.Migrations
 {
-    public partial class AddedCNPJ : Migration
+    public partial class ChangeLogo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long?>(
-                name: "CNPJ",
+            migrationBuilder.AddColumn<byte[]>(
+                name: "File",
                 table: "Business",
-                nullable: true,
-                defaultValue: null);   
+                nullable: true);       
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-           
+        
         }
     }
 }

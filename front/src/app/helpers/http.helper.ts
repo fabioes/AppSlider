@@ -71,9 +71,14 @@ export class HttpHelper {
 
     public HttpPut<TResult>(url: string, payload?: any): Observable<TResult> {
 
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
+        let headers = new HttpHeaders();
+        if (payload instanceof FormData) {
+          headers.append('Content-Type', 'multipart/form-data');
+          headers.append('Accept', 'application/json');
+      } else {
+          headers.append('Content-Type', 'application/json');
+      }
+
 
         let fullUrl = environment.apiConfig.baseUrl + url
 
@@ -178,7 +183,7 @@ export class HttpHelper {
         } else {
             this.showError(error.message);
         }
-        
+
     }
 
     private showError(errorMessage: string): any {

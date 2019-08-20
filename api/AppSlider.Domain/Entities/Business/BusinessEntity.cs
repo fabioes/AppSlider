@@ -13,7 +13,7 @@ namespace AppSlider.Domain.Entities.Business
         public virtual int IdType { get; set; }
         public virtual int? IdCategory { get; set; }
         public virtual String LegalName { get; protected set; }
-        public virtual long CNPJ { get;protected set; }
+        public virtual long? CNPJ { get; protected set; }
         public virtual String Description { get; protected set; }
         public virtual Guid? IdLogo { get; protected set; }
         public virtual String ContactName { get; protected set; }
@@ -23,6 +23,8 @@ namespace AppSlider.Domain.Entities.Business
         public virtual DateTime? ExpirationDate { get; protected set; }
         public virtual Boolean Active { get; protected set; }
         public virtual Boolean Blocked { get; protected set; }
+
+        public virtual byte[] File { get; set; }
 
         [ForeignKey("IdCategory")]
         public virtual Category Category { get; set; }
@@ -40,7 +42,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<Playlist> Playlists { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name,long CNPJ ,string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
+        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -57,9 +59,10 @@ namespace AppSlider.Domain.Entities.Business
             ExpirationDate = expirationDate;
             Active = active;
             Blocked = blocked;
+            File = file;
         }
 
-        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name,long CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked) : this()
+        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null) : this()
         {
             IdFather = idFather;
             IdType = idType;
@@ -75,6 +78,7 @@ namespace AppSlider.Domain.Entities.Business
             ExpirationDate = expirationDate;
             Active = active;
             Blocked = blocked;
+            File = file;
         }
 
         public BusinessEntity()

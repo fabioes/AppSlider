@@ -22,7 +22,7 @@ namespace AppSlider.Application.Business.Services.Update
         {
             UserUpdateValidations(command);
 
-            var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name,command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false);
+            var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name,command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false,command.File);
 
             businessRepository.DetachBusiness(business);
 

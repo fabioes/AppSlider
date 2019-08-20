@@ -57,13 +57,20 @@
 
         public async Task<ICollection<Equipament>> GetByFranchise(Guid franchiseId)
         {
-            var equipaments = await _context.Equipaments.Where(w => w.IdFranchise == franchiseId).ToListAsync();
+            List<Equipament> equipaments = new List<Equipament>();
+            var establishments = await _context.Business.Where(x => x.IdFather == franchiseId).ToListAsync();
+            foreach (var establishment in establishments)
+            {
+                var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
+                equipaments.AddRange(equipamentList);
+            }
+            
             return equipaments;
         }
 
         public async Task<Equipament> Update(Equipament equipament)
         {
-            //_context.DetachLocalIfExists(equipament);
+            _context.DetachLocalIfExistsGuid(equipament);
             _context.Equipaments.Update(equipament);
             await _context.SaveChangesAsync();
 
