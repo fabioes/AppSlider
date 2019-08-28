@@ -1,5 +1,6 @@
 ﻿using AppSlider.Domain.Authentication;
 using AppSlider.Domain.Entities.Business;
+using AppSlider.Domain.Entities.Equipaments;
 using AppSlider.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,7 @@ namespace AppSlider.Domain.Repositories
         Task<Boolean> Delete(BusinessEntity businessEntity);
         void DetachBusiness(BusinessEntity businessEntity);
         Task<ICollection<BusinessEntity>> GetForLoggedUser(LoggedUser loggedUser);
+        Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity);
+        Task UpdateEquipaments(Equipament equipament);
     }
 }

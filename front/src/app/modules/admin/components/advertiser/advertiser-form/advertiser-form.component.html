@@ -57,6 +57,22 @@
       </p-multiSelect>
     </div>
     <div class="form-group">
+      <label>Equipamentos do Anunciante</label>
+      <p-multiSelect
+        [style]="{ width: '100%' }"
+        [options]="equipaments"
+        formControlName="equipaments"
+        optionLabel="nome"
+        maxSelectedLabels="3"
+        (onChange)="getCheckboxScope($event)"
+        selectedItemsLabel="{0} Equipamentos Selecionados"
+        defaultLabel="Selecione..."
+
+      >
+      </p-multiSelect>
+    </div>
+
+    <div class="form-group">
       <label>Nome do Contato da Anunciante</label>
       <label class="required-info-asterisk">*</label>
       <input

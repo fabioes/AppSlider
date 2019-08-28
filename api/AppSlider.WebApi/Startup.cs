@@ -15,6 +15,7 @@
     using System;
     using AppSlider.Application.User.Services.Get;
     using Microsoft.AspNetCore.Http;
+    using AutoMapper;
 
     public class Startup
     {
@@ -29,6 +30,9 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

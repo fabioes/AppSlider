@@ -24,6 +24,10 @@
         public DbSet<Domain.Entities.BusinessPlayLists.BusinessPlayList> BusinessPlayLists { get; set; }
         public DbSet<Domain.Entities.Equipaments.Equipament> Equipaments { get; set; }
 
+        public DbSet<Domain.Entities.Business.Establishment> Establishments { get; set; }
+        public DbSet<Domain.Entities.Business.Advertiser> Advertisers { get; set; }
+        public DbSet<Domain.Entities.Business.AdvertiserEstablishments> AdvertiserEstablishments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Domain.Entities.Users.User>()
@@ -42,11 +46,41 @@
                .ToTable("Files");
 
             modelBuilder.Entity<BusinessEntity>()
-                
-                .ToTable("Business")                
+
+                .ToTable("Business")
                 .HasMany(m => m.ChildrenBusinessEntity)
                 .WithOne(o => o.BusinessEntityFather)
                 .HasForeignKey(fk => fk.IdFather);
+
+            modelBuilder.Entity<AdvertiserEstablishments>()
+       .HasKey(pc => new { pc.IdAdvertiser, pc.IdEstablishment });
+
+            modelBuilder.Entity<AdvertiserEstablishments>()
+        .HasOne(pc => pc.Advertiser)
+        .WithMany(p => p.AdvertisersEstablishments)
+        .HasForeignKey(pc => pc.IdAdvertiser);
+            modelBuilder.Entity<AdvertiserEstablishments>()
+       .HasOne(pc => pc.Establishment)
+       .WithMany(p => p.AdvertisersEstablishments)
+       .HasForeignKey(pc => pc.IdEstablishment);
+
+
+            modelBuilder.Entity<AdvertiserEquipament>()
+       .HasKey(pc => new { pc.IdAdvertiser, pc.IdEquipament });
+
+            modelBuilder.Entity<AdvertiserEquipament>()
+        .HasOne(pc => pc.Advertiser)
+        .WithMany(p => p.AdvertisersEquipament)
+        .HasForeignKey(pc => pc.IdAdvertiser);
+
+            modelBuilder.Entity<AdvertiserEquipament>()
+       .HasOne(pc => pc.Equipament)
+       .WithMany(p => p.AdvertisersEquipament)
+       .HasForeignKey(pc => pc.IdEquipament);
+
+
+
+
 
             modelBuilder.Entity<Domain.Entities.PlayLists.Playlist>()
                .ToTable("Playlists");

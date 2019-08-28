@@ -9,7 +9,7 @@ namespace AppSlider.Domain.Entities.Equipaments
 {
     public class Equipament : Entity<Guid>, IAggregateRoot
     {
-        
+
         public virtual string Name { get; set; }
 
         public virtual string Description { get; set; }
@@ -31,6 +31,11 @@ namespace AppSlider.Domain.Entities.Equipaments
         [ForeignKey("IdEstablishment")]
         public virtual BusinessEntity Establishment { get; set; }
 
+     
+        public virtual ICollection<AdvertiserEquipament> AdvertisersEquipament { get; set; }
+
+
+
         [ForeignKey("IdPlaylist")]
         public virtual Playlist PlayList { get; set; }
 
@@ -47,7 +52,7 @@ namespace AppSlider.Domain.Entities.Equipaments
             Active = active;
         }
 
-        public Equipament(string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active): this()
+        public Equipament(string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active) : this()
         {
             Name = name;
             Description = description;

@@ -37,7 +37,7 @@ namespace AppSlider.WebApi.Controllers.Business.Create
         public async Task<IActionResult> Create([FromBody]BusinessCreateRequestCommand request)
         {
             if(request== null) throw new BusinessException("Favor informar os dados do Negócio!");
-
+                                   
             var result = await _businessCreateService.Process(request);
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });

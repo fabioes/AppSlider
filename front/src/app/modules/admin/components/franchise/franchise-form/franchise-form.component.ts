@@ -32,10 +32,10 @@ export class FranchiseFormComponent implements OnInit {
 
   ngOnInit() {
     if (!this.franchise) {
-      this.file = '/assets/img/noimage-portfolio-2000x1125.png';
+      this.file = './assets/img/noimage-portfolio-2000x1125.png';
     } else {
       if (!this.franchise.file) {
-        this.file = '/assets/img/noimage-portfolio-2000x1125.png';
+        this.file = './assets/img/noimage-portfolio-2000x1125.png';
       }
       else {
         this.file = 'data:image/jpeg;base64,' + this.franchise.file;

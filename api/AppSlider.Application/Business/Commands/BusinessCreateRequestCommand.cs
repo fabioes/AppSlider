@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AppSlider.Application.Equipament.Commands;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace AppSlider.Application.Business.Commands
 {
@@ -46,5 +48,10 @@ namespace AppSlider.Application.Business.Commands
 
         [JsonProperty("file")]
         public byte[] File { get; set; }
+
+        [JsonProperty("filhos")]
+        public List<BusinessCreateRequestCommand> Children { get; set; }
+        [JsonProperty("equipaments")]
+        public virtual List<EquipamentCreateCommand> Equipaments { get; set; }
     }
 }

@@ -1,6 +1,8 @@
-﻿using AppSlider.Utils.Cripto;
+﻿using AppSlider.Application.Equipament.Commands;
+using AppSlider.Utils.Cripto;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace AppSlider.Application.Business.Commands
 {
@@ -50,5 +52,11 @@ namespace AppSlider.Application.Business.Commands
 
         [JsonIgnore]
         public virtual byte[] File{ get; set; }
+
+        [JsonProperty("filhos")]
+        public virtual List<BusinessUpdateRequestCommand> Children { get; set; }
+
+        [JsonProperty("equipaments")]
+        public virtual List<EquipamentUpdateCommand> Equipaments { get; set; }
     }
 }

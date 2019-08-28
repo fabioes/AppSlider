@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 import { FranchiseService } from '../../../services/franchise/franchise.service';
 import { SelectItem } from 'primeng/components/common/selectitem';
+import { EquipamentComponent } from '../../equipament/equipament.component';
+import { EquipamentService } from '../../../services/equipament/equipament.service';
 
 @Component({
   selector: 'advertiser-form',
@@ -20,7 +22,8 @@ export class AdvertiserFormComponent implements OnInit {
   advertiserForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
   franchise: Model.App.UserFranchise;
-  establishments: Array<Model.App.Business>; 
+  establishments: Array<Model.App.Business>;
+  equipaments: Array<Model.App.Equipament>;
   searchTerm: string;
   selectedScopes: any[] = [];
 
@@ -30,11 +33,13 @@ export class AdvertiserFormComponent implements OnInit {
     private businessService: BusinessService,
     private toastrService: ToastrService,
     private businessTypeService: BusinessTypeService,
-    private franchiseService: FranchiseService) {
+    private franchiseService: FranchiseService,
+    private equipamentService: EquipamentService) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
- 
+
     this.getEstablishments();
+    this.getEquipaments();
   }
 
   ngOnInit() {
@@ -54,7 +59,8 @@ export class AdvertiserFormComponent implements OnInit {
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null],
-      establishments: []
+      establishments: [],
+      equipaments: [],
     });
 
     this.advertiserForm.patchValue(this.advertiser || {});
@@ -75,13 +81,16 @@ export class AdvertiserFormComponent implements OnInit {
     this.advertiser = this.advertiserForm.value;
 
     if (this.advertiser.id) {
+      this.advertiser.filhos = this.establishments;
+      this.advertiser.equipaments = this.equipaments;
+      console.log(this.advertiser);
+
       this.businessService.updateBusiness(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
     }
     else {
       this.businessService.createBusiness(this.advertiser).subscribe(res => this.callbackAction('criado', res));
     }
   }
-
 
   public isFieldInvalid(field: string) {
     return this.globalService.isFieldInvalid(field, this.advertiserForm);
@@ -107,19 +116,24 @@ export class AdvertiserFormComponent implements OnInit {
   }
   getCheckboxScope(event) {
     this.selectedScopes.push(event);
-    console.log(this.advertiserForm.get('establishments'));
+
   }
   getEstablishments() {
-    //TODO: make retrive routines for Attendant by API request
+    // TODO: make retrive routines for Attendant by API request
 
-    return this.businessService.getByFranchiseAndType("Estabelecimento").subscribe(res => {
+    return this.businessService.getByFranchiseAndType('Estabelecimento').subscribe(res => {
 
       this.establishments = res;
 
       // if (this.searchTerm)
       //   this.searchSubmit(null);
       // else
-      //this.establishmentsGrid = this.establishments;
+      // this.establishmentsGrid = this.establishments;
     });
+  }
+  getEquipaments() {
+    return this.equipamentService.getByFranchise().subscribe(
+      res => this.equipaments = res
+    );
   }
 }

@@ -42,7 +42,7 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<Playlist> Playlists { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null) : this()
+        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -60,9 +60,10 @@ namespace AppSlider.Domain.Entities.Business
             Active = active;
             Blocked = blocked;
             File = file;
+            ChildrenBusinessEntity = children;
         }
 
-        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null) : this()
+        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
         {
             IdFather = idFather;
             IdType = idType;
@@ -79,6 +80,8 @@ namespace AppSlider.Domain.Entities.Business
             Active = active;
             Blocked = blocked;
             File = file;
+            ChildrenBusinessEntity = children;
+
         }
 
         public BusinessEntity()
