@@ -93,11 +93,11 @@ namespace AppSlider.WebApi.Filters
                         return;
                     }
 
-                    if (user?.Active != true)
-                    {
-                        context.Result = new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} está inativo!");
-                        return;
-                    }
+                    //if (user?.Active != true)
+                    //{
+                    //    context.Result = new CustomUnauthorizedResultError($"Permissão Negada! - Usuário: {userToken} está inativo!");
+                    //    return;
+                    //}
 
                     if (!ValidateUserRoutePermission(decodedToken, context))
                     {

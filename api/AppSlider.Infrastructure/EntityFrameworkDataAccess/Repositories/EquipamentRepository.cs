@@ -58,13 +58,25 @@
         public async Task<ICollection<Equipament>> GetByFranchise(Guid franchiseId)
         {
             List<Equipament> equipaments = new List<Equipament>();
-            var establishments = await _context.Business.Where(x => x.IdFather == franchiseId).ToListAsync();
+            var establishments = await _context.Business.Where(x => x.IdFather == franchiseId && x.IdType == 2).ToListAsync();
             foreach (var establishment in establishments)
             {
                 var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
                 equipaments.AddRange(equipamentList);
             }
             
+            return equipaments;
+        }
+        public async Task<ICollection<Equipament>> GetSelectedByAdvertiser(Guid business)
+        {
+            List<Equipament> equipaments = new List<Equipament>();
+            var advertiserEquipaments = await _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == business).ToListAsync();
+            foreach (var advertiserEquipament in advertiserEquipaments)
+            {
+                var equipament = await _context.Equipaments.FirstOrDefaultAsync(w => w.Id == advertiserEquipament.IdEquipament);
+                equipaments.Add(equipament);
+            }
+
             return equipaments;
         }
 

@@ -58,7 +58,7 @@
         }
 
         public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
-        {
+         {
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
             if (type == "Anunciante")
             {
@@ -68,35 +68,45 @@
                 {
                     item.ChildrenBusinessEntity = new List<BusinessEntity>();
                     var ad = await _context.AdvertiserEstablishments.Where(x => x.IdAdvertiser == item.Id).ToListAsync();
+                    var equi = await _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == item.Id).ToListAsync();
                     foreach (var estab in ad)
                     {
                         childBusiness = await _context.Business.FirstOrDefaultAsync(x => x.Id == estab.IdEstablishment);
 
                         item?.ChildrenBusinessEntity?.Add(childBusiness);
                     }
-                }
 
+                }
 
             }
             return businessEntities;
         }
 
-        public async Task UpdateEquipaments(Equipament equipament)
+        public async Task UpdateEquipaments(AdvertiserEquipament advertiserEquipament)
         {
-            //var entity = _context.Equipaments.FirstOrDefault(x => x.Id == equipament.Id);
-            //entity.Advertiser = equipament.Advertiser;
 
-            //_context.DetachLocalIfExistsGuid(entity);
-            //_context.Equipaments.Update(entity);
-            //await _context.SaveChangesAsync();
+            var local = _context.Set<AdvertiserEquipament>().Local.FirstOrDefault(e => e.IdAdvertiser == advertiserEquipament.IdAdvertiser);
+
+            if (local == null) local = advertiserEquipament;
+
+            _context.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
+
+            _context.AdvertiserEquipament.Add(advertiserEquipament);
+            await _context.SaveChangesAsync();
 
         }
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {
-            _context.DetachLocalIfExistsGuid(businessEntity);
+            //_context.DetachLocalIfExistsGuid(businessEntity);
 
-            await _context.SaveChangesAsync();
+            var business = _context.Business.FirstOrDefault(x => x.Id == businessEntity.Id);
+
+            if (business != null)
+            {
+                _context.Entry(business).CurrentValues.SetValues(businessEntity);
+                await _context.SaveChangesAsync();
+            }          
 
             return businessEntity;
         }
@@ -116,36 +126,41 @@
         }
         public async Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity)
         {
-            DetachBusiness(businessEntity);
-            var advertiser = new Advertiser(businessEntity.Id);
-            if (!_context.Advertisers.Any(x => x.Id == businessEntity.Id))
-                _context.Advertisers.Add(advertiser);
-            if (businessEntity.ChildrenBusinessEntity != null)
-                foreach (var children in businessEntity.ChildrenBusinessEntity)
-                {
-                    var establishment = new Establishment(children.Id);
-                    if (!_context.Establishments.Any(x => x.Id == children.Id))
-                        _context.Establishments.Add(establishment);
-                    var advertiserstablishment = new AdvertiserEstablishments() { Advertiser = advertiser, Establishment = establishment };
 
-                    _context.AdvertiserEstablishments.Add(advertiserstablishment);
-                    _context.Entry(advertiserstablishment).State = advertiserstablishment == null ? EntityState.Modified : EntityState.Detached;
-                    _context.Entry(advertiser).State = advertiser == null ? EntityState.Modified : EntityState.Detached;
-                    _context.Entry(establishment).State = establishment == null ? EntityState.Modified : EntityState.Detached;
-                }
-            try
+            var advertiserEstablishment = await _context.AdvertiserEstablishments.Where(x => x.IdAdvertiser == businessEntity.Id).ToListAsync();
+            if (advertiserEstablishment.Count > 0)
             {
+                _context.AdvertiserEstablishments.RemoveRange(advertiserEstablishment);
+                await _context.SaveChangesAsync();
+
+                if (businessEntity.ChildrenBusinessEntity != null)
+                    foreach (var children in businessEntity.ChildrenBusinessEntity)
+                    {
+                        _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
+                    }
+
+            }
+            else
+            {
+                _context.Advertisers.Add(new Advertiser(businessEntity.Id));
+            }
+            await _context.SaveChangesAsync();
+            return businessEntity;
+
+        }
+
+        public async Task RemoveAllAdvertiserEquipaments(BusinessEntity businessEntity)
+        {
+            var advertiserEquipament = new AdvertiserEquipament() { IdAdvertiser = businessEntity.Id };
+
+
+            if (_context.AdvertiserEquipament.Any(x => x.IdAdvertiser == businessEntity.Id))
+            {
+                var li = _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == businessEntity.Id).ToList();
+                _context.AdvertiserEquipament.RemoveRange(li);
 
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException ex)
-            {
-
-                throw ex;
-            }
-
-
-            return businessEntity;
         }
     }
 }

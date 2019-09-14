@@ -1,0 +1,94 @@
+<div class="modal-header">
+  <h3>
+    {{
+      !curiosities?.id
+        ? "novo Anunciante?"
+        : "editan " + curiosities?.nome
+    }}
+  </h3>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(null)"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    preencha as informações relevantes
+    {{ curiosities?.id ? curiosities.nome : "" }}
+  </p>
+
+  <form [formGroup]="curiositiesForm">
+    <input formControlName="id" type="hidden" />
+    <input formControlName="id_tipo" type="hidden" />
+    <input formControlName="id_pai" type="hidden" />
+
+    <div class="form-group">
+      <label>Nome </label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('nome') }"
+        formControlName="nome"
+        placeholder="digite o nome "
+        name="nome"
+        maxlength="200"
+        required
+      />
+      <div class="invalid-feedback" *ngIf="isFieldInvalid('nome')">
+        Favor inserir o 'Nome '!
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Estabelecimentos </label>
+      <p-multiSelect
+        [style]="{ width: '100%' }"
+        [options]="establishments"
+        formControlName="x"
+        optionLabel="nome"
+        (onChange)="getCheckboxScope($event)"
+        selectedItemsLabel="{0} Estabelecimentos Selecionados"
+        defaultLabel="Selecione..."
+      >
+      </p-multiSelect>
+    </div>
+    <div class="form-group">
+      <label>Equipamentos </label>
+      <p-multiSelect
+        [style]="{ width: '100%' }"
+        [options]="equipaments"
+        formControlName="y"
+        optionLabel="nome"
+        (onChange)="getCheckboxScope($event)"
+        selectedItemsLabel="{0} Equipamentos Selecionados"
+        defaultLabel="Selecione..."
+      >
+      </p-multiSelect>
+    </div>
+
+    <div class="form-group">
+      <label>Ativo?</label>
+      <label class="required-info-asterisk">*</label>
+      <input
+        class="form-control"
+        type="checkbox"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('ativo') }"
+        formControlName="ativo"
+        name="ativo"
+      />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn bg-dark"
+    [disabled]="!curiositiesForm.valid"
+    (click)="save()"
+  >
+    {{ curiosities?.id ? "Salvar" : "Cadastrar" }}
+  </button>
+</div>

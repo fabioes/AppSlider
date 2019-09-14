@@ -47,9 +47,8 @@
       <p-multiSelect
         [style]="{ width: '100%' }"
         [options]="establishments"
-        formControlName="establishments"
+        formControlName="x"
         optionLabel="nome"
-        maxSelectedLabels="3"
         (onChange)="getCheckboxScope($event)"
         selectedItemsLabel="{0} Estabelecimentos Selecionados"
         defaultLabel="Selecione..."
@@ -61,13 +60,11 @@
       <p-multiSelect
         [style]="{ width: '100%' }"
         [options]="equipaments"
-        formControlName="equipaments"
+        formControlName="y"
         optionLabel="nome"
-        maxSelectedLabels="3"
         (onChange)="getCheckboxScope($event)"
         selectedItemsLabel="{0} Equipamentos Selecionados"
         defaultLabel="Selecione..."
-
       >
       </p-multiSelect>
     </div>

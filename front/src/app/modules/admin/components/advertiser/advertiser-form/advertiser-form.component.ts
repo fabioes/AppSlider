@@ -26,6 +26,8 @@ export class AdvertiserFormComponent implements OnInit {
   equipaments: Array<Model.App.Equipament>;
   searchTerm: string;
   selectedScopes: any[] = [];
+  selectedEstablishments:SelectItem[];
+  selectedEquipaments:SelectItem[];
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -50,8 +52,6 @@ export class AdvertiserFormComponent implements OnInit {
       descricao: [''],
       id_pai: [this.franchise.id],
       id_tipo: ['', Validators.required],
-      //id_categoria: string,
-      //id_logo: string,
       contato_nome: ['', Validators.required],
       contato_email: ['', Validators.required],
       contato_telefone: [''],
@@ -59,8 +59,8 @@ export class AdvertiserFormComponent implements OnInit {
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null],
-      establishments: [],
-      equipaments: [],
+      x: [this.advertiser != null ? this.advertiser.filhos : null],
+      y: [this.advertiser != null ? this.advertiser.equipaments : null],
     });
 
     this.advertiserForm.patchValue(this.advertiser || {});
@@ -81,9 +81,10 @@ export class AdvertiserFormComponent implements OnInit {
     this.advertiser = this.advertiserForm.value;
 
     if (this.advertiser.id) {
-      this.advertiser.filhos = this.establishments;
-      this.advertiser.equipaments = this.equipaments;
-      console.log(this.advertiser);
+
+       this.advertiser.filhos = this.advertiserForm.value.x;
+       this.advertiser.equipaments = this.advertiserForm.value.y;
+
 
       this.businessService.updateBusiness(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
     }
@@ -95,8 +96,6 @@ export class AdvertiserFormComponent implements OnInit {
   public isFieldInvalid(field: string) {
     return this.globalService.isFieldInvalid(field, this.advertiserForm);
   }
-
-
   public callbackAction(action, res) {
 
     this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Anunciante <b> ' + res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
@@ -119,16 +118,11 @@ export class AdvertiserFormComponent implements OnInit {
 
   }
   getEstablishments() {
-    // TODO: make retrive routines for Attendant by API request
 
     return this.businessService.getByFranchiseAndType('Estabelecimento').subscribe(res => {
 
       this.establishments = res;
 
-      // if (this.searchTerm)
-      //   this.searchSubmit(null);
-      // else
-      // this.establishmentsGrid = this.establishments;
     });
   }
   getEquipaments() {

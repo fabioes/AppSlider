@@ -11,7 +11,7 @@ namespace AppSlider.Domain.Entities.Users
         public virtual string Franchises { get; set; }
         public virtual string Roles { get; set; }
         public virtual string Email { get; set; }
-        public virtual bool Active { get; set; }
+        public virtual bool Active { get; set; } = true;
         public virtual bool Blocked { get; set; }
 
         public User(string name, String username, String password, String profile, String email, String franchises, String roles, Boolean active, Boolean blocked)

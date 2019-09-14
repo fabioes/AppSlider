@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +26,9 @@ export class EstablishmentFormComponent implements OnInit {
   playlists: Array<Model.App.Playlist>;
   playlistsGrid: Array<Model.App.Playlist>;
   searchTerm: string;
-  imageSrc: string; 
+  imageSrc: string;
+  file: any;
+  @ViewChild('fileUpload') private fileUpload: ElementRef;
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -42,10 +44,21 @@ export class EstablishmentFormComponent implements OnInit {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
 
-    this.categoryService.getAllCategories().subscribe(res => { debugger; this.categories = res });
+    this.categoryService.getAllCategories().subscribe(res => { this.categories = res });
   }
 
   ngOnInit() {
+
+    if (!this.establishment) {
+      this.file = './assets/img/noimage-portfolio-2000x1125.png';
+    } else {
+      if (!this.establishment.file) {
+        this.file = './assets/img/noimage-portfolio-2000x1125.png';
+      } else {
+        this.file = 'data:image/jpeg;base64,' + this.establishment.file;
+      }
+    }
+
 
     this.establishmentForm = this.fb.group({
       id: [''],
@@ -86,13 +99,14 @@ export class EstablishmentFormComponent implements OnInit {
 
     this.establishment = this.establishmentForm.value;
 
-    this.establishment.id_categoria = (<any>this.establishment.id_categoria).id
+    this.establishment.id_categoria = '1';
 
+    let file: File = this.fileUpload.nativeElement.files[0];
     if (this.establishment.id) {
-      this.businessService.updateBusiness(this.establishment).subscribe(res => this.callbackAction('alterado', res));
+      this.businessService.updateFranchise(this.establishment, file).subscribe(res => this.callbackAction('alterada', res));
     }
     else {
-      this.businessService.createBusiness(this.establishment).subscribe(res => this.callbackAction('criado', res));
+      this.businessService.createFranchise(this.establishment, file).subscribe(res => this.callbackAction('criada', res));
     }
   }
 
@@ -136,7 +150,7 @@ export class EstablishmentFormComponent implements OnInit {
 
     modalRef.componentInstance.name = 'Playlist Itens';
 
-    
+
 
     modalRef.result.then((res: Model.App.Playlist) => {
       if (res == null) return;
@@ -147,7 +161,7 @@ export class EstablishmentFormComponent implements OnInit {
       console.log(err);
     });
   }
-  
+
   private getPlaylists() {
     //TODO: make retrive routines for Attendant by API request
 

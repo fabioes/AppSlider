@@ -1,0 +1,45 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-4 col-xl-5">
+              <h5 class="title">Curiosidades</h5>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p-table [value]="midiafoneGrid">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-midiafone>
+              <tr>
+                <td>
+                  {{midiafone.nome}}
+                </td>
+                <td>
+                  <a (click)="showDialog(midiafone)">
+                    <i class="pi pi-pencil"></i>
+                  </a>
+
+                  <a (click)="filesDialog(midiafone)">
+                    <i class="pi pi-images"></i>
+                  </a>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-confirmDialog
+    header="Tem certeza?"
+    icon="pi pi-exclamation-triangle"
+  ></p-confirmDialog>
+</div>

@@ -43,6 +43,8 @@ namespace AppSlider.Application.Business.Commands
 
         [JsonProperty("contato_endereco")]
         public virtual String ContactAddress { get; set; }
+        [JsonProperty("contato_cidade")]
+        public virtual String ContactCity { get; set; }
 
         [JsonProperty("data_expiracao")]
         public virtual DateTime? ExpirationDate { get; set; }

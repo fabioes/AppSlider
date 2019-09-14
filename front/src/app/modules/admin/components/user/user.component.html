@@ -36,7 +36,6 @@
                 <th>Nome</th>
                 <th>Login</th>
                 <th>Perfil</th>
-                <th>E-mail</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -46,7 +45,6 @@
                 <td>{{user.nome}}</td>
                 <td>{{user.login}}</td>
                 <td>{{user.perfil}}</td>
-                <td>{{user.email}}</td>
                 <td>{{user.ativo ? 'sim' : 'não'}}</td>
                 <td>
                   <a (click)="showDialog(user)" *ngIf="user?.bloqueado !== true">

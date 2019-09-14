@@ -54,6 +54,7 @@ export class FranchiseFormComponent implements OnInit {
       contato_email: ['', Validators.required],
       contato_telefone: [''],
       contato_endereco: [''],
+      contato_cidade: [''],
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null]
@@ -62,7 +63,6 @@ export class FranchiseFormComponent implements OnInit {
     this.franchiseForm.patchValue(this.franchise || {});
 
     this.businessTypeService.getAllBusinessTypes().subscribe(res => {
-      debugger;
       this.franchiseForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Franquia')[0]).id);
     });
 

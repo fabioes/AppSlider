@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AppSlider.Application.Category.Results;
+using AppSlider.Application.Equipament.Results;
 using AppSlider.Application.TypeBusiness.Results;
 using Newtonsoft.Json;
 
@@ -44,6 +45,8 @@ namespace AppSlider.Application.Business.Results
 
         [JsonProperty("contato_endereco")]
         public virtual String ContactAddress { get; set; }
+        [JsonProperty("contato_cidade")]
+        public virtual String ContactCity { get; set; }
 
         [JsonProperty("data_expiracao")]
         public virtual DateTime? ExpirationDate { get; set; }
@@ -72,6 +75,9 @@ namespace AppSlider.Application.Business.Results
         [JsonProperty("filhos")]
         public virtual IList<BusinessResult> ChildrenBusinessEntity { get; set; }
 
+        [JsonProperty("equipaments")]
+        public virtual IList<EquipamentResult> Equipaments { get; set; }
+
         public static explicit operator BusinessResult(Domain.Entities.Business.BusinessEntity b)
         {
             return b == null ? null : new BusinessResult
@@ -84,6 +90,7 @@ namespace AppSlider.Application.Business.Results
                 ContactEmail = b.ContactEmail,
                 ContactName = b.ContactName,
                 ContactPhone = b.ContactPhone,
+                ContactCity = b.ContactCity,
                 Description = b.Description,
                 ExpirationDate = b.ExpirationDate,
                 Id = b.Id,
@@ -103,7 +110,7 @@ namespace AppSlider.Application.Business.Results
 
         public static explicit operator Domain.Entities.Business.BusinessEntity(BusinessResult b)
         {
-            return b == null ? null : new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name, b.CNPJ, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress, b.ExpirationDate, b.Active, b.Blocked);
+            return b == null ? null : new Domain.Entities.Business.BusinessEntity(b.Id, b.IdFather, b.IdType, b.IdCategory, b.Name, b.CNPJ, b.Description, b.IdLogo, b.ContactName, b.ContactEmail, b.ContactPhone, b.ContactAddress,b.ContactCity, b.ExpirationDate, b.Active, b.Blocked);
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,8 @@ export class EstablishmentComponent implements OnInit {
   searchTerm: string;
   playlists: Array<Model.App.Playlist>;
   playlistsGrid: Array<Model.App.Playlist>;
+  file: any;
+  @ViewChild('fileUpload') private fileUpload: ElementRef;
 
 
   constructor(private businessService: BusinessService,
@@ -73,7 +75,7 @@ export class EstablishmentComponent implements OnInit {
 
     modalRef.componentInstance.name = 'Playlist Itens';
 
-    modalRef.componentInstance.business = business;   
+    modalRef.componentInstance.business = business;
 
     modalRef.result.then((res: Model.App.Business) => {
       if (res == null) return;
@@ -85,12 +87,8 @@ export class EstablishmentComponent implements OnInit {
     });
   }
   private getPlaylists() {
-    //TODO: make retrive routines for Attendant by API request
-    console.log('entrou');
     return this.playlistService.getAllPlaylists().subscribe(res => {
-
       this.playlists = res;
-      console.log(res);
       if (this.searchTerm)
         this.searchSubmit(null);
       else

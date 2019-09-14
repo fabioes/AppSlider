@@ -13,13 +13,16 @@ namespace AppSlider.Application.Business.Services.Get
     public class UserGetService : IBusinessGetService
     {
         private readonly IBusinessRepository businessRepository;
+        private readonly IEquipamentRepository equipamentRepository;
         private readonly LoggedUser loggedUser;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserGetService(IBusinessRepository businessRepository,
+        public UserGetService(IBusinessRepository businessRepository, 
+            IEquipamentRepository equipamentRepository,
             [FromServices]LoggedUser loggedUser)
         {
             this.businessRepository = businessRepository;
+            this.equipamentRepository = equipamentRepository;
             this.loggedUser = loggedUser;
         }
 
@@ -65,7 +68,8 @@ namespace AppSlider.Application.Business.Services.Get
                 throw new Exception("tipo é obrigatório");
 
             var business = await businessRepository.GetByFranchiseAndType(_franchiseId, type);
-
+               
+          
             var returnBusiness = business.Select(s => (BusinessResult)s).ToList();
 
             return returnBusiness;

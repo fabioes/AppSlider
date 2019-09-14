@@ -20,6 +20,7 @@ namespace AppSlider.Domain.Repositories
         void DetachBusiness(BusinessEntity businessEntity);
         Task<ICollection<BusinessEntity>> GetForLoggedUser(LoggedUser loggedUser);
         Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity);
-        Task UpdateEquipaments(Equipament equipament);
+        Task UpdateEquipaments(AdvertiserEquipament advertiserEquipament);
+        Task RemoveAllAdvertiserEquipaments(BusinessEntity businessEntity);
     }
 }

@@ -39,14 +39,18 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { CalendarModule } from 'primeng/calendar';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 //pipes
 import { PhonePipe } from './shared/pipes/phone.pipe';
-import { DateFormat} from './shared/pipes/date-format.pipe'
+import { DateFormat } from './shared/pipes/date-format.pipe'
 
 //directives
 import { PhoneMaskDirective } from './directives/masks/phone-mask.directive';
+import { CuriositiesComponent } from './components/curiosities/curiosities.component';
+import { CuriositiesFormComponent } from './components/curiosities/curiosities-form/curiosities-form.component';
+import { MidiafoneFormComponent } from './components/midiafone/midiafone-form/midiafone-form.component';
+import { MidiafoneComponent } from './components/midiafone/midiafone.component';
 
 @NgModule({
   imports: [
@@ -84,17 +88,24 @@ import { PhoneMaskDirective } from './directives/masks/phone-mask.directive';
     AdvertiserFormComponent,
     EstablishmentComponent,
     EstablishmentFormComponent,
+    CuriositiesComponent,
+    CuriositiesFormComponent,
     PlaylistComponent,
     PlaylistFormComponent,
     PlaylistFilesComponent,
     EquipamentComponent,
     EquipamentFormComponent,
+    MidiafoneFormComponent,
+    MidiafoneComponent,
     IconsComponent,
     DateFormat,
     PhonePipe,
-    PhoneMaskDirective    
+    PhoneMaskDirective
   ],
-  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent, PlaylistFormComponent, PlaylistFilesComponent, EquipamentFormComponent]
+  // tslint:disable-next-line: max-line-length
+  entryComponents: [UserFormComponent, UserResetPasswordComponent, CategoryFormComponent, BusinessTypeFormComponent, FranchiseFormComponent, AdvertiserFormComponent, EstablishmentFormComponent,
+    PlaylistFormComponent, PlaylistFilesComponent, PlaylistComponent
+    , EquipamentFormComponent, CuriositiesFormComponent, MidiafoneFormComponent]
 })
 
 export class AdminModule { }

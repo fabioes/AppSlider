@@ -49,8 +49,6 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
-                <th>Descrição</th>
-                <th>Data de Expiração</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -58,12 +56,10 @@
             <ng-template pTemplate="body" let-establishment>
               <tr>
                 <td>
-                  <a (click)="filesDialog(establishment)">{{
+                {{
                     establishment.nome
-                  }}</a>
+                  }}
                 </td>
-                <td>{{ establishment.descricao }}</td>
-                <td>{{ establishment.data_expiracao | dateFormat }}</td>
                 <td>{{ establishment.ativo ? "sim" : "não" }}</td>
                 <td>
                   <a
@@ -78,6 +74,12 @@
                   >
                     <i class="pi pi-times"></i>
                   </a>
+                  <a
+                  (click)="filesDialog(establishment)"
+                  *ngIf="establishment.bloqueado !== true"
+                >
+                  <i class="pi pi-images"></i>
+                </a>
                   <a
                     (click)="switchActive(establishment)"
                     title="{{

@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AppSlider.Application.Business.Results;
 using AppSlider.Application.Business.Services.Get;
+using AppSlider.Application.Equipament.Services.Get;
 using AppSlider.Domain.Authentication;
 using AppSlider.Domain.CustomAttributes;
 using AppSlider.WebApi.Model;
@@ -16,10 +17,12 @@ namespace AppSlider.WebApi.Controllers.Business.Get
     public class BusinessController : Controller
     {
         private readonly IBusinessGetService _businessGetService;
+        private readonly IEquipamentGetService _equipamentGetService;
         
-        public BusinessController(IBusinessGetService businessGetService)
+        public BusinessController(IBusinessGetService businessGetService,IEquipamentGetService equipamentGetService)
         {
-            _businessGetService = businessGetService;        
+            _businessGetService = businessGetService;
+            _equipamentGetService = equipamentGetService;
         }
 
         /// <summary>
@@ -67,6 +70,12 @@ namespace AppSlider.WebApi.Controllers.Business.Get
         public async Task<IActionResult> GetByType(String franchiseId, String type)
         {
             var results = await _businessGetService.GetByFranchiseAndType(franchiseId, type);
+
+            foreach (var item in results)
+            {        
+                
+                item.Equipaments = await _equipamentGetService.GetSelectedByAdvertiser(item.Id);
+            }
 
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }

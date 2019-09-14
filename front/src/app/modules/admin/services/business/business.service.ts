@@ -54,7 +54,9 @@ export class BusinessService {
     headers.append('Accept', 'application/json');
     let form: FormData = new FormData();
     form.append('value', JSON.stringify(Business));
+    if(file){
     form.append('files', file, file.name);
+    }
     return this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.franchise, form)
       .pipe(map(res => res.item));
   }
@@ -63,8 +65,9 @@ export class BusinessService {
     let form: FormData = new FormData();
 
     form.append('value', JSON.stringify(Business));
+
+    if(file)
     form.append('files', file, file.name);
-    console.log(JSON.stringify(form));
     return this.httpHelper.HttpPut<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.franchise, form,)
       .pipe(map(res => res.item));
   }

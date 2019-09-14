@@ -90,7 +90,7 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
                 new BusinessType(3, "Anunciante", "Anunciante como Tipo de Negócio.", true)
             );
 
-            var midiaFoneFranchise = new BusinessEntity(Guid.NewGuid(), null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", 0, "Franquia padrão 'MidiaFone'", null, "", "", "", "", null, true, true);
+            var midiaFoneFranchise = new BusinessEntity(Guid.NewGuid(), null, midiaFoneFranchiseType.Id, midiaFoneFranchiseCategory.Id, "MidiaFone", 0, "Franquia padrão 'MidiaFone'", null, "", "", "", "", "",null, true, true);
 
             modelBuilder.Entity<BusinessEntity>().HasData(
                 midiaFoneFranchise

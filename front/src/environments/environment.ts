@@ -35,6 +35,7 @@ export const environment = {
         switchActive: "/playlist/switch_active",
         getByFranchise: "/playlist/GetByFranchise",
         getByBusiness: "/playlist/business",
+        getbyMacAddress: "/playlist/GetByMacAddressEquipament",
         playlistItem: "/playlist_file"
       },
       files:{

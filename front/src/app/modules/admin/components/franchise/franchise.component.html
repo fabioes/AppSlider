@@ -34,8 +34,6 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
-                <th>Descrição</th>
-                <th>Data de Expiração</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -43,8 +41,6 @@
             <ng-template pTemplate="body" let-franchise>
               <tr>
                 <td>{{franchise.nome}}</td>
-                <td>{{franchise.descricao}}</td>
-                <td>{{franchise.data_expiracao | dateFormat}}</td>
                 <td>{{franchise.ativo ? 'sim' : 'não'}}</td>
                 <td>
                   <a (click)="showDialog(franchise)" *ngIf="franchise.bloqueado !== true">
@@ -55,7 +51,7 @@
                   </a>
                   <a (click)="switchActive(franchise)" title="{{franchise.ativo == true ? 'desativar' : 'ativar'}}" *ngIf="franchise.bloqueado !== true">
                     <i class="pi" [ngClass]="{'pi-lock': franchise.ativo == true, 'pi-unlock': franchise.ativo != true}"></i>
-                  </a>                 
+                  </a>
                 </td>
               </tr>
             </ng-template>

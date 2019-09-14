@@ -30,7 +30,7 @@
         {
             var ids = loggedUser.Roles?.Select(s => Guid.Parse(s))?.ToList();
 
-            var roles = await _context.Roles.Where(w => loggedUser.Profile == "sa" || (ids != null && ids.Contains(w.Id))).ToListAsync();
+            var roles = await _context.Roles.Where(w => loggedUser.Profile == "sa" || w.Name == "AppSlider.Read.Business").ToListAsync();
 
             return roles;
         }

@@ -25,7 +25,21 @@
     <input formControlName="id" type="hidden" />
     <input formControlName="id_tipo" type="hidden" />
     <input formControlName="id_pai" type="hidden" />
-
+    <div class="image-upload">
+      <label>
+        <img
+          id="blah"
+          [src]="file"
+          width="140"
+          height="120"
+        />
+        <input
+          type="file"
+          #fileUpload
+          onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
+        />
+      </label>
+    </div>
     <div class="form-group">
       <label>Nome do Estabelecimento</label>
       <label class="required-info-asterisk">*</label>
@@ -61,7 +75,7 @@
                 placeholder="digite a descrição do estabelecimento" maxlength="500" name="descricao"></textarea>
         </div> -->
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Categoria do Estabelecimento</label>
       <label class="required-info-asterisk">*</label>
       <p-dropdown
@@ -77,7 +91,7 @@
       <div class="invalid-feedback" *ngIf="isFieldInvalid('categoria')">
         Favor inserir o 'Categoria do Estabelecimento'!
       </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label>Nome do Contato da Estabelecimento</label>
@@ -138,7 +152,7 @@
         maxlength="300"
       />
     </div>
-    <div class="form-group date-group">
+    <!-- <div class="form-group date-group">
       <label>Data de expiração</label>
       <p-calendar
         [locale]="pt"
@@ -160,7 +174,7 @@
         formControlName="ativo"
         name="ativo"
       />
-    </div>
+    </div> -->
   </form>
 </div>
 <div class="modal-footer">

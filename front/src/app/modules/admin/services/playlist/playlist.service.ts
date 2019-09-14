@@ -30,6 +30,10 @@ export class PlaylistService {
     return this.httpHelper.HttpGet<Model.Core.ApiResultItem<Model.App.Playlist>>(environment.apiConfig.apiRoutes.playlist.default + '/' + id)
       .pipe(map(res => res.item));
   }
+  public getByMacAddress(macAddress: string): Observable<Model.App.Playlist> {
+    return this.httpHelper.HttpGet<Model.Core.ApiResultItem<Model.App.Playlist>>(environment.apiConfig.apiRoutes.playlist.getbyMacAddress + '/' + macAddress)
+      .pipe(map(res => res.item));
+  }
 
   public createPlaylist(playlist: Model.App.Playlist): Observable<Model.App.Playlist> {
     return this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.App.Playlist>>(environment.apiConfig.apiRoutes.playlist.default, playlist)

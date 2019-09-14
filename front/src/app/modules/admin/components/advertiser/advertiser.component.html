@@ -49,7 +49,6 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
-                <th>Descrição</th>
                 <th>Data de Expiração</th>
                 <th>Ativo?</th>
                 <th></th>
@@ -58,9 +57,8 @@
             <ng-template pTemplate="body" let-advertiser>
               <tr>
                 <td>
-                  <a (click)="filesDialog(advertiser)">{{ advertiser.nome }}</a>
+                  {{ advertiser.nome }}
                 </td>
-                <td>{{ advertiser.descricao }}</td>
                 <td>{{ advertiser.data_expiracao | dateFormat }}</td>
                 <td>{{ advertiser.ativo ? "sim" : "não" }}</td>
                 <td>
@@ -75,6 +73,12 @@
                     *ngIf="advertiser.bloqueado !== true"
                   >
                     <i class="pi pi-times"></i>
+                  </a>
+                  <a
+                    (click)="filesDialog(advertiser)"
+                    *ngIf="advertiser.bloqueado !== true"
+                  >
+                    <i class="pi pi-images"></i>
                   </a>
                   <a
                     (click)="switchActive(advertiser)"

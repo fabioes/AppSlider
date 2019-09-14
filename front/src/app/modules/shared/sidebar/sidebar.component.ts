@@ -5,8 +5,8 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
-    charName: string,
-    menuRole: string
+    charName: string;
+    menuRole: string;
 }
 
 // public const String ReadUser = "AppSlider.Read.User";
@@ -24,15 +24,16 @@ declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
     //{ path: '/adm/dashboard', title: 'Dashboard',  icon: 'design_app', class: '', charName: 'dashboard'},
-    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '', charName: 'usuarios', menuRole: 'AppSlider.Read.User' },
-    { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias', menuRole: 'AppSlider.Read.Category' },
-    { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio', menuRole: 'AppSlider.Read.BusinessType' },
-    { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/usuarios', title: 'Usuários',  icon: 'users_single-02', class: '', charName: 'usuarios', menuRole: 'AppSlider.Read.x' },
+    // { path: '/adm/categorias', title: 'Categorias',  icon: 'design_bullet-list-67', class: '', charName: 'categorias', menuRole: 'AppSlider.Read.Category' },
+    // { path: '/adm/tipos-negocio', title: 'Tipos de Negócio',  icon: 'files_single-copy-04', class: '', charName: 'tipos-negocio', menuRole: 'AppSlider.Read.BusinessType' },
+    { path: '/adm/franquias', title: 'Franquias',  icon: 'travel_istanbul', class: '', charName: 'franquias', menuRole: 'AppSlider.Write.y' },
     { path: '/adm/estabelecimentos', title: 'Estabelecimentos',  icon: 'business_bank', class: '', charName: 'estabelecimentos', menuRole: 'AppSlider.Read.Business' },
     { path: '/adm/anunciantes', title: 'Anunciantes',  icon: 'users_circle-08', class: '', charName: 'anunciantes', menuRole: 'AppSlider.Read.Business' },
-    { path: '/adm/playlists', title: 'Playlists',  icon: 'media-1_button-play', class: '', charName: 'playlists', menuRole: 'AppSlider.Read.Playlist' },
-    { path: '/adm/equipamentos', title: 'Equipamentos',  icon: 'tech_tablet', class: '', charName: 'equipamentos', menuRole: 'AppSlider.Read.Equipament' },
-    
+    { path: '/adm/equipamentos', title: 'Equipamentos',  icon: 'tech_tablet', class: '', charName: 'equipamentos', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/curiosidades', title: 'Curiosidades Midiafone',  icon: 'education_atom', class: '', charName: 'curiosidades', menuRole: 'AppSlider.Read.Business' },
+    { path: '/adm/midiafone', title: 'Midiafone',  icon: 'objects_spaceship', class: '', charName: 'midiafone', menuRole: 'AppSlider.Read.Business' },
+
     // { path: '/adm/icons', title: 'Icons',  icon:'education_atom', class: '', charName: 'icons' },
     // { path: '/maps', title: 'Maps',  icon:'location_map-big', class: '' },
     // { path: '/notifications', title: 'Notifications',  icon:'ui-1_bell-53', class: '' },

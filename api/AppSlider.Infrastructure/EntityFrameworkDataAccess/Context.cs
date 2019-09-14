@@ -27,6 +27,7 @@
         public DbSet<Domain.Entities.Business.Establishment> Establishments { get; set; }
         public DbSet<Domain.Entities.Business.Advertiser> Advertisers { get; set; }
         public DbSet<Domain.Entities.Business.AdvertiserEstablishments> AdvertiserEstablishments { get; set; }
+        public DbSet<AdvertiserEquipament> AdvertiserEquipament { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -113,10 +114,12 @@
         public void DetachLocalIfExistsGuid<T>(T entity) where T : Entity<Guid>
         {
             var local = this.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
-
+           
             if (local == null) local = entity;
 
             this.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
+
+            Entry(local).CurrentValues.SetValues(entity);
         }
 
     }

@@ -22,7 +22,7 @@ namespace AppSlider.Application.Business.Services.Create
         {
             UserCreateValidations(command);
 
-            var business = new BusinessEntity(command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ExpirationDate, command.Active, false, command.File) ;
+            var business = new BusinessEntity(command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ContactCity,command.ExpirationDate, command.Active, false, command.File) ;
 
             await businessRepository.Add(business);
 

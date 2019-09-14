@@ -15,5 +15,6 @@
         Task<Equipament> Update(Equipament equipament);
         Task<Boolean> Delete(Equipament equipament);
         void DetachEquipament(Equipament equipament);
+        Task<ICollection<Equipament>> GetSelectedByAdvertiser(Guid business);
     }
 }

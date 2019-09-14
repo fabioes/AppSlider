@@ -71,6 +71,8 @@ namespace AppSlider.Infrastructure.Migrations
                     b.Property<string>("ContactAddress")
                         .HasMaxLength(300);
 
+                    b.Property<string>("ContactCity");
+
                     b.Property<string>("ContactEmail")
                         .HasMaxLength(200);
 
@@ -116,15 +118,16 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a3915d4e-b8ad-4d11-8418-58fc74825993"),
+                            Id = new Guid("6615c3cc-766b-4845-90f3-5e5349c5e072"),
                             Active = true,
                             Blocked = true,
                             CNPJ = 0L,
                             ContactAddress = "",
+                            ContactCity = "",
                             ContactEmail = "",
                             ContactName = "",
                             ContactPhone = "",
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 153, DateTimeKind.Local).AddTicks(5798),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 230, DateTimeKind.Local).AddTicks(4018),
                             Description = "Franquia padrão 'MidiaFone'",
                             IdCategory = 1,
                             IdType = 1,
@@ -159,7 +162,7 @@ namespace AppSlider.Infrastructure.Migrations
                         {
                             Id = 1,
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 195, DateTimeKind.Local).AddTicks(6769),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 267, DateTimeKind.Local).AddTicks(3411),
                             Description = "Franquia como Tipo de Negócio.",
                             Name = "Franquia"
                         },
@@ -167,7 +170,7 @@ namespace AppSlider.Infrastructure.Migrations
                         {
                             Id = 2,
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 195, DateTimeKind.Local).AddTicks(7691),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 267, DateTimeKind.Local).AddTicks(4183),
                             Description = "Estabelecimento como Tipo de Negócio.",
                             Name = "Estabelecimento"
                         },
@@ -175,7 +178,7 @@ namespace AppSlider.Infrastructure.Migrations
                         {
                             Id = 3,
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 195, DateTimeKind.Local).AddTicks(7782),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 267, DateTimeKind.Local).AddTicks(4264),
                             Description = "Anunciante como Tipo de Negócio.",
                             Name = "Anunciante"
                         });
@@ -238,7 +241,7 @@ namespace AppSlider.Infrastructure.Migrations
                         {
                             Id = 1,
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 210, DateTimeKind.Local).AddTicks(2951),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 280, DateTimeKind.Local).AddTicks(4681),
                             Description = "Categoria MidiaFone.",
                             Name = "MidiaFone"
                         });
@@ -328,11 +331,11 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c6ac8f9b-8a80-46b2-90d1-485003d09386"),
+                            Id = new Guid("e756ebab-407a-4965-bfa8-a72a24885829"),
                             Active = true,
                             Blocked = true,
-                            BusinessId = new Guid("a3915d4e-b8ad-4d11-8418-58fc74825993"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 216, DateTimeKind.Local).AddTicks(5909),
+                            BusinessId = new Guid("6615c3cc-766b-4845-90f3-5e5349c5e072"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 285, DateTimeKind.Local).AddTicks(8379),
                             Expirate = new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999),
                             Name = "Curiosidades MidiaFone"
                         });
@@ -382,85 +385,85 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("46044527-e348-43e4-a7e7-2bc5bbcdb680"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(7695),
+                            Id = new Guid("aaa9136a-7a98-455d-a146-0659f5f31a4c"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4539),
                             Description = "Permissão de leitura para rotina de Usuário.",
                             Name = "AppSlider.Read.User"
                         },
                         new
                         {
-                            Id = new Guid("f9eee27d-c2b1-4c9a-b989-ef318bc66254"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(7821),
+                            Id = new Guid("f3d5d25f-2dd2-479a-a1a9-2dbd09a4ed6b"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4680),
                             Description = "Permissão de escrita para rotina de Usuário.",
                             Name = "AppSlider.Write.User"
                         },
                         new
                         {
-                            Id = new Guid("95ab08e5-1e53-4cc3-a973-9f1c34079895"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(7883),
+                            Id = new Guid("e4cac319-b2dd-40fa-9cc0-0612b5139bed"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4744),
                             Description = "Permissão de leitura para rotina de Negócio.",
                             Name = "AppSlider.Read.Business"
                         },
                         new
                         {
-                            Id = new Guid("06e743e7-90ea-4edb-95c0-110da453a2aa"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(7943),
+                            Id = new Guid("a5d3abcd-5a63-43b7-a22d-10d5b9378251"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4802),
                             Description = "Permissão de escrita para rotina de Negócio.",
                             Name = "AppSlider.Write.Business"
                         },
                         new
                         {
-                            Id = new Guid("def27a16-6509-4ac9-916e-de8fc791ffa6"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8049),
+                            Id = new Guid("f38f67b8-30a6-4b4d-bf15-a7f8cd716639"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4859),
                             Description = "Permissão de leitura para rotina de Tipos de Negócio.",
                             Name = "AppSlider.Read.BusinessType"
                         },
                         new
                         {
-                            Id = new Guid("b29c176e-7832-4572-93e8-d87bddaed754"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8104),
+                            Id = new Guid("15261098-8839-4191-a3c7-a24568b461ee"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4914),
                             Description = "Permissão de escrita para rotina de Tipos de Negócio.",
                             Name = "AppSlider.Write.BusinessType"
                         },
                         new
                         {
-                            Id = new Guid("f581ea5c-e28c-43ba-8ea4-90d73d9a304b"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8159),
+                            Id = new Guid("697906bb-0e6c-4c5f-b8aa-fecce54daf1b"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(4965),
                             Description = "Permissão de leitura para rotina de Categoria.",
                             Name = "AppSlider.Read.Category"
                         },
                         new
                         {
-                            Id = new Guid("24aa6860-65b0-4019-90bc-d928f7021d99"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8212),
+                            Id = new Guid("a6e2b0d6-8c28-4cfa-baaf-56e826eec20a"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(5020),
                             Description = "Permissão de escrita para rotina de Categoria.",
                             Name = "AppSlider.Write.Category"
                         },
                         new
                         {
-                            Id = new Guid("1442dfee-e9cf-498a-9290-bccbd5a3340f"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8266),
+                            Id = new Guid("5fe17d1d-77b5-432a-9fb6-4e84d4d45ae1"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(5074),
                             Description = "Permissão de leitura para rotina de Playlist.",
                             Name = "AppSlider.Read.Playlist"
                         },
                         new
                         {
-                            Id = new Guid("2173dc5d-9dac-4529-a1fe-7075e2717958"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8319),
+                            Id = new Guid("73511b1f-ac5c-4939-8bd7-08b50cdec7ad"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(5154),
                             Description = "Permissão de escrita para rotina de Playlist.",
                             Name = "AppSlider.Write.Playlist"
                         },
                         new
                         {
-                            Id = new Guid("26433585-3981-40bc-94a8-b554d4c3985c"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8372),
+                            Id = new Guid("63ba2a59-7a58-46a1-a0a1-4685b9d46168"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(5206),
                             Description = "Permissão de leitura para rotina de Equipamento.",
                             Name = "AppSlider.Read.Equipament"
                         },
                         new
                         {
-                            Id = new Guid("4c0c9f3a-8d03-48ed-bba3-be93283cb9e2"),
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 221, DateTimeKind.Local).AddTicks(8423),
+                            Id = new Guid("c00159fa-54d5-44a5-baf2-8b5a8adf5ace"),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 290, DateTimeKind.Local).AddTicks(5257),
                             Description = "Permissão de escrita para rotina de Equipamento.",
                             Name = "AppSlider.Write.Equipament"
                         });
@@ -502,10 +505,10 @@ namespace AppSlider.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b67ea9ee-9e8d-4de0-8f65-6d6ab029f645"),
+                            Id = new Guid("bc72c54f-303d-4698-a102-2c164f342e98"),
                             Active = true,
                             Blocked = true,
-                            DataCreated = new DateTime(2019, 8, 28, 2, 53, 50, 223, DateTimeKind.Local).AddTicks(7609),
+                            DataCreated = new DateTime(2019, 9, 7, 20, 51, 56, 292, DateTimeKind.Local).AddTicks(2784),
                             Email = "",
                             Name = "Administrador",
                             Password = "c342ad7be7abf5228097def554f8499d4f07191f4bcf5e80d012df86659fcea6",

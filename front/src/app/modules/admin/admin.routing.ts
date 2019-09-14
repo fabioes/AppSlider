@@ -9,8 +9,10 @@ import { BusinessTypeComponent } from './components/business-type/business-type.
 import { FranchiseComponent } from './components/franchise/franchise.component';
 import { EstablishmentComponent } from './components/establishment/establishment.component';
 import { AdvertiserComponent } from './components/advertiser/advertiser.component';
-import { PlaylistComponent } from './components/playlist/playlist.component';
 import { EquipamentComponent } from './components/equipament/equipament.component';
+import { PlaylistFilesComponent } from './components/playlist/playlist-files/playlist-files.component';
+import { CuriositiesComponent } from './components/curiosities/curiosities.component';
+import { MidiafoneComponent } from './components/midiafone/midiafone.component';
 
 export const AdminRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -21,7 +23,8 @@ export const AdminRoutes: Routes = [
     { path: 'franquias', component: FranchiseComponent },
     { path: 'estabelecimentos', component: EstablishmentComponent },
     { path: 'anunciantes', component: AdvertiserComponent },
-    { path: 'playlists', component: PlaylistComponent },
+    { path: 'curiosidades', component: CuriositiesComponent },
+    { path: 'midiafone', component: MidiafoneComponent },
     { path: 'equipamentos', component: EquipamentComponent },
     { path: 'icons', component: IconsComponent }
 ];

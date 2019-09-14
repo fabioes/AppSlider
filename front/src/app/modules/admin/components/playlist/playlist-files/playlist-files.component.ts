@@ -93,16 +93,16 @@ export class PlaylistFilesComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.playlistService.removeItem(this.business.id, playListItem.id).subscribe(() => {
-          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Item da Playlist <b> ' + this.playlist.nome + ' </b> foi removido com sucesso.', '', {
+
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Item da Playlist <b> </b> foi removido com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
             enableHtml: true,
             toastClass: "alert alert-success alert-with-icon",
             positionClass: 'toast-top-right'
           });
+          this.getPlaylists();
         });
-
-        this.playlist.playlist_itens = this.playlist.playlist_itens.filter(f => f.id !== playListItem.id);
       }
     });
   }
@@ -112,12 +112,8 @@ export class PlaylistFilesComponent implements OnInit {
     return this.globalService.isFieldInvalid(field, this.playlistFilesForm);
   }
   private getPlaylists() {
-    //TODO: make retrive routines for Attendant by API request
-    console.log('entrou');
     return this.playlistService.getByBusiness(this.business.id).subscribe(res => {
-
       this.playlists = res;
-      console.log(res);
       if (this.searchTerm)
         this.searchSubmit(null);
       else
@@ -142,13 +138,15 @@ export class PlaylistFilesComponent implements OnInit {
       toastClass: "alert alert-success alert-with-icon",
       positionClass: 'toast-top-right'
     });
-    console.log(res);
+
+    this.playlist = res;
 
     this.playlistFilesForm.get('tipo').setValue(null);
     this.playlistFilesForm.get('tempo_duracao').setValue(5);
     this.fileUpload.clear();
 
-    if (!this.playlist.playlist_itens) this.playlist.playlist_itens = [];
+    if (!this.playlist.playlist_itens)
+    this.playlist.playlist_itens = [];
 
     this.getPlaylists();
   }

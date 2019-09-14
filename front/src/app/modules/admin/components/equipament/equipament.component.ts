@@ -5,6 +5,8 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EquipamentFormComponent } from './equipament-form/equipament-form.component';
 import { EquipamentService } from '../../services/equipament/equipament.service';
+import { PlaylistFilesComponent } from '../playlist/playlist-files/playlist-files.component';
+import { PlaylistComponent } from '../playlist/playlist.component';
 
 
 @Component({
@@ -28,7 +30,6 @@ export class EquipamentComponent implements OnInit {
   }
 
   private getEquipaments() {
-    //TODO: make retrive routines for Attendant by API request
 
     return this.equipamentService.getByFranchise().subscribe(res => {
 
@@ -107,6 +108,26 @@ export class EquipamentComponent implements OnInit {
         });
       }
     });
+  }
+  filesDialog(equipament: Model.App.Equipament) {
+    const modalRef = this.modalService.open(PlaylistComponent, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+
+    modalRef.componentInstance.name = 'Equipamento';
+
+    modalRef.componentInstance.equipament = equipament;
+
+    modalRef.result.then((res: Model.App.BusinessType) => {
+      if (res == null) return;
+
+      this.getEquipaments();
+
+    }).catch(err => {
+      console.log(err);
+    });
+
   }
 
 }

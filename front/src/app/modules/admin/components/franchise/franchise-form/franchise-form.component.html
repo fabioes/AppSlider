@@ -141,7 +141,7 @@
         maxlength="50"
       />
     </div>
-    <div class="form-group date-group">
+    <!-- <div class="form-group date-group">
       <label>Data de expiração</label>
       <p-calendar
         [locale]="pt"
@@ -151,8 +151,8 @@
         dateFormat="dd/M/yy"
       >
       </p-calendar>
-    </div>
-    <div class="form-group">
+    </div> -->
+    <!-- <div class="form-group">
       <label>Ativa?</label>
       <label class="required-info-asterisk">*</label>
       <input
@@ -161,6 +161,17 @@
         [ngClass]="{ 'is-invalid': isFieldInvalid('ativo') }"
         formControlName="ativo"
         name="ativo"
+      />
+    </div> -->
+    <div class="form-group">
+      <label>Cidade</label>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_cidade') }"
+        formControlName="contato_cidade"
+        placeholder="digite a cidade da franquia"
+        name="contato_cidade"
+        maxlength="300"
       />
     </div>
   </form>

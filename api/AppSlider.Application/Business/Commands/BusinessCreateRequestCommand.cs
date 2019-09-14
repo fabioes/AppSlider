@@ -40,6 +40,9 @@ namespace AppSlider.Application.Business.Commands
         [JsonProperty("contato_endereco")]
         public String ContactAddress { get; set; }
 
+        [JsonProperty("contato_cidade")]
+        public String ContactCity { get; set; }
+
         [JsonProperty("data_expiracao")]
         public DateTime? ExpirationDate { get; set; }
 

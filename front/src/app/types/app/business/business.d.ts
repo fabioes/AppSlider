@@ -11,6 +11,7 @@ declare namespace Model.App {
         contato_email: string,
         contato_telefone: string,
         contato_endereco: string,
+        contato_cidade: string,
         data_expiracao: Date,
         ativo: boolean,
         bloqueado: boolean,
@@ -21,5 +22,4 @@ declare namespace Model.App {
         filhos: Array<Model.App.Business>,
         equipaments: Array<Model.App.Equipament>
     }
-
 }

@@ -14,5 +14,6 @@ namespace AppSlider.Application.Equipament.Services.Get
         Task<EquipamentResult> GetByMacAddress(String macAddress);
 
         Task<List<EquipamentResult>> GetAll();
+        Task<List<EquipamentResult>> GetSelectedByAdvertiser(Guid businessId);
     }
 }

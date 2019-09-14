@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using MySqlConnector.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +12,10 @@ namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<Context>
     {
+        
         public Context CreateDbContext(string[] args)
         {
+
             //IConfigurationRoot configuration = new ConfigurationBuilder().S
             //    .SetBasePath(Directory.GetCurrentDirectory())
             //    .AddJsonFile("appsettings.json")

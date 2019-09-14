@@ -17,8 +17,8 @@
 
             builder.RegisterType<Context>()
               .WithParameter(new TypedParameter(typeof(DbContextOptions), optionsBuilder.Options))
-              .InstancePerLifetimeScope();
-
+              .InstancePerDependency();
+            
             //
             // Register all Types in MongoDataAccess namespace
             //

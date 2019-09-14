@@ -51,5 +51,12 @@ namespace AppSlider.Application.Equipament.Services.Get
             
             return returnEquipaments;
         }
+        public async Task<List<EquipamentResult>> GetSelectedByAdvertiser(Guid businessId)
+        {
+            var equipaments = await equipamentRepository.GetSelectedByAdvertiser(businessId);
+            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).ToList();
+
+            return returnEquipaments;
+        }
     }
 }
