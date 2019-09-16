@@ -44,7 +44,7 @@
         public async Task<Equipament> GetByMacAddress(string macAddress)
         {
             var equipament = await _context.Equipaments.Include(i => i.Establishment).ThenInclude(x => x.Playlists).FirstOrDefaultAsync(f => f.MacAddress == macAddress);
-
+            
             return equipament;
         }
 

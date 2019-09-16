@@ -110,6 +110,17 @@
 
             return businessEntity;
         }
+        public async Task<List<BusinessEntity>> GetAdvertisers(Guid id)
+        {
+            List<BusinessEntity> businessEntities = new List<BusinessEntity>();
+            var advertisers = await _context.AdvertiserEquipament.Where(x => x.IdEquipament == id).ToListAsync();
+            foreach (var advertiser in advertisers)
+            {
+                businessEntities.Add(await Get(advertiser.IdAdvertiser));
+            }
+
+            return businessEntities;
+        }
 
         public void DetachBusiness(BusinessEntity businessEntity)
         {

@@ -13,7 +13,8 @@ namespace AppSlider.Domain.Repositories
         Task<BusinessEntity> Get(Guid id);
         Task<ICollection<BusinessEntity>> GetAll();
         Task<ICollection<BusinessEntity>> GetByType(String type);
-        Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type);        
+        Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type);
+        Task<List<BusinessEntity>> GetAdvertisers(Guid id);
         Task<BusinessEntity> Add(BusinessEntity businessEntity);
         Task<BusinessEntity> Update(BusinessEntity businessEntity);
         Task<Boolean> Delete(BusinessEntity businessEntity);

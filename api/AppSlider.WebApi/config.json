@@ -14,7 +14,7 @@
     {
       "type": "AppSlider.Infrastructure.EntityFrameworkDataAccess.Module",
       "properties": {
-        "ConnectionString": "Server=localhost;User Id=root;Password=1234;Database=midiafone;Connection Reset=false"
+        "ConnectionString": "Server=mysql.midiafone.com.br;User Id=midiafone;Password=mfdb123321;Database=midiafone;Connection Reset=false"
       }
     }
   ]
