@@ -17,7 +17,7 @@ namespace AppSlider.Application.User.Results
         public String Password { get; private set; }
 
         [JsonProperty("perfil")]
-        public String Profile { get; private set; }
+        public String Profile { get; private set; } = "user";
 
         [JsonProperty("ativo")]
         public Boolean Active { get; private set; }

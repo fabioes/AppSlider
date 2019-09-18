@@ -46,9 +46,9 @@ export class UserFormComponent implements OnInit {
       nome: ['', Validators.required],
       login: ['', Validators.required],
       senha: (this.user || <Model.App.User>{}).id ? [''] : ['', Validators.required],
-      perfil: ['', Validators.required],
+      perfil: [''],
       ativo: [true],
-      email: ['', Validators.required],
+      email: [''],
       franquias: [''],
       roles: ['']
     });

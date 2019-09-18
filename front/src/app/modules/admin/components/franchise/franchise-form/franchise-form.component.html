@@ -38,9 +38,9 @@
       </label>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <div class="form-group">
-          <label>Razão Social</label>
+          <label>Cidade</label>
           <label class="required-info-asterisk">*</label>
           <input
             class="form-control"
@@ -55,6 +55,17 @@
             Favor inserir o Razão Social!
           </div>
         </div>
+      </div> -->
+      <div class="form-group">
+        <label>Cidade</label>
+        <input
+          class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('contato_cidade') }"
+          formControlName="contato_cidade"
+          placeholder="digite a cidade da franquia"
+          name="contato_cidade"
+          maxlength="300"
+        />
       </div>
       <div class="col-md-6">
         <div class="form-group">
@@ -89,7 +100,7 @@
         Favor inserir o 'Nome do Contato da Franquia'!
       </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>E-mail</label>
       <label class="required-info-asterisk">*</label>
       <input
@@ -140,7 +151,7 @@
         name="contato_telefone"
         maxlength="50"
       />
-    </div>
+    </div> -->
     <!-- <div class="form-group date-group">
       <label>Data de expiração</label>
       <p-calendar
@@ -163,17 +174,7 @@
         name="ativo"
       />
     </div> -->
-    <div class="form-group">
-      <label>Cidade</label>
-      <input
-        class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('contato_cidade') }"
-        formControlName="contato_cidade"
-        placeholder="digite a cidade da franquia"
-        name="contato_cidade"
-        maxlength="300"
-      />
-    </div>
+
   </form>
 </div>
 <div class="modal-footer">

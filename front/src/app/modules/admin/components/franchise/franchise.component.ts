@@ -17,6 +17,7 @@ export class FranchiseComponent implements OnInit {
   franchisesGrid: Array<Model.App.Business>;
   searchTerm: string;
 
+
   constructor(private businessService: BusinessService,
     private confirmationService: ConfirmationService,
     private modalService: NgbModal,
@@ -24,6 +25,9 @@ export class FranchiseComponent implements OnInit {
 
   ngOnInit() {
     this.getFranchises();
+
+
+
   }
 
   private getFranchises() {
@@ -32,7 +36,10 @@ export class FranchiseComponent implements OnInit {
     return this.businessService.getForLoggedUser().subscribe(res => {
 
       this.franchises = res;
-
+      for (let franchise of this.franchises) {
+        var base64 = 'data:image/jpeg;base64,' + franchise.file;
+        franchise.file = base64;
+    }
       if (this.searchTerm)
         this.searchSubmit(null);
       else
@@ -45,7 +52,7 @@ export class FranchiseComponent implements OnInit {
     if (!this.searchTerm)
       this.getFranchises();
 
-    this.franchisesGrid = this.franchises.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 );
+    this.franchisesGrid = this.franchises.filter((item) => (item.contato_cidade || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 );
   }
 
   showDialog(franchise: Model.App.Business) {
@@ -70,13 +77,13 @@ export class FranchiseComponent implements OnInit {
 
   deleteFranchise(franchise) {
     this.confirmationService.confirm({
-      message: 'Tem certeza que deseja deletar a Franquia ' + franchise.nome + '?',
+      message: 'Tem certeza que deseja deletar a Franquia ' + franchise.contato_cidade + '?',
       header: 'Confirma a deleção?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.businessService.deleteBusiness(franchise.id).subscribe(() => {
           this.getFranchises();
-          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + franchise.nome + ' </b> foi deletada com sucesso.', '', {
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + franchise.contato_cidade + ' </b> foi deletada com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
             enableHtml: true,
@@ -90,13 +97,13 @@ export class FranchiseComponent implements OnInit {
 
   switchActive(franchise){
     this.confirmationService.confirm({
-      message: 'Tem certeza que deseja ' + (franchise.ativo ? 'desativar' : 'ativar') + ' a franquia ' + franchise.nome + '?',
+      message: 'Tem certeza que deseja ' + (franchise.ativo ? 'desativar' : 'ativar') + ' a franquia ' + franchise.contato_cidade + '?',
       header: 'Confirma a ' + (franchise.ativo ? 'desativação' : 'ativação') + '?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.businessService.switchActive(franchise.id).subscribe(() => {
           this.getFranchises();
-          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> A Franquia <b> ' + franchise.nome + ' </b> foi ' + (franchise.ativo ? 'desativada' : 'ativada') + ' com sucesso.', '', {
+          this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span> A Franquia <b> ' + franchise.contato_cidade + ' </b> foi ' + (franchise.ativo ? 'desativada' : 'ativada') + ' com sucesso.', '', {
             timeOut: 3500,
             closeButton: true,
             enableHtml: true,

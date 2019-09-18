@@ -49,6 +49,7 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
+              <th>Logo</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
@@ -60,6 +61,12 @@
                     establishment.nome
                   }}
                 </td>
+                <td><img
+                  id="blah"
+                  [src]="establishment.file"
+                  width="100"
+                  height="100"
+                /></td>
                 <td>{{ establishment.ativo ? "sim" : "não" }}</td>
                 <td>
                   <a

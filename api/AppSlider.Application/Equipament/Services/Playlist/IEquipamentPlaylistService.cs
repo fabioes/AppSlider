@@ -40,12 +40,22 @@ namespace AppSlider.Application.Equipament.Services.Playlist
             for (int i = 1; i < 60; i++)
             {
                 int j = 1;
+                Guid Id;
                 while (j < 7)
                 {
+                    
                     var advertisers = await businessRepository.GetAdvertisers(equipamentPlaylist.Id);
+                    
                     foreach (var advertiser in advertisers)
                     {
+                        if (Id == advertiser.Id)
+                        {
+                            break;
+                        }
                         var files = await playlistRepository.GetByBusiness(advertiser.Id);
+                       
+                         Id = advertiser.Id;
+
                         if (files.PlaylistFiles != null)
                         {
                             foreach (var file in files.PlaylistFiles)

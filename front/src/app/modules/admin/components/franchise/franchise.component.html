@@ -33,14 +33,21 @@
           <p-table [value]="franchisesGrid" [paginator]="true" [rows]="10">
             <ng-template pTemplate="header">
               <tr>
-                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Logo</th>
                 <th>Ativo?</th>
                 <th></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-franchise>
               <tr>
-                <td>{{franchise.nome}}</td>
+                <td>{{franchise.contato_cidade}}</td>
+                <td><img
+                  id="blah"
+                  [src]="franchise.file"
+                  width="100"
+                  height="100"
+                /></td>
                 <td>{{franchise.ativo ? 'sim' : 'não'}}</td>
                 <td>
                   <a (click)="showDialog(franchise)" *ngIf="franchise.bloqueado !== true">

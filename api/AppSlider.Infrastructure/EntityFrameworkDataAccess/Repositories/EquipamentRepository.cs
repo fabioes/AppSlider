@@ -50,7 +50,7 @@
 
         public async Task<ICollection<Equipament>> GetAll()
         {
-            var equipaments = await _context.Equipaments.ToListAsync();
+            var equipaments = await _context.Equipaments.OrderBy(x => x.Name).ToListAsync();
 
             return equipaments;
         }

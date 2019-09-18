@@ -53,12 +53,15 @@
         public async Task<ICollection<BusinessEntity>> GetByType(String type)
         {
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == type).ToListAsync();
-
+            if (type != "Franquia")
+            {
+                return businessEntities.OrderBy(x => x.LegalName).ToList();
+            }
             return businessEntities;
         }
 
         public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
-         {
+        {
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
             if (type == "Anunciante")
             {
@@ -79,7 +82,15 @@
                 }
 
             }
-            return businessEntities;
+            if (type != "Franquia")
+            {
+                return businessEntities.OrderBy(x => x.LegalName).ToList();
+            }
+            else
+            {
+                return businessEntities.OrderBy(x => x.ContactCity).ToList();
+            }
+
         }
 
         public async Task UpdateEquipaments(AdvertiserEquipament advertiserEquipament)
@@ -106,7 +117,7 @@
             {
                 _context.Entry(business).CurrentValues.SetValues(businessEntity);
                 await _context.SaveChangesAsync();
-            }          
+            }
 
             return businessEntity;
         }
@@ -131,7 +142,7 @@
         {
             var ids = loggedUser.Franchises?.Select(s => Guid.Parse(s))?.ToList();
 
-            var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == "Franquia" && (loggedUser.Profile == "sa" || (ids != null && ids.Contains(w.Id)))).ToListAsync();
+            var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == "Franquia" && (loggedUser.Profile == "sa" || (ids != null && ids.Contains(w.Id)))).OrderBy(x => x.ContactCity).ToListAsync();
 
             return businessEntities;
         }

@@ -33,11 +33,11 @@
         </div>
 
         <div class="form-group">
-            <label>Escolha o arquivo que representará o Item da Playlist</label>
+            <label>Escolha o arquivo 1200 x 720 pixels – PNG,JPG, GIF</label>
             <label class="required-info-asterisk">*</label>
             <br />
-            <p-fileUpload #fileUpload name="attachment" chooseLabel="Selecione um arquivo" customUpload="true" multiple="false" mode="basic"></p-fileUpload>
-            <div class="invalid-feedback" *ngIf="showFileError == true">
+            <p-fileUpload #fileUpload name="attachment" (onSelect)="validateFile($event,fileUpload)" chooseLabel="Selecione um arquivo" customUpload="true" multiple="false"  mode="basic"></p-fileUpload>
+            <div class="invalid-feedback" *ngIf="showFileError === true">
                 Favor inserir um arquivo para o Item da Playlist!
             </div>
         </div>

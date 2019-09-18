@@ -40,6 +40,10 @@ export class EstablishmentComponent implements OnInit {
     return this.businessService.getByFranchiseAndType("Estabelecimento").subscribe(res => {
 
       this.establishments = res;
+      for (let establishments of this.establishments) {
+        var base64 = 'data:image/jpeg;base64,' + establishments.file;
+        establishments.file = base64;
+    }
 
       if (this.searchTerm)
         this.searchSubmit(null);
