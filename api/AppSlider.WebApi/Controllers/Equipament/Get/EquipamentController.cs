@@ -51,7 +51,7 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
         [CustomAuthorize(AppSliderRoles.ReadEquipament)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnList<EquipamentResult>))]
         public async Task<IActionResult> GetByType(String franchiseId)
-        {
+     {
             var results = await _equipamentGetService.GetByFranchise(Guid.Parse(franchiseId));
 
             return Ok(new ApiReturnList<EquipamentResult> { Items = results, Success = true });

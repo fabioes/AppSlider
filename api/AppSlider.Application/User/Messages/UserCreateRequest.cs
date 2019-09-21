@@ -25,7 +25,7 @@ namespace AppSlider.Application.User.Messages
         public List<String> Franchises { get; set; }
 
         [JsonProperty("perfil")]
-        public String Profile { get; set; }
+        public String Profile { get; set; } = "user";
 
         [JsonProperty("ativo")]
         public Boolean? Active { get; set; }

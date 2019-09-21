@@ -120,6 +120,45 @@ export class PlaylistFilesComponent implements OnInit {
         this.playlistsGrid = this.playlists;
     });
   }
+  validateFile(event, uploader: FileUpload) {
+      console.log(event);
+        let reader = new FileReader();
+     if (event.files && event.files.length > 0) {
+       let file = event.files[0];
+
+       const img = new Image();
+       img.src = window.URL.createObjectURL( file );
+
+       reader.readAsDataURL(file);
+       reader.onload = () => {
+
+         const width = img.naturalWidth;
+         const height = img.naturalHeight;
+
+         window.URL.revokeObjectURL( img.src );
+          debugger; 
+         if( width !== 1270 && height !== 720 ) {
+              this.playlistFilesForm.setErrors({ 'invalid': true });
+         }  
+         var extn = file.name.split(".").pop();
+         switch (extn.toLowerCase()) {
+            case 'gif':
+            case 'jpg':
+            case 'jpeg':
+            case 'gif':   
+             this.playlistFilesForm.setErrors({ 'invalid': null });
+             break;         
+           default:
+             this.playlistFilesForm.setErrors({ 'invalid': true });
+             break;
+         }  
+         if(extn !== 'gif' || extn !== 'png' || extn !== 'jpg' || extn !== 'jpeg' )  {
+            this.playlistFilesForm.setErrors({ 'invalid': true });
+         }
+         
+     };
+    }
+      }
 
   searchSubmit($event) {
 

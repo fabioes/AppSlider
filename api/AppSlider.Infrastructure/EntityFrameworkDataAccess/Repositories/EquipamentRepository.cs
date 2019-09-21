@@ -44,13 +44,13 @@
         public async Task<Equipament> GetByMacAddress(string macAddress)
         {
             var equipament = await _context.Equipaments.Include(i => i.Establishment).ThenInclude(x => x.Playlists).FirstOrDefaultAsync(f => f.MacAddress == macAddress);
-
+            
             return equipament;
         }
 
         public async Task<ICollection<Equipament>> GetAll()
         {
-            var equipaments = await _context.Equipaments.ToListAsync();
+            var equipaments = await _context.Equipaments.OrderBy(x => x.Name).ToListAsync();
 
             return equipaments;
         }

@@ -17,11 +17,13 @@ namespace AppSlider.Application.Equipament.Services.Playlist
     {
         private readonly IPlaylistRepository playlistRepository;
         private readonly IEquipamentRepository equipamentRepository;
+        private readonly IBusinessRepository businessRepository;
 
-        public EquipamentPlaylistService(IPlaylistRepository playlistRepository, IEquipamentRepository equipamentRepository)
+        public EquipamentPlaylistService(IPlaylistRepository playlistRepository, IEquipamentRepository equipamentRepository, IBusinessRepository businessRepository)
         {
             this.playlistRepository = playlistRepository;
             this.equipamentRepository = equipamentRepository;
+            this.businessRepository = businessRepository;
         }
 
         public async Task<PlaylistResult> Process(String macAddress)
@@ -32,6 +34,64 @@ namespace AppSlider.Application.Equipament.Services.Playlist
             var equipamentPlaylist = await equipamentRepository.GetByMacAddress(macAddress);
             if (equipamentPlaylist == null)
                 throw new Exception("Favor informar o Mac Address de um Equipamento válido");
+            var playlist = new Domain.Entities.PlayLists.Playlist();
+            var curiosities = (await businessRepository.GetByType("Curiosidades")).FirstOrDefault();
+            var midiafone = (await businessRepository.GetByType("Midiafone")).FirstOrDefault();
+            for (int i = 1; i < 60; i++)
+            {
+                int j = 1;
+                Guid Id;
+                while (j < 7)
+                {
+                    
+                    var advertisers = await businessRepository.GetAdvertisers(equipamentPlaylist.Id);
+                    
+                    foreach (var advertiser in advertisers)
+                    {
+                        if (Id == advertiser.Id)
+                        {
+                            break;
+                        }
+                        var files = await playlistRepository.GetByBusiness(advertiser.Id);
+                       
+                         Id = advertiser.Id;
+
+                        if (files.PlaylistFiles != null)
+                        {
+                            foreach (var file in files.PlaylistFiles)
+                            {
+                                playlist.PlaylistFiles.Add(file);
+                            }
+                        }
+                    }
+                    j++;
+                }
+                j = 0;
+                var establishmentFile = equipamentPlaylist.Establishment.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                var curiosity = curiosities.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                var ad = midiafone.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+
+                playlist.PlaylistFiles.Add(establishmentFile);
+                playlist.PlaylistFiles.Add(curiosity);
+                playlist.PlaylistFiles.Add(ad);
+                if (playlist.PlaylistFiles.Count >= 60)
+                    break;
+            }
+
+                                   
+            //foreach (var file in curiosities.Playlists.FirstOrDefault().PlaylistFiles)
+            //{
+            //    playlist.PlaylistFiles.Add(file);
+            //}
+            //foreach (var file in midiafone.Playlists.FirstOrDefault().PlaylistFiles)
+            //{
+            //    playlist.PlaylistFiles.Add(file);
+            //}
+
+
+
+
+
 
             //if (equipamentPlaylist?.PlayList?.PlaylistFiles.Any() != true)
             //    throw new Exception("Playlist do equipamento não possui itens");
@@ -83,7 +143,7 @@ namespace AppSlider.Application.Equipament.Services.Playlist
             //    equipamentPlaylist.PlayList.PlaylistFiles = returnPlaylistItems;
             //}
 
-            return (PlaylistResult)equipamentPlaylist?.Establishment?.Playlists?.FirstOrDefault();
+            return (PlaylistResult)playlist;
         }
     }
 }

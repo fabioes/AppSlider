@@ -13,7 +13,7 @@ namespace AppSlider.Domain.Entities.PlayLists
         public virtual DateTime Expirate { get; set; }
         public virtual Guid BusinessId { get; set; }
 
-        public virtual ICollection<PlaylistFile> PlaylistFiles { get; set; }
+        public virtual List<PlaylistFile> PlaylistFiles { get; set; }
 
         [ForeignKey("BusinessId")]
         public virtual BusinessEntity Franchise { get; set; }
@@ -39,6 +39,7 @@ namespace AppSlider.Domain.Entities.PlayLists
 
         public Playlist()
         {
+            PlaylistFiles = new List<PlaylistFile>();
         }
     }
 

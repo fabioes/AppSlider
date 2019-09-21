@@ -23,6 +23,10 @@ import { AuthInterceptor } from './config/interceptors/auth.interceptor';
 /** prime ng modules */
 import { ProgressBarModule } from 'primeng/progressbar';
 /** prime ng modules end */
+import { NgxPasswordToggleModule } from 'ngx-password-toggle';
+import { PasswordModule } from 'primeng/password';
+
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
   imports: [
@@ -36,7 +40,10 @@ import { ProgressBarModule } from 'primeng/progressbar';
     NgbModule,
     ToastrModule.forRoot(),
     //prime ng
-    ProgressBarModule
+    ProgressBarModule,
+    NgxPasswordToggleModule,
+    PasswordModule,
+    InputTextModule
   ],
   declarations: [
     AppComponent,

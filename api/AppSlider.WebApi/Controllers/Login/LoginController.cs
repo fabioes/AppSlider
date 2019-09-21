@@ -90,7 +90,7 @@ namespace AppSlider.WebApi.Controllers.Login
                 (securityToken as JwtSecurityToken).Payload["roles"] = roles.Select(s => s.Name).ToList();
 
                 var franchises = await _businessService.GetFromUser(loggedUser);
-                (securityToken as JwtSecurityToken).Payload["franchises"] = franchises.Select(s => new { id = s.Id.ToString(), name = s.Name }).ToList();
+                (securityToken as JwtSecurityToken).Payload["franchises"] = franchises.Select(s => new { id = s.Id.ToString(), name = s.ContactCity }).ToList();
 
                 var token = handler.WriteToken(securityToken);
 
