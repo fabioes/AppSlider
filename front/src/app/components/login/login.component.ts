@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private formSubmitAttempt: boolean;
   public notLogged: boolean;
+  toggled = false;
 
   constructor(private fb: FormBuilder,
     private globalService: GlobalService,
@@ -34,7 +35,9 @@ export class LoginComponent implements OnInit {
       senha: ['', Validators.required]
     });
   }
+toggle(){
 
+}
   loginSubmit($event) {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value);

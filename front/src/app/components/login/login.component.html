@@ -16,16 +16,14 @@
                   height="72"> -->
               <h1 class="h3 mb-3 font-weight-normal">Login</h1>
               <label for="login" class="sr-only">Usuário</label>
-              <input required type="email" formControlName="login" id="login" class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('login')}"
+              <input required type="text"   formControlName="login" id="login" class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('login')}"
               placeholder="login" required="" autofocus="">
               <div class="invalid-feedback" *ngIf="isFieldInvalid('login')">
                 Favor inserir o 'Login'!
               </div>
-
-
               <br />
               <label for="inputPassword" class="sr-only">Senha</label>
-              <input type="password" formControlName="senha" id="inputPassword" class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('senha')}" placeholder="Password"
+              <input type="password" formControlName="senha" id="inputPassword"  passwordToggle class="form-control" [ngClass]="{'is-invalid': isFieldInvalid('senha')}" placeholder="Password"
                 required>
                 <div class="invalid-feedback" *ngIf="isFieldInvalid('senha')">
                     Favor inserir a 'Senha'!

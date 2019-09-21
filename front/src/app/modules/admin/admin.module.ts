@@ -40,7 +40,7 @@ import { DialogModule } from 'primeng/dialog'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { CalendarModule } from 'primeng/calendar';
 import { MultiSelectModule } from 'primeng/multiselect';
-
+import {PasswordModule} from 'primeng/password';
 //pipes
 import { PhonePipe } from './shared/pipes/phone.pipe';
 import { DateFormat } from './shared/pipes/date-format.pipe'
@@ -71,6 +71,7 @@ import { MidiafoneComponent } from './components/midiafone/midiafone.component';
     ConfirmDialogModule,
     CalendarModule,
     MultiSelectModule,
+    PasswordModule,
   ],
   declarations: [
     DashboardComponent,
