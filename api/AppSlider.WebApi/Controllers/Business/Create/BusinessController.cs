@@ -50,14 +50,16 @@ namespace AppSlider.WebApi.Controllers.Business.Create
         [CustomAuthorize(AppSliderRoles.WriteBusiness)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
         public async Task<IActionResult> CreateFranchise([ModelBinder(BinderType = typeof(JsonModelBinder))]BusinessCreateRequestCommand value, IList<IFormFile> files)
-        {
+        {    
             if (value == null) throw new BusinessException("Favor informar os dados do Negócio!");
+            if(files.Count > 0){
             var file = files[0];
 
             var fileMS = new MemoryStream();
             file.CopyTo(fileMS);
 
             value.File = fileMS.ToArray();
+            }
            
             var result = await _businessCreateService.Process(value);
 
