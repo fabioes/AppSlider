@@ -23,12 +23,12 @@
           <td>
             <img
               src="{{ getFileUrl + item.id_arquivo }}"
-              *ngIf="item.tipo == 'imagem'"
+              *ngIf="item?.tipo == 'imagem'"
               style="height: 60px;"
             />
           </td>
-          <td>{{ item.tipo }}</td>
-          <td>{{ item.tempo_duracao }}</td>
+          <td>{{ item?.tipo }}</td>
+          <td>{{ item?.tempo_duracao }}</td>
         </tr>
       </ng-template>
     </p-table>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3>Mídias do {{business?.nome}}</h3>
+    <h3>Mídias do(a) {{business?.nome}}</h3>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -36,7 +36,7 @@
             <label>Escolha o arquivo 1200 x 720 pixels – PNG,JPG, GIF</label>
             <label class="required-info-asterisk">*</label>
             <br />
-            <p-fileUpload #fileUpload name="attachment" (onSelect)="validateFile($event,fileUpload)" chooseLabel="Selecione um arquivo" customUpload="true" multiple="false"  mode="basic"></p-fileUpload>
+            <p-fileUpload #fileUpload formControlName="attachment" (onSelect)="validateFile($event,fileUpload)" chooseLabel="Selecione um arquivo" customUpload="true" multiple="false"  mode="basic"></p-fileUpload>
             <div class="invalid-feedback" *ngIf="showFileError === true">
                 Favor inserir um arquivo para o Item da Playlist!
             </div>

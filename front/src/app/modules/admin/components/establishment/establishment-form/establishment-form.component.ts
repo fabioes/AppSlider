@@ -69,7 +69,7 @@ export class EstablishmentFormComponent implements OnInit {
       id_categoria: [''],
       //id_logo: string,
       contato_nome: ['', Validators.required],
-      contato_email: ['', Validators.required],
+      contato_email: [''],
       contato_telefone: [''],
       contato_endereco: [''],
       data_expiracao: [''],

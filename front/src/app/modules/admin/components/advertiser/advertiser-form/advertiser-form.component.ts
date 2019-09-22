@@ -113,8 +113,11 @@ export class AdvertiserFormComponent implements OnInit {
     let date = moment(event).format();
     this.advertiserForm.get('data_expiracao').setValue(date);
   }
+
   getCheckboxScope(event) {
+
     this.selectedScopes.push(event);
+
 
   }
   getEstablishments() {

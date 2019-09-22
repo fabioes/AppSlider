@@ -44,7 +44,7 @@ namespace AppSlider.Application.Business.Services.Update
                 await businessRepository.RemoveAllAdvertiserEquipaments(business);
                 foreach (var item in command.Equipaments)
                 {
-                    await businessRepository.UpdateEquipaments(new Domain.Entities.Business.AdvertiserEquipament()
+                    await businessRepository.UpdateEquipaments(new AdvertiserEquipament()
                     {
                         IdAdvertiser = business.Id,
                         IdEquipament = item.Id

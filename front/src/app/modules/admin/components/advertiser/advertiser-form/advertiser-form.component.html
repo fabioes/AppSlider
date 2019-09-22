@@ -49,9 +49,11 @@
         [options]="establishments"
         formControlName="x"
         optionLabel="nome"
+        [filter]="true" filterBy="label,value.name"
         (onChange)="getCheckboxScope($event)"
         selectedItemsLabel="{0} Estabelecimentos Selecionados"
         defaultLabel="Selecione..."
+        #est
       >
       </p-multiSelect>
     </div>
@@ -62,9 +64,11 @@
         [options]="equipaments"
         formControlName="y"
         optionLabel="nome"
+        [filter]="true"
         (onChange)="getCheckboxScope($event)"
         selectedItemsLabel="{0} Equipamentos Selecionados"
         defaultLabel="Selecione..."
+        #eq
       >
       </p-multiSelect>
     </div>

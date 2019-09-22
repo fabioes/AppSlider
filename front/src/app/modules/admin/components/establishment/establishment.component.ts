@@ -103,9 +103,9 @@ export class EstablishmentComponent implements OnInit {
   searchSubmit($event) {
 
     if (!this.searchTerm)
-      this.getPlaylists();
+      this.getEstablishments();
 
-    this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.establishmentsGrid = this.establishments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
   deleteFranchise(establishment) {

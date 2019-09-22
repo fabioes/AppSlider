@@ -164,7 +164,11 @@
             }
             else
             {
-                _context.Advertisers.Add(new Advertiser(businessEntity.Id));
+                if (businessEntity.ChildrenBusinessEntity != null)
+                    foreach (var children in businessEntity.ChildrenBusinessEntity)
+                    {
+                        _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
+                    }
             }
             await _context.SaveChangesAsync();
             return businessEntity;
