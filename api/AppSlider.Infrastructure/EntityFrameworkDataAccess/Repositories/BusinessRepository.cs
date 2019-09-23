@@ -160,15 +160,25 @@
                     {
                         _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
                     }
-
             }
             else
             {
-                if (businessEntity.ChildrenBusinessEntity != null)
+                if (businessEntity.ChildrenBusinessEntity != null)   {  
+                    var advertiser =  _context.Advertisers.FirstOrDefault(x => x.Id == businessEntity.Id);   
+                         
+                     if(advertiser == null){
+                    _context.Advertisers.Add(new Advertiser (businessEntity.Id)); 
+                    await _context.SaveChangesAsync();   
+                     }                    
+                       
                     foreach (var children in businessEntity.ChildrenBusinessEntity)
                     {
+                       var establishment = _context.Establishments.FirstOrDefault(x => x.Id == children.Id);   
+                       if(establishment == null)
+                         _context.Establishments.Add(new Establishment (children.Id)); 
                         _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
                     }
+                }
             }
             await _context.SaveChangesAsync();
             return businessEntity;
