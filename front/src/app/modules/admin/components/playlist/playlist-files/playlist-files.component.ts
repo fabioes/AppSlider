@@ -60,7 +60,7 @@ export class PlaylistFilesComponent implements OnInit {
       business_id: [this.business.id],
       business_type: [this.business.id_tipo],
       tipo: [''],
-      tempo_duracao: [5, Validators.required]    
+      tempo_duracao: [5, Validators.required]
     });
     this.getPlaylists();
 
@@ -120,7 +120,7 @@ export class PlaylistFilesComponent implements OnInit {
         this.playlistsGrid = this.playlists;
     });
   }
-  validateFile(event, uploader: FileUpload) {      
+  validateFile(event, uploader: FileUpload) {
         let reader = new FileReader();
      if (event.files && event.files.length > 0) {
        let file = event.files[0];
@@ -135,9 +135,10 @@ export class PlaylistFilesComponent implements OnInit {
          const height = img.naturalHeight;
 
          window.URL.revokeObjectURL( img.src );
-          debugger;
+
          if( width !== 1270 && height !== 720 ) {
               this.playlistFilesForm.setErrors({ 'invalid': true });
+              return;
          }
          var extn = file.name.split(".").pop();
          switch (extn.toLowerCase()) {
@@ -150,7 +151,7 @@ export class PlaylistFilesComponent implements OnInit {
            default:
              this.playlistFilesForm.setErrors({ 'invalid': true });
              break;
-         }        
+         }
 
      };
     }
@@ -163,7 +164,7 @@ export class PlaylistFilesComponent implements OnInit {
 
    // this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
-  
+
 
   public callbackAction(action, res) {
 

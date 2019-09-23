@@ -47,7 +47,7 @@ export class EquipamentComponent implements OnInit {
     if (!this.searchTerm)
       this.getEquipaments();
 
-    this.equipamentsGrid = this.equipaments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.mac_address || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.equipamentsGrid = this.equipaments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
   showDialog(equipament: Model.App.BusinessType) {
