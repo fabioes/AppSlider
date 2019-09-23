@@ -59,9 +59,8 @@ export class PlaylistFilesComponent implements OnInit {
     this.playlistFilesForm = this.fb.group({
       business_id: [this.business.id],
       business_type: [this.business.id_tipo],
-      tipo: ['', Validators.required],
-      tempo_duracao: [5, Validators.required],
-      attachment: ['', Validators.required]
+      tipo: [''],
+      tempo_duracao: [5, Validators.required]    
     });
     this.getPlaylists();
 
@@ -121,8 +120,7 @@ export class PlaylistFilesComponent implements OnInit {
         this.playlistsGrid = this.playlists;
     });
   }
-  validateFile(event, uploader: FileUpload) {
-      console.log(event);
+  validateFile(event, uploader: FileUpload) {      
         let reader = new FileReader();
      if (event.files && event.files.length > 0) {
        let file = event.files[0];
@@ -147,19 +145,16 @@ export class PlaylistFilesComponent implements OnInit {
             case 'jpg':
             case 'jpeg':
             case 'gif':
-             this.playlistFilesForm.setErrors({ 'invalid': null });
+             this.playlistFilesForm.setErrors(null);
              break;
            default:
              this.playlistFilesForm.setErrors({ 'invalid': true });
              break;
-         }
-         if(extn !== 'gif' || extn !== 'png' || extn !== 'jpg' || extn !== 'jpeg' )  {
-            this.playlistFilesForm.setErrors({ 'invalid': true });
-         }
+         }        
 
      };
     }
-      }
+  }
 
   searchSubmit($event) {
 
@@ -168,6 +163,7 @@ export class PlaylistFilesComponent implements OnInit {
 
    // this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
+  
 
   public callbackAction(action, res) {
 
