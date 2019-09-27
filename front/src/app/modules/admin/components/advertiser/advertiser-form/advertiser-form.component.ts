@@ -26,8 +26,8 @@ export class AdvertiserFormComponent implements OnInit {
   equipaments: Array<Model.App.Equipament>;
   searchTerm: string;
   selectedScopes: any[] = [];
-  selectedEstablishments:SelectItem[];
-  selectedEquipaments:SelectItem[];
+  selectedEstablishments: SelectItem[];
+  selectedEquipaments: SelectItem[];
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -82,8 +82,8 @@ export class AdvertiserFormComponent implements OnInit {
 
     if (this.advertiser.id) {
 
-       this.advertiser.filhos = this.advertiserForm.value.x;
-       this.advertiser.equipaments = this.advertiserForm.value.y;
+      this.advertiser.filhos = this.advertiserForm.value.x;
+      this.advertiser.equipaments = this.advertiserForm.value.y;
 
 
       this.businessService.updateBusiness(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
@@ -118,6 +118,13 @@ export class AdvertiserFormComponent implements OnInit {
 
     this.selectedScopes.push(event);
 
+
+  }
+  setEquipments(event) {
+    this.selectedScopes.push(event);
+    return this.equipamentService.getByEstablishment(event.itemValue.id.toString()).subscribe(
+      res => this.equipaments = res
+    );
 
   }
   getEstablishments() {

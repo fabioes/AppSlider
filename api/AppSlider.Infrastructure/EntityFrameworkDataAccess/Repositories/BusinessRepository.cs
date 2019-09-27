@@ -102,6 +102,7 @@
 
             _context.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
 
+
             _context.AdvertiserEquipament.Add(advertiserEquipament);
             await _context.SaveChangesAsync();
 
@@ -148,7 +149,7 @@
         }
         public async Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity)
         {
-
+            _context.Entry(businessEntity).State = EntityState.Detached;
             var advertiserEstablishment = await _context.AdvertiserEstablishments.Where(x => x.IdAdvertiser == businessEntity.Id).ToListAsync();
             if (advertiserEstablishment.Count > 0)
             {
@@ -175,7 +176,8 @@
                     {
                        var establishment = _context.Establishments.FirstOrDefault(x => x.Id == children.Id);   
                        if(establishment == null)
-                         _context.Establishments.Add(new Establishment (children.Id)); 
+                         _context.Establishments.Add(new Establishment (children.Id));
+                        
                         _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
                     }
                 }

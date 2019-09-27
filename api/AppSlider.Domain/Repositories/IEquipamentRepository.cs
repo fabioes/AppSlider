@@ -11,6 +11,7 @@
         Task<ICollection<Equipament>> GetAll();
         Task<Equipament> GetByMacAddress(string macAddress);
         Task<ICollection<Equipament>> GetByFranchise(Guid franshiseId);
+        Task<ICollection<Equipament>> GetByEstablishment(Guid establishmentId);
         Task<Equipament> Add(Equipament equipament);
         Task<Equipament> Update(Equipament equipament);
         Task<Boolean> Delete(Equipament equipament);

@@ -17,11 +17,15 @@ export class EquipamentService {
         return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Equipament>>(environment.apiConfig.apiRoutes.equipament.default)
             .pipe(map(res => res.items));
     }
-    
+
     public getByFranchise(): Observable<Array<Model.App.Equipament>> {
         return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Equipament>>(environment.apiConfig.apiRoutes.equipament.get_by_franchise + '/' + this.franchiseService.Franchise.id)
             .pipe(map(res => res.items));
     }
+    public getByEstablishment(id:string): Observable<Array<Model.App.Equipament>> {
+      return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Equipament>>(environment.apiConfig.apiRoutes.equipament.getByEstablishment + '/' + id)
+          .pipe(map(res => res.items));
+  }
 
     public getEquipament(id: string) {
         return this.httpHelper.HttpGet<Model.Core.ApiResultItem<Model.App.Equipament>>(environment.apiConfig.apiRoutes.equipament.default + '/' + id)

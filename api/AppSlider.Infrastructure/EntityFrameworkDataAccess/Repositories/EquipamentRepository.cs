@@ -67,6 +67,17 @@
             
             return equipaments;
         }
+        public async Task<ICollection<Equipament>> GetByEstablishment(Guid establishmentId)
+        {
+            List<Equipament> equipaments = new List<Equipament>();
+            var establishment = await _context.Business.FirstOrDefaultAsync(x => x.Id == establishmentId);
+          
+                var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
+                equipaments.AddRange(equipamentList);
+            
+
+            return equipaments;
+        }
         public async Task<ICollection<Equipament>> GetSelectedByAdvertiser(Guid business)
         {
             List<Equipament> equipaments = new List<Equipament>();

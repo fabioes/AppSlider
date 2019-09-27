@@ -25,15 +25,15 @@ namespace AppSlider.Application.Business.Services.Update
         {
             List<BusinessEntity> children = null;
             UserUpdateValidations(command);
-            if (command.Children != null)
-            {
-                children = Fill(command);
-            }
+         
 
             var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ContactCity, command.ExpirationDate, command.Active, false, command.File);
            // businessRepository.DetachBusiness(business);
             await businessRepository.Update(business);
-
+            if (command.Children != null)
+            {
+                children = Fill(command);
+            }
             business.ChildrenBusinessEntity = children;
 
             if (command.IdType == 3)

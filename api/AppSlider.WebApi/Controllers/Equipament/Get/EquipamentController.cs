@@ -58,6 +58,20 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
         }
 
         /// <summary>
+        /// Obtem Equipamentos para um estabelecimento
+        /// </summary>
+        [HttpGet("GetByEstablishment/{establismentId}")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadEquipament)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnList<EquipamentResult>))]
+        public async Task<IActionResult> GetByEstablishment(String establismentId)
+        {
+            var results = await _equipamentGetService.GetByEstablishment(Guid.Parse(establismentId));
+
+            return Ok(new ApiReturnList<EquipamentResult> { Items = results, Success = true });
+        }
+
+        /// <summary>
         /// Obtem um Equipamento pelo seu MacAddress
         /// </summary>
         [HttpGet("GetByMacAddress/{macAddress}")]
