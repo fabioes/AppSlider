@@ -44,7 +44,7 @@
         public async Task<Equipament> GetByMacAddress(string macAddress)
         {
             var equipament = await _context.Equipaments.Include(i => i.Establishment).ThenInclude(x => x.Playlists).FirstOrDefaultAsync(f => f.MacAddress == macAddress);
-            
+
             return equipament;
         }
 
@@ -64,17 +64,18 @@
                 var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
                 equipaments.AddRange(equipamentList);
             }
-            
+
             return equipaments;
         }
-        public async Task<ICollection<Equipament>> GetByEstablishment(Guid establishmentId)
+        public async Task<ICollection<Equipament>> GetByEstablishments(IList<Guid> establishmentIds)
         {
             List<Equipament> equipaments = new List<Equipament>();
-            var establishment = await _context.Business.FirstOrDefaultAsync(x => x.Id == establishmentId);
-          
+            foreach (var item in establishmentIds)
+            {
+                var establishment = await _context.Business.FirstOrDefaultAsync(x => x.Id == item);
                 var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
                 equipaments.AddRange(equipamentList);
-            
+            }
 
             return equipaments;
         }

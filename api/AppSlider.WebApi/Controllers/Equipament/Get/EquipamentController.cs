@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using AppSlider.Application.Equipament.Results;
@@ -60,13 +61,19 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
         /// <summary>
         /// Obtem Equipamentos para um estabelecimento
         /// </summary>
-        [HttpGet("GetByEstablishment/{establismentId}")]
+        [HttpPost("GetByEstablishments")]
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.ReadEquipament)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnList<EquipamentResult>))]
-        public async Task<IActionResult> GetByEstablishment(String establismentId)
+        public async Task<IActionResult> GetByEstablishments([FromBody]string[] establishmentIds)
         {
-            var results = await _equipamentGetService.GetByEstablishment(Guid.Parse(establismentId));
+            List<Guid> list = new List<Guid>();
+            foreach (var id in establishmentIds)
+            {
+                list.Add(Guid.Parse(id));
+            }
+
+            var results = await _equipamentGetService.GetByEstablishments(list);
 
             return Ok(new ApiReturnList<EquipamentResult> { Items = results, Success = true });
         }

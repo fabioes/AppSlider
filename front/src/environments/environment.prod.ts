@@ -39,7 +39,7 @@ export const environment = {
       equipament: {
         default: "/equipament",
         get_by_franchise: "/equipament/GetByFranchise",
-        getByEstablishment: "/equipament/GetByEstablishment",
+        getByEstablishments: "/equipament/GetByEstablishments",
         get_by_mac_address: "/equipament/GetByMacAddress",
         switchActive: "/equipament/switch_active"
       }

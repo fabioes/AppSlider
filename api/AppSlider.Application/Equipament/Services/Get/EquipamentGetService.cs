@@ -42,9 +42,9 @@ namespace AppSlider.Application.Equipament.Services.Get
 
             return returnEquipaments;
         }
-        public async Task<List<EquipamentResult>> GetByEstablishment(Guid establishemntId)
+        public async Task<List<EquipamentResult>> GetByEstablishments(IList<Guid> establishemntIds)
         {
-            var equipaments = await equipamentRepository.GetByEstablishment(establishemntId);
+            var equipaments = await equipamentRepository.GetByEstablishments(establishemntIds);
 
             var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).ToList();
 

@@ -122,7 +122,8 @@ export class AdvertiserFormComponent implements OnInit {
   }
   setEquipments(event) {
     this.selectedScopes.push(event);
-    return this.equipamentService.getByEstablishment(event.itemValue.id.toString()).subscribe(
+    this.advertiser.filhos = this.advertiserForm.value.x;
+    return this.equipamentService.getByEstablishment(this.advertiser.filhos ).subscribe(
       res => this.equipaments = res
     );
 

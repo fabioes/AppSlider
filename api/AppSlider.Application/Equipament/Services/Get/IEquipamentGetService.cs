@@ -10,7 +10,7 @@ namespace AppSlider.Application.Equipament.Services.Get
         Task<EquipamentResult> Get(Guid id);
 
         Task<List<EquipamentResult>> GetByFranchise(Guid franchiseId);
-        Task<List<EquipamentResult>> GetByEstablishment(Guid establishmentId);
+        Task<List<EquipamentResult>> GetByEstablishments(IList<Guid> establishmentIds);
 
         Task<EquipamentResult> GetByMacAddress(String macAddress);
 
