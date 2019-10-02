@@ -138,7 +138,11 @@ export class AdvertiserFormComponent implements OnInit {
   }
   getEquipaments() {
     return this.equipamentService.getByFranchise().subscribe(
-      res => this.equipaments = res
+      res => {this.equipaments = res
+        for(let i of this.equipaments){
+            i.advertiser_name = i.nome + "|" + i.establishment.nome
+        }
+      }
     );
   }
 }

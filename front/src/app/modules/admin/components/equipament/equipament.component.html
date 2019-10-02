@@ -49,6 +49,7 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
+                <th>Estabelecimento</th>
                 <th>Mac Address</th>
                 <th></th>
               </tr>
@@ -56,6 +57,7 @@
             <ng-template pTemplate="body" let-equipament>
               <tr>
                 <td>{{ equipament.nome }}</td>
+                <td>{{ equipament.establishment.nome }}</td>
                 <td>{{ equipament.mac_address }}</td>
                 <td>
                   <a (click)="showDialog(equipament)">

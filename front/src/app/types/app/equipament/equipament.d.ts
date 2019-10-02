@@ -7,8 +7,10 @@ declare namespace Model.App {
         mac_address: string
         id_franquia: string,
         id_estabelecimento: string,
+        establishment: Model.App.Business,
         id_playlist: string,
-        ativo: boolean
+        ativo: boolean,
+        advertiser_name: string 
     }
 }
 

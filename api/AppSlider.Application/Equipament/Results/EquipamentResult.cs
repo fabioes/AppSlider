@@ -1,4 +1,5 @@
 ﻿using System;
+using AppSlider.Application.Business.Results;
 using Newtonsoft.Json;
 
 namespace AppSlider.Application.Equipament.Results
@@ -26,6 +27,9 @@ namespace AppSlider.Application.Equipament.Results
         [JsonProperty("id_playlist")]
         public Guid? IdPlaylist { get; set; }
 
+        [JsonProperty("establishment")]    
+        BusinessResult Establishment {get;set;}
+
         [JsonProperty("ativo")]
         public Boolean Active { get; set; }
 
@@ -38,6 +42,7 @@ namespace AppSlider.Application.Equipament.Results
                     Description = equipament.Description,
                     Id = equipament.Id,
                     IdEstablishment = equipament.IdEstablishment,
+                    Establishment = (BusinessResult)equipament.Establishment,
                     IdFranchise = equipament.IdFranchise,
                     IdPlaylist = equipament.IdPlaylist,
                     MacAddress = equipament.MacAddress,
