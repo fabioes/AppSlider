@@ -124,8 +124,11 @@ export class AdvertiserFormComponent implements OnInit {
     this.selectedScopes.push(event);
     this.advertiser.filhos = this.advertiserForm.value.x;
     return this.equipamentService.getByEstablishment(this.advertiser.filhos ).subscribe(
-      res => this.equipaments = res
-    );
+      res => {this.equipaments = res
+        for(let i of this.equipaments){
+            i.advertiser_name = i.nome + "|" + i.establishment.nome;
+        }
+      });
 
   }
   getEstablishments() {

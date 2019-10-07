@@ -41,13 +41,14 @@ namespace AppSlider.Application.Equipament.Services.Playlist
                 Guid Id;
 
                 var advertisers = await businessRepository.GetAdvertisers(equipamentPlaylist.Id);
-
+                int j = 0;
                 foreach (var advertiser in advertisers)
                 {
                     if (Id == advertiser.Id)
                     {
                         break;
                     }
+                    else if (j == 7) { break; }
                     var files = await playlistRepository.GetByBusiness(advertiser.Id);
 
                     Id = advertiser.Id;
@@ -60,6 +61,7 @@ namespace AppSlider.Application.Equipament.Services.Playlist
                                 playlist.PlaylistFiles.Add(file);
                         }
                     }
+                    j++;
                 }
 
 
