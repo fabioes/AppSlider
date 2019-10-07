@@ -2,8 +2,8 @@
   <h3>
     {{
       !advertiser?.id
-        ? "novo Anunciante?"
-        : "editando anunciante " + advertiser?.nome
+        ? "Novo Anunciante?"
+        : "Editando anunciante " + advertiser?.nome
     }}
   </h3>
   <button
@@ -17,7 +17,7 @@
 </div>
 <div class="modal-body">
   <p>
-    preencha as informações relevantes do anunciante
+    Preencha as informações relevantes do anunciante
     {{ advertiser?.id ? advertiser.nome : "" }}
   </p>
 

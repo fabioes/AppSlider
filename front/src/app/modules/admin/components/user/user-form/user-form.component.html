@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h3>{{!user?.id ? 'novo usuário?' : 'editando usuário ' + user?.nome}}</h3>
+    <h3>{{!user?.id ? 'Novo Usuário?' : 'Editando Usuário ' + user?.nome}}</h3>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    <p>preencha as informações relevantes do usuario {{user?.id ? user.nome : ''}}</p>
+    <p>preencha as informações relevantes do usuário {{user?.id ? user.nome : ''}}</p>
 
     <form [formGroup]="userForm">
 

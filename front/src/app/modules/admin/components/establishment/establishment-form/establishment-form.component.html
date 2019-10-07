@@ -3,7 +3,7 @@
     {{
       !establishment?.id
         ? "Novo Estabelecimento"
-        : "editando estabelecimento " + establishment?.nome
+        : "Editando Estabelecimento " + establishment?.nome
     }}
   </h3>
   <button
@@ -17,7 +17,7 @@
 </div>
 <div class="modal-body">
   <p>
-    preencha as informações relevantes do estabelecimento
+    Preencha as informações relevantes do estabelecimento
     {{ establishment?.id ? establishment.nome : "" }}
   </p>
 
@@ -36,7 +36,7 @@
         <input
           type="file"
           #fileUpload
-          onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
+          (change)="preview(fileUpload.files)"
         />
       </label>
     </div>

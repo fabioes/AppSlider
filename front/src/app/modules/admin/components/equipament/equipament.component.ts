@@ -70,7 +70,7 @@ export class EquipamentComponent implements OnInit {
     });
   }
 
-  deleteBusinessType(equipament) {
+  deleteEquipament(equipament) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja deletar o equipamento ' + equipament.nome + '?',
       header: 'Confirma a deleção?',

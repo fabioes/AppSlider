@@ -2,8 +2,8 @@
   <h3>
     {{
       !curiosities?.id
-        ? "novo Anunciante?"
-        : "editando " + curiosities?.nome
+        ? "Novo Anunciante?"
+        : "Editando " + curiosities?.nome
     }}
   </h3>
   <button
@@ -17,7 +17,7 @@
 </div>
 <div class="modal-body">
   <p>
-    preencha as informações relevantes
+    Preencha as informações relevantes
     {{ curiosities?.id ? curiosities.nome : "" }}
   </p>
 
@@ -42,7 +42,7 @@
         Favor inserir o 'Nome '!
       </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Estabelecimentos </label>
       <p-multiSelect
         [style]="{ width: '100%' }"
@@ -67,7 +67,7 @@
         defaultLabel="Selecione..."
       >
       </p-multiSelect>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label>Ativo?</label>

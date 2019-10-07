@@ -2,8 +2,8 @@
   <h3>
     {{
       !equipament?.id
-        ? "novo equipamento?"
-        : "editando equipamento " + equipament?.nome
+        ? "Novo equipamento?"
+        : "Editando equipamento " + equipament?.nome
     }}
   </h3>
   <button
@@ -17,7 +17,7 @@
 </div>
 <div class="modal-body">
   <p>
-    preencha as informações relevantes do equipamento
+    Preencha as informações relevantes do equipamento
     {{ equipament?.id ? equipament.nome : "" }}
   </p>
 
@@ -75,7 +75,7 @@
       <p-dropdown
         [options]="establishments"
         [filter]="true"
-        placeholder="Selecione a Estabelecimento"
+        placeholder="Selecione o Estabelecimento"
         [style]="{ width: '100%', 'backgroud-color': 'white' }"
         optionLabel="nome"
         formControlName="id_estabelecimento"

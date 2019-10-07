@@ -7,6 +7,7 @@ import { BusinessService } from '../../../services/business/business.service';
 import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 import { FileUpload } from 'primeng/fileupload';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'franchise-form',
@@ -19,6 +20,7 @@ export class FranchiseFormComponent implements OnInit {
   franchiseForm: FormGroup;
   pt = this.globalService.getPrimeCalendarPtConfig();
   file: any;
+
   @ViewChild('fileUpload') private fileUpload: ElementRef;
 
   constructor(public activeModal: NgbActiveModal,
@@ -26,7 +28,8 @@ export class FranchiseFormComponent implements OnInit {
     private globalService: GlobalService,
     private businessService: BusinessService,
     private toastrService: ToastrService,
-    private businessTypeService: BusinessTypeService) {
+    private businessTypeService: BusinessTypeService,
+    private sanitizer:DomSanitizer) {
     moment.locale('pt-BR');
   }
 
@@ -38,7 +41,8 @@ export class FranchiseFormComponent implements OnInit {
         this.file = './assets/img/noimage-portfolio-2000x1125.png';
       }
       else {
-        this.file = 'data:image/jpeg;base64,' + this.franchise.file;
+
+        this.file = this.franchise.file;
       }
     }
 
@@ -71,12 +75,23 @@ export class FranchiseFormComponent implements OnInit {
 
   }
 
-  public save() {
+  public async save() {
 
     if (this.franchiseForm.invalid) return;
 
     this.franchise = this.franchiseForm.value;
     let file: File = this.fileUpload.nativeElement.files[0];
+    if (!file) {
+      const b64toBlob = async () => {
+        const url = this.file;
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const file = new File([blob], "franchise");
+        return file;
+      };
+      let v = await b64toBlob();
+      file = v;
+    }
     if (this.franchise.id) {
       this.businessService.updateFranchise(this.franchise, file).subscribe(res => this.callbackAction('alterada', res));
     }
@@ -93,7 +108,7 @@ export class FranchiseFormComponent implements OnInit {
 
   public callbackAction(action, res) {
 
-    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
+    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>A Franquia <b> ' + res.contato_cidade + ' </b> foi ' + action + ' com sucesso.', '', {
       timeOut: 3500,
       closeButton: true,
       enableHtml: true,
@@ -107,6 +122,16 @@ export class FranchiseFormComponent implements OnInit {
   setDateValue(event) {
     let date = moment(event).format();
     this.franchiseForm.get('data_expiracao').setValue(date);
+  }
+  preview(files) {
+    if (files.length === 0)
+      return;
+    var reader = new FileReader();
+
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.file = reader.result;
+    }
   }
 
 }

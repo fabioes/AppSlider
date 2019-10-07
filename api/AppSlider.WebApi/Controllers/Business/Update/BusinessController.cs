@@ -34,8 +34,18 @@ namespace AppSlider.WebApi.Controllers.Business.Update
         [Authorize("Bearer")]
         [CustomAuthorize(AppSliderRoles.WriteBusiness)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
-        public async Task<IActionResult> Update([FromBody]BusinessUpdateRequestCommand request)
+        public async Task<IActionResult> Update([FromBody]BusinessUpdateRequestCommand request, IList<IFormFile> files)
         {
+            if (request == null) throw new BusinessException("Favor informar os dados do Negócio!");
+            if (files.Count > 0)
+            {
+                var file = files[0];
+
+                var fileMS = new MemoryStream();
+                file.CopyTo(fileMS);
+
+                request.File = fileMS.ToArray();
+            }
             var result = await _businessUpdateService.Process(request);
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });

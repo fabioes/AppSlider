@@ -27,7 +27,7 @@ namespace AppSlider.Application.Business.Services.Config
             if (business == null)
                 throw new BusinessException($"Erro na ativação / desativação do Negócio", new List<string> { "Negócio Inexistente!" }, "BusinessConfigService - Validations");
 
-            var domainBusiness = new BusinessEntity(business.Id, business.IdFather, business.IdType, business.IdCategory, business.LegalName,business.CNPJ ,business.Description, business.IdLogo, business.ContactName, business.ContactEmail, business.ContactPhone, business.ContactAddress,business.ContactCity, business.ExpirationDate, !business.Active, business.Blocked);
+            var domainBusiness = new BusinessEntity(business.Id, business.IdFather, business.IdType, business.IdCategory, business.LegalName,business.CNPJ ,business.Description, business.IdLogo, business.ContactName, business.ContactEmail, business.ContactPhone, business.ContactAddress,business.ContactCity, business.ExpirationDate, !business.Active, business.Blocked,business.File);
 
             businessRepository.DetachBusiness(business);
 

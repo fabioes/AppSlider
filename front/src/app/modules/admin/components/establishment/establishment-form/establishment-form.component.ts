@@ -55,7 +55,7 @@ export class EstablishmentFormComponent implements OnInit {
       if (!this.establishment.file) {
         this.file = './assets/img/noimage-portfolio-2000x1125.png';
       } else {
-        this.file = 'data:image/jpeg;base64,' + this.establishment.file;
+        this.file = this.establishment.file;
       }
     }
 
@@ -93,15 +93,25 @@ export class EstablishmentFormComponent implements OnInit {
 
   }
 
-  public save() {
+  public async save() {
 
     if (this.establishmentForm.invalid) return;
 
     this.establishment = this.establishmentForm.value;
 
     this.establishment.id_categoria = '1';
-
     let file: File = this.fileUpload.nativeElement.files[0];
+    if (!file) {
+      const b64toBlob = async () => {
+        const url = this.file;
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const file = new File([blob], "establishment");
+        return file;
+      };
+      let v = await b64toBlob();
+      file = v;
+    }
     if (this.establishment.id) {
       this.businessService.updateFranchise(this.establishment, file).subscribe(res => this.callbackAction('alterada', res));
     }
@@ -142,7 +152,7 @@ export class EstablishmentFormComponent implements OnInit {
     this.playlistsGrid = this.playlists.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
   }
 
-  filesDialog(){
+  filesDialog() {
     const modalRef = this.modalService.open(PlaylistFilesComponent, {
       backdrop: 'static',
       size: 'lg'
@@ -177,12 +187,24 @@ export class EstablishmentFormComponent implements OnInit {
   }
   readURL(event): void {
     if (event.target.files && event.target.files[0]) {
-        const file = event.target.files[0];
+      const file = event.target.files[0];
 
-        const reader = new FileReader();
-        reader.onload = e => this.imageSrc = reader.result.toString();
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = reader.result.toString();
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
     }
+  }
+  preview(files) {
+    if (files.length === 0)
+      return;
+    var reader = new FileReader();
+
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.file = reader.result;
+    }
+  }
+
 }
-}
+

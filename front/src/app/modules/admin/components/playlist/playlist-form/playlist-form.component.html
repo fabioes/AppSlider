@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h3>{{!playlist?.id ? 'nova Playlist?' : 'editando playlist ' + playlist?.nome}}</h3>
+    <h3>{{!playlist?.id ? 'Nova Playlist?' : 'Editando playlist ' + playlist?.nome}}</h3>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss(null)">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    <p>preencha as informações relevantes da playlist {{playlist?.id ? playlist.nome : ''}}</p>
+    <p>Preencha as informações relevantes da playlist {{playlist?.id ? playlist.nome : ''}}</p>
 
     <form [formGroup]="playlistForm">
 
