@@ -42,6 +42,12 @@
 
             return businessEntity;
         }
+        private async Task<BusinessEntity> GetActive(Guid id)
+        {
+            var businessEntity = await _context.Business.FirstOrDefaultAsync(x => x.Id == id && x.Active == true && x.ExpirationDate < DateTime.Now);
+
+            return businessEntity;
+        }
 
         public async Task<ICollection<BusinessEntity>> GetAll()
         {
@@ -128,7 +134,8 @@
             var advertisers = await _context.AdvertiserEquipament.Where(x => x.IdEquipament == id).ToListAsync();
             foreach (var advertiser in advertisers)
             {
-                businessEntities.Add(await Get(advertiser.IdAdvertiser));
+                var idAdvertiser = await GetActive(advertiser.IdAdvertiser);
+                businessEntities.Add(idAdvertiser);
             }
 
             return businessEntities;
