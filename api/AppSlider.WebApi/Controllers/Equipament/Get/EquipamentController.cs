@@ -17,10 +17,10 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
     public class EquipamentController : Controller
     {
         private readonly IEquipamentGetService _equipamentGetService;
-        
+
         public EquipamentController(IEquipamentGetService equipamentGetService)
         {
-            _equipamentGetService = equipamentGetService;        
+            _equipamentGetService = equipamentGetService;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
         [CustomAuthorize(AppSliderRoles.ReadEquipament)]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnList<EquipamentResult>))]
         public async Task<IActionResult> GetByType(String franchiseId)
-     {
+        {
             var results = await _equipamentGetService.GetByFranchise(Guid.Parse(franchiseId));
 
             return Ok(new ApiReturnList<EquipamentResult> { Items = results, Success = true });

@@ -53,7 +53,7 @@ namespace AppSlider.Application.Equipament.Services.Playlist
 
                     Id = advertiser.Id;
 
-                    if (files.PlaylistFiles != null)
+                    if (files?.PlaylistFiles != null)
                     {
                         foreach (var file in files.PlaylistFiles)
                         {
@@ -64,7 +64,7 @@ namespace AppSlider.Application.Equipament.Services.Playlist
                     j++;
                 }
 
-                var establishmentFile = equipamentPlaylist.Establishment.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                var establishmentFile = equipamentPlaylist.Establishment.Playlists.FirstOrDefault()?.PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
                 var curiosity = curiosities.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
                 var ad = midiafone.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
                 if (establishmentFile != null)
