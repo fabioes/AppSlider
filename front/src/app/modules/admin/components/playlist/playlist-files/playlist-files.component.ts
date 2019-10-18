@@ -59,7 +59,7 @@ export class PlaylistFilesComponent implements OnInit {
     this.playlistFilesForm = this.fb.group({
       business_id: [this.business.id],
       business_type: [this.business.id_tipo],
-      tipo: [''],
+      tipo: ['imagem'],
       tempo_duracao: [5, Validators.required]
     });
     this.getPlaylists();
@@ -80,7 +80,7 @@ export class PlaylistFilesComponent implements OnInit {
 
     let file: File = this.fileUpload.files[0];
     let playlistItem = this.playlistFilesForm.value;
-    playlistItem.tipo = (typeof playlistItem.tipo) == "string" ? playlistItem.tipo : playlistItem.tipo.value;
+    playlistItem.tipo = 'imagem';
 
     this.playlistService.addItem(playlistItem, file).subscribe(res => this.callbackAction('criado', res));
 
@@ -126,7 +126,7 @@ export class PlaylistFilesComponent implements OnInit {
        let file = event.files[0];
 
        const img = new Image();
-       img.src = window.URL.createObjectURL( file );
+       img.src = window.URL.createObjectURL(file);
 
        reader.readAsDataURL(file);
        reader.onload = () => {
@@ -178,7 +178,7 @@ export class PlaylistFilesComponent implements OnInit {
 
     this.playlist = res;
 
-    this.playlistFilesForm.get('tipo').setValue(null);
+
     this.playlistFilesForm.get('tempo_duracao').setValue(5);
     this.fileUpload.clear();
 

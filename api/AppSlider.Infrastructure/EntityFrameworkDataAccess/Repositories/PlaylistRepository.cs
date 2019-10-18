@@ -62,7 +62,7 @@
         }
         public async Task<Playlist> GetByBusiness(Guid businessId)
         {
-            var playlist = await _context.PlayLists.FirstOrDefaultAsync(w => w.BusinessId == businessId && w.Active == true && w.Expirate < DateTime.Now);
+            var playlist = await _context.PlayLists.FirstOrDefaultAsync(w => w.BusinessId == businessId);
             return playlist;
         }
 

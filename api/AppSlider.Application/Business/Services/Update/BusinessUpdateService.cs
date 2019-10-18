@@ -25,11 +25,11 @@ namespace AppSlider.Application.Business.Services.Update
         {
             List<BusinessEntity> children = null;
             UserUpdateValidations(command);
-         
+
 
             var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ContactCity, command.ExpirationDate, command.Active, false, command.File);
-           // businessRepository.DetachBusiness(business);
-            await businessRepository.Update(business);
+            // businessRepository.DetachBusiness(business);
+
             if (command.Children != null)
             {
                 children = Fill(command);
@@ -51,12 +51,59 @@ namespace AppSlider.Application.Business.Services.Update
                     });
                 }
             }
-
+            business.ChildrenBusinessEntity = null;
+            await businessRepository.Update(business);
             var returnUser = (BusinessResult)business;
 
             return returnUser;
         }
 
+        public async Task<BusinessResult> ProcessAdvertiser(BusinessUpdateRequestCommand command)
+        {
+            List<BusinessEntity> children = null;
+            UserUpdateValidations(command);
+
+
+            var business = new BusinessEntity(command.Id, command.IdFather, command.IdType, command.IdCategory, command.Name, command.CNPJ, command.Description, command.IdLogo, command.ContactName, command.ContactEmail, command.ContactPhone, command.ContactAddress, command.ContactCity, command.ExpirationDate, command.Active, false, command.File);
+
+            await businessRepository.UpdateAdvertiserBusiness(business);
+
+            if (command.Children != null)
+            {
+                children = Fill(command);
+            }
+            business.ChildrenBusinessEntity = children;
+
+            if (command.IdType == 3)
+                await businessRepository.UpdateAdvertiser(business);
+
+            if (command.Equipaments != null && command.IdType == 3)
+            {
+                await businessRepository.RemoveAllAdvertiserEquipaments(business);
+                foreach (var item in command.Equipaments)
+                {
+                    try
+                    {
+                        await businessRepository.UpdateEquipaments(new AdvertiserEquipament()
+                        {
+                            IdAdvertiser = business.Id,
+                            IdEquipament = item.Id
+                        });
+                    }
+                    catch (Exception)
+                    {
+
+
+                    }
+
+                }
+            }
+
+
+            var returnUser = (BusinessResult)business;
+
+            return returnUser;
+        }
 
         private void UserUpdateValidations(BusinessUpdateRequestCommand command)
         {

@@ -26,7 +26,8 @@ export class AdvertiserFormComponent implements OnInit {
   equipaments: Array<Model.App.Equipament>;
   searchTerm: string;
   selectedScopes: any[] = [];
-  selectedEstablishments: SelectItem[];
+  selectedEstablishmentScopes: any[] = [];
+  selectedEstablishments: SelectItem[]=[];
   selectedEquipaments: SelectItem[];
 
   constructor(public activeModal: NgbActiveModal,
@@ -42,9 +43,13 @@ export class AdvertiserFormComponent implements OnInit {
 
     this.getEstablishments();
     this.getEquipaments();
+
   }
 
   ngOnInit() {
+    for (let establishment of this.advertiser.filhos) {
+      this.selectedEstablishments.push({ label: establishment.nome, value: establishment.id });
+    }
 
     this.advertiserForm = this.fb.group({
       id: [''],
@@ -59,10 +64,12 @@ export class AdvertiserFormComponent implements OnInit {
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null],
-      x: [this.advertiser != null ? this.advertiser.filhos : null],
+      x: [this.advertiser != null ? this.selectedEstablishments : null],
       y: [this.advertiser != null ? this.advertiser.equipaments : null],
+      z: ['']
     });
-
+    this.selectedScopes = [];
+    this.selectedEstablishmentScopes = [];
     this.advertiserForm.patchValue(this.advertiser || {});
 
     this.businessTypeService.getAllBusinessTypes().subscribe(res => {
@@ -85,8 +92,7 @@ export class AdvertiserFormComponent implements OnInit {
       this.advertiser.filhos = this.advertiserForm.value.x;
       this.advertiser.equipaments = this.advertiserForm.value.y;
 
-
-      this.businessService.updateBusiness(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
+      this.businessService.updateAdvertiser(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
     }
     else {
       this.businessService.createBusiness(this.advertiser).subscribe(res => this.callbackAction('criado', res));
@@ -116,17 +122,20 @@ export class AdvertiserFormComponent implements OnInit {
 
   getCheckboxScope(event) {
 
-    this.selectedScopes.push(event);
+    this.selectedEstablishmentScopes.push(event);
 
 
   }
   setEquipments(event) {
     this.selectedScopes.push(event);
-    this.advertiser.filhos = this.advertiserForm.value.x;
-    return this.equipamentService.getByEstablishment(this.advertiser.filhos ).subscribe(
-      res => {this.equipaments = res
-        for(let i of this.equipaments){
-            i.advertiser_name = i.nome + "|" + i.establishment.nome;
+    this.advertiser.filhos = [];
+    this.advertiser.filhos.push(event.itemValue);
+
+    return this.equipamentService.getByEstablishment(this.advertiser.filhos).subscribe(
+      res => {
+        this.equipaments = res;
+        for (let i of this.equipaments) {
+          i.advertiser_name = i.nome + "|" + i.establishment.nome;
         }
       });
 
@@ -141,9 +150,10 @@ export class AdvertiserFormComponent implements OnInit {
   }
   getEquipaments() {
     return this.equipamentService.getByFranchise().subscribe(
-      res => {this.equipaments = res
-        for(let i of this.equipaments){
-            i.advertiser_name = i.nome + "|" + i.establishment.nome
+      res => {
+        this.equipaments = res
+        for (let i of this.equipaments) {
+          i.advertiser_name = i.nome + "|" + i.establishment.nome
         }
       }
     );

@@ -22,7 +22,7 @@ namespace AppSlider.Domain.Entities.Business
         public virtual String ContactAddress { get; protected set; }
         public virtual String ContactCity { get; protected set; }
         public virtual DateTime? ExpirationDate { get; protected set; }
-        public virtual Boolean Active { get; protected set; }
+        public virtual Boolean Active { get; set; }
         public virtual Boolean Blocked { get; protected set; }
 
         public virtual byte[] File { get; set; }
@@ -41,9 +41,9 @@ namespace AppSlider.Domain.Entities.Business
 
         public virtual ICollection<BusinessEntity> ChildrenBusinessEntity { get; set; }
 
-        public virtual IList<Playlist> Playlists { get; set; }        
+        public virtual IList<Playlist> Playlists { get; set; }
 
-        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress,string contactCity,DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
+        public BusinessEntity(Guid id, Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, string contactCity, DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
         {
             Id = id;
             IdFather = idFather;
@@ -65,7 +65,7 @@ namespace AppSlider.Domain.Entities.Business
             ChildrenBusinessEntity = children;
         }
 
-        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress,string contactCity ,DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
+        public BusinessEntity(Guid? idFather, int idType, int? idCategory, string name, long? CNPJ, string description, Guid? idLogo, string contactName, string contactEmail, string contactPhone, string contactAddress, string contactCity, DateTime? expirationDate, bool active, bool blocked, byte[] file = null, List<BusinessEntity> children = null) : this()
         {
             IdFather = idFather;
             IdType = idType;

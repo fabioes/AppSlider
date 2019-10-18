@@ -7,5 +7,6 @@ namespace AppSlider.Application.Business.Services.Update
     public interface IBusinessUpdateService
     {
         Task<BusinessResult> Process(BusinessUpdateRequestCommand command);
+        Task<BusinessResult> ProcessAdvertiser(BusinessUpdateRequestCommand command);
     }
 }

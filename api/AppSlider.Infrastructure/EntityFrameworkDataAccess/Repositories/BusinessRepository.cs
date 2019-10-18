@@ -9,6 +9,7 @@
     using System.Linq;
     using AppSlider.Domain.Authentication;
     using AppSlider.Domain.Entities.Equipaments;
+    using Dapper;
 
     public class BusinessRepository : IBusinessRepository
     {
@@ -38,19 +39,20 @@
 
         public async Task<BusinessEntity> Get(Guid id)
         {
-            var businessEntity = await _context.Business.FindAsync(id);
+            var businessEntity = await _context.Business.FirstOrDefaultAsync(x => x.Id == id);
 
             return businessEntity;
         }
         private async Task<BusinessEntity> GetActive(Guid id)
         {
-            var businessEntity = await _context.Business.FirstOrDefaultAsync(x => x.Id == id && x.Active == true && x.ExpirationDate < DateTime.Now);
+            var businessEntity = await _context.Business.FirstOrDefaultAsync(x => x.Id == id && x.Active == true && x.ExpirationDate > DateTime.Now);
 
             return businessEntity;
         }
 
         public async Task<ICollection<BusinessEntity>> GetAll()
         {
+            RefreshAll();
             var businessEntities = await _context.Business.ToListAsync();
 
             return businessEntities;
@@ -65,9 +67,17 @@
             }
             return businessEntities;
         }
+        public void RefreshAll()
+        {
+            foreach (var entity in _context.ChangeTracker.Entries())
+            {
+                entity.Reload();
+            }
+        }
 
         public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
         {
+            RefreshAll();
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
             if (type == "Anunciante")
             {
@@ -101,18 +111,11 @@
 
         public async Task UpdateEquipaments(AdvertiserEquipament advertiserEquipament)
         {
-
-            var local = _context.Set<AdvertiserEquipament>().Local.FirstOrDefault(e => e.IdAdvertiser == advertiserEquipament.IdAdvertiser);
-
-            if (local == null) local = advertiserEquipament;
-
-            _context.Entry(local).State = local == null ? EntityState.Modified : EntityState.Detached;
-
-
-            _context.AdvertiserEquipament.Add(advertiserEquipament);
-            await _context.SaveChangesAsync();
+            var db = _context.Database.GetDbConnection();
+            await db.ExecuteAsync("INSERT INTO AdvertiserEquipament (IdAdvertiser,IdEquipament) VALUES (@IdAdvertiser,@IdEquipament)", new { IdAdvertiser = advertiserEquipament.IdAdvertiser, IdEquipament = advertiserEquipament.IdEquipament });
 
         }
+
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {
@@ -128,6 +131,25 @@
 
             return businessEntity;
         }
+        public async Task<BusinessEntity> UpdateAdvertiserBusiness(BusinessEntity businessEntity)
+        {
+            var db = _context.Database.GetDbConnection();
+            if (db.State != System.Data.ConnectionState.Open)
+                db.Open();
+            var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active , " +
+               "ExpirationDate = @ExpirationDate WHERE Id = @Id ", new { businessEntity.Active, businessEntity.ExpirationDate, businessEntity.Id, });
+
+            return businessEntity;
+        }
+        public async Task<BusinessEntity> UpdateAdvertiserActive(BusinessEntity businessEntity)
+        {
+            var db = _context.Database.GetDbConnection();
+            if (db.State != System.Data.ConnectionState.Open)
+                db.Open();
+            var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active  WHERE Id = @Id ", new { businessEntity.Active, businessEntity.Id, });
+
+            return businessEntity;
+        }
         public async Task<List<BusinessEntity>> GetAdvertisers(Guid id)
         {
             List<BusinessEntity> businessEntities = new List<BusinessEntity>();
@@ -135,7 +157,10 @@
             foreach (var advertiser in advertisers)
             {
                 var idAdvertiser = await GetActive(advertiser.IdAdvertiser);
-                businessEntities.Add(idAdvertiser);
+                if (idAdvertiser != null)
+                {
+                    businessEntities.Add(idAdvertiser);
+                }
             }
 
             return businessEntities;
@@ -156,56 +181,58 @@
         }
         public async Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity)
         {
-            _context.Entry(businessEntity).State = EntityState.Detached;
+            var db = _context.Database.GetDbConnection();
+
             var advertiserEstablishment = await _context.AdvertiserEstablishments.Where(x => x.IdAdvertiser == businessEntity.Id).ToListAsync();
             if (advertiserEstablishment.Count > 0)
             {
-                _context.AdvertiserEstablishments.RemoveRange(advertiserEstablishment);
-                await _context.SaveChangesAsync();
+                await db.ExecuteAsync("DELETE FROM AdvertiserEstablishments WHERE IdAdvertiser = @Id", new { businessEntity.Id });
+
 
                 if (businessEntity.ChildrenBusinessEntity != null)
                     foreach (var children in businessEntity.ChildrenBusinessEntity)
                     {
-                        _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
+                        if(children.Id != null)
+                            try
+                            {
+                                await db.ExecuteAsync("INSERT INTO AdvertiserEstablishments (IdAdvertiser,IdEstablishment) VALUES (@IdAdvertiser,@IdEstablishment)", new { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
+                            }
+                            catch (Exception)
+                            {
+                               
+                            }                        
                     }
             }
             else
             {
-                if (businessEntity.ChildrenBusinessEntity != null)   {  
-                    var advertiser =  _context.Advertisers.FirstOrDefault(x => x.Id == businessEntity.Id);   
-                         
-                     if(advertiser == null){
-                    _context.Advertisers.Add(new Advertiser (businessEntity.Id)); 
-                    await _context.SaveChangesAsync();   
-                     }                    
-                       
+                if (businessEntity.ChildrenBusinessEntity != null)
+                {
+                    var advertiser = _context.Advertisers.FirstOrDefault(x => x.Id == businessEntity.Id);
+
+                    if (advertiser == null)
+                    {
+                        await db.ExecuteAsync("INSERT INTO Advertisers (Id,DataCreated) VALUES (@IdAdvertiser,NOW())", new { IdAdvertiser = businessEntity.Id });
+                    }
+
                     foreach (var children in businessEntity.ChildrenBusinessEntity)
                     {
-                       var establishment = _context.Establishments.FirstOrDefault(x => x.Id == children.Id);   
-                       if(establishment == null)
-                         _context.Establishments.Add(new Establishment (children.Id));
-                        
-                        _context.AdvertiserEstablishments.Add(new AdvertiserEstablishments { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
+                        var establishment = _context.Establishments.FirstOrDefault(x => x.Id == children.Id);
+                        if (establishment == null)
+                            await db.ExecuteAsync("INSERT INTO Establishments (Id,DataCreated) VALUES (@IdEstablishment,NOW())", new { IdEstablishment = children.Id });
+
+                        await db.ExecuteAsync("INSERT INTO AdvertiserEstablishments (IdAdvertiser,IdEstablishment) VALUES (@IdAdvertiser,@IdEstablishment)", new { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
                     }
                 }
             }
-            await _context.SaveChangesAsync();
+
             return businessEntity;
 
         }
 
         public async Task RemoveAllAdvertiserEquipaments(BusinessEntity businessEntity)
         {
-            var advertiserEquipament = new AdvertiserEquipament() { IdAdvertiser = businessEntity.Id };
-
-
-            if (_context.AdvertiserEquipament.Any(x => x.IdAdvertiser == businessEntity.Id))
-            {
-                var li = _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == businessEntity.Id).ToList();
-                _context.AdvertiserEquipament.RemoveRange(li);
-
-                await _context.SaveChangesAsync();
-            }
+            var db = _context.Database.GetDbConnection();
+            await db.ExecuteAsync("DELETE FROM AdvertiserEquipament WHERE IdAdvertiser = @Id", new { businessEntity.Id });
         }
     }
 }

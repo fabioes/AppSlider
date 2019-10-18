@@ -70,6 +70,7 @@ namespace AppSlider.WebApi.Controllers.Equipament.Get
             List<Guid> list = new List<Guid>();
             foreach (var id in establishmentIds)
             {
+                if(id!=null)
                 list.Add(Guid.Parse(id));
             }
 

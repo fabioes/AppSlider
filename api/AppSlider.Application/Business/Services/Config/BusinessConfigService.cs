@@ -26,14 +26,13 @@ namespace AppSlider.Application.Business.Services.Config
 
             if (business == null)
                 throw new BusinessException($"Erro na ativação / desativação do Negócio", new List<string> { "Negócio Inexistente!" }, "BusinessConfigService - Validations");
+                      
+            business.Active = !business.Active;
+         
 
-            var domainBusiness = new BusinessEntity(business.Id, business.IdFather, business.IdType, business.IdCategory, business.LegalName,business.CNPJ ,business.Description, business.IdLogo, business.ContactName, business.ContactEmail, business.ContactPhone, business.ContactAddress,business.ContactCity, business.ExpirationDate, !business.Active, business.Blocked,business.File);
+            await businessRepository.UpdateAdvertiserActive(business);
 
-            businessRepository.DetachBusiness(business);
-
-            await businessRepository.Update(domainBusiness);
-
-            var returnUser = (BusinessResult)domainBusiness;
+            var returnUser = (BusinessResult)business;
 
             return returnUser;
         }

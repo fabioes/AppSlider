@@ -48,6 +48,10 @@ export class BusinessService {
     return this.httpHelper.HttpPut<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.default, Business)
       .pipe(map(res => res.item));
   }
+  public updateAdvertiser(Business: Model.App.Business) {
+    return this.httpHelper.HttpPut<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.advertiser, Business)
+      .pipe(map(res => res.item));
+  }
   public createFranchise(Business: Model.App.Business, file: File) {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');

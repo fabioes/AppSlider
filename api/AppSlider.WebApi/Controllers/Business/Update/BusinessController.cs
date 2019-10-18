@@ -50,6 +50,18 @@ namespace AppSlider.WebApi.Controllers.Business.Update
 
             return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
         }
+        [HttpPut("advertiser")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.WriteBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> UpdateAdvertiser([FromBody]BusinessUpdateRequestCommand request)
+        {
+            if (request == null) throw new BusinessException("Favor informar os dados do Negócio!");
+            
+            var result = await _businessUpdateService.ProcessAdvertiser(request);
+
+            return Ok(new ApiReturnItem<BusinessResult> { Item = result, Success = true });
+        }
         [HttpPut("franchise")]
         [AllowAnonymous]
         [CustomAuthorize(AppSliderRoles.WriteBusiness)]

@@ -25,6 +25,7 @@ export const environment = {
       },
       business: {
         default: "/business",
+        advertiser: "/business/advertiser",
         franchise: "/business/franchise",
         switchActive: "/business/switch_active",
         get_by_type: "/business/GetByType",

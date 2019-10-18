@@ -38,7 +38,7 @@ namespace AppSlider.Application.Equipament.Services.Get
         {
             var equipaments = await equipamentRepository.GetByFranchise(franchiseId);
 
-            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).ToList();
+            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).OrderBy(x => x.Name).ToList();
 
             return returnEquipaments;
         }
@@ -46,7 +46,7 @@ namespace AppSlider.Application.Equipament.Services.Get
         {
             var equipaments = await equipamentRepository.GetByEstablishments(establishemntIds);
 
-            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).ToList();
+            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).OrderBy(x => x.Name).ToList();
 
             return returnEquipaments;
         }
@@ -56,7 +56,7 @@ namespace AppSlider.Application.Equipament.Services.Get
         {
             var equipaments = await equipamentRepository.GetAll();
 
-            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).ToList();
+            var returnEquipaments = equipaments?.Select(s => (EquipamentResult)s).OrderBy(x => x.Name).ToList();
             
             return returnEquipaments;
         }
