@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GlobalService } from '../../../../../services/global/global.service';
 import { ToastrService } from 'ngx-toastr';
@@ -7,8 +7,6 @@ import { BusinessService } from '../../../services/business/business.service';
 import * as moment from 'moment';
 import { BusinessTypeService } from '../../../services/business-type/business-type.service';
 import { FranchiseService } from '../../../services/franchise/franchise.service';
-import { SelectItem } from 'primeng/components/common/selectitem';
-import { EquipamentComponent } from '../../equipament/equipament.component';
 import { EquipamentService } from '../../../services/equipament/equipament.service';
 
 @Component({
@@ -25,10 +23,11 @@ export class AdvertiserFormComponent implements OnInit {
   establishments: Array<Model.App.Business>;
   equipaments: Array<Model.App.Equipament>;
   searchTerm: string;
-  selectedScopes: any[] = [];
-  selectedEstablishmentScopes: any[] = [];
-  selectedEstablishments: SelectItem[]=[];
-  selectedEquipaments: SelectItem[];
+
+  establishmentsDdlItems: Array<Model.Util.DropdownModelItem> = [];
+  selectedEstablishmentsDdlItems: Array<Model.Util.DropdownModelItem> = [];
+  equipmentsDdlItems: Array<Model.Util.DropdownModelItem> = [];
+  selectedEquipmentsDdlItems: Array<Model.Util.DropdownModelItem> = [];
 
   constructor(public activeModal: NgbActiveModal,
     private fb: FormBuilder,
@@ -40,16 +39,6 @@ export class AdvertiserFormComponent implements OnInit {
     private equipamentService: EquipamentService) {
     moment.locale('pt-BR');
     this.franchise = this.franchiseService.Franchise;
-
-    this.getEstablishments();
-    this.getEquipaments();
-
-  }
-
-  ngOnInit() {
-    for (let establishment of this.advertiser.filhos) {
-      this.selectedEstablishments.push({ label: establishment.nome, value: establishment.id });
-    }
 
     this.advertiserForm = this.fb.group({
       id: [''],
@@ -64,37 +53,46 @@ export class AdvertiserFormComponent implements OnInit {
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null],
-      x: [this.advertiser != null ? this.selectedEstablishments : null],
-      y: [this.advertiser != null ? this.advertiser.equipaments : null],
+      x: [null],
+      y: [null],
       z: ['']
     });
-    this.selectedScopes = [];
-    this.selectedEstablishmentScopes = [];
+
+    this.getEstablishments();
+    this.getEquipaments();
+
+  }
+
+  async ngOnInit() {
     this.advertiserForm.patchValue(this.advertiser || {});
 
-    this.businessTypeService.getAllBusinessTypes().subscribe(res => {
-      this.advertiserForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Anunciante')[0]).id);
-    });
+    if (this.advertiser) {
+      this.advertiserForm.get('x').setValue(this.selectedEstablishmentsDdlItems);
+      this.advertiserForm.get('y').setValue(this.selectedEquipmentsDdlItems);
+    }
 
-    if ((this.advertiser || <Model.App.Business>{}).data_expiracao)
+    const res = await this.businessTypeService.getAllBusinessTypes().toPromise();
+      this.advertiserForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Anunciante')[0]).id);
+
+    if ((this.advertiser || <Model.App.Business>{}).data_expiracao) {
       this.advertiserForm.get('dateTemp').setValue(new Date(this.advertiser.data_expiracao));
+    }
 
   }
 
   public save() {
 
-    if (this.advertiserForm.invalid) return;
+    if (this.advertiserForm.invalid) { return; }
 
     this.advertiser = this.advertiserForm.value;
 
     if (this.advertiser.id) {
 
-      this.advertiser.filhos = this.advertiserForm.value.x;
-      this.advertiser.equipaments = this.advertiserForm.value.y;
+      this.advertiser.filhos = (this.advertiserForm.get('x').value || []).map(m => this.establishments.find(f => f.id === m.value.id));
+      this.advertiser.equipaments = (this.advertiserForm.get('y').value || []).map(m => this.equipaments.find(f => f.id === m.value.id));
 
       this.businessService.updateAdvertiser(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
-    }
-    else {
+    } else {
       this.businessService.createBusiness(this.advertiser).subscribe(res => this.callbackAction('criado', res));
     }
   }
@@ -104,11 +102,12 @@ export class AdvertiserFormComponent implements OnInit {
   }
   public callbackAction(action, res) {
 
-    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Anunciante <b> ' + res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
+    this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Anunciante <b> ' +
+     res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
       timeOut: 3500,
       closeButton: true,
       enableHtml: true,
-      toastClass: "alert alert-success alert-with-icon",
+      toastClass: 'alert alert-success alert-with-icon',
       positionClass: 'toast-top-right'
     });
 
@@ -116,46 +115,53 @@ export class AdvertiserFormComponent implements OnInit {
   }
 
   setDateValue(event) {
-    let date = moment(event).format();
+    const date = moment(event).format();
     this.advertiserForm.get('data_expiracao').setValue(date);
   }
 
-  getCheckboxScope(event) {
+  async getEstablishments() {
 
-    this.selectedEstablishmentScopes.push(event);
+    this.establishments = await this.businessService.getByFranchiseAndType('Estabelecimento').toPromise();
 
-
-  }
-  setEquipments(event) {
-    this.selectedScopes.push(event);
-    this.advertiser.filhos = [];
-    this.advertiser.filhos.push(event.itemValue);
-
-    return this.equipamentService.getByEstablishment(this.advertiser.filhos).subscribe(
-      res => {
-        this.equipaments = res;
-        for (let i of this.equipaments) {
-          i.advertiser_name = i.nome + "|" + i.establishment.nome;
+    this.establishmentsDdlItems = (this.establishments || []).map(m => {
+      const newItem = {
+        label: m.nome,
+        value: {
+          id: m.id,
+          name: m.nome
         }
-      });
+      };
 
-  }
-  getEstablishments() {
+      if ((this.advertiser.filhos || []).filter(f => f.id === m.id).length > 0
+      && this.selectedEstablishmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
+        this.selectedEstablishmentsDdlItems.push(newItem);
+      }
 
-    return this.businessService.getByFranchiseAndType('Estabelecimento').subscribe(res => {
-
-      this.establishments = res;
-
+      return newItem;
     });
   }
-  getEquipaments() {
-    return this.equipamentService.getByFranchise().subscribe(
-      res => {
-        this.equipaments = res
-        for (let i of this.equipaments) {
-          i.advertiser_name = i.nome + "|" + i.establishment.nome
+  async getEquipaments() {
+    const equipaments = await this.equipamentService.getByFranchise().toPromise();
+    this.equipaments = equipaments.map(m => {
+      m.advertiser_name = m.nome + '|' + m.establishment.nome;
+      return m;
+    });
+
+    this.equipmentsDdlItems = this.equipaments.map(m => {
+      const newItem = {
+        label: m.advertiser_name,
+        value: {
+          id: m.id,
+          name: m.advertiser_name
         }
+      };
+
+      if ((this.advertiser.equipaments || []).filter(f => f.id === m.id).length > 0
+      && this.selectedEquipmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
+        this.selectedEquipmentsDdlItems.push(newItem);
       }
-    );
+
+      return newItem;
+    });
   }
 }

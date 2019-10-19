@@ -46,11 +46,10 @@
       <label>Estabelecimentos do Anunciante</label>
       <p-multiSelect
         [style]="{ width: '100%' }"
-        [options]="establishments"
+        [options]="establishmentsDdlItems"
         formControlName="x"
-        optionLabel="nome"
-        [filter]="true" filterBy="label,value.name"
-        (onChange)="setEquipments($event)"
+        optionLabel="label"
+        [filter]="true" filterBy="label,value.id"
         selectedItemsLabel="{0} Estabelecimentos Selecionados"
         defaultLabel="Selecione..."
         #est
@@ -61,11 +60,10 @@
       <label>Equipamentos do Anunciante</label>
       <p-multiSelect
         [style]="{ width: '100%' }"
-        [options]="equipaments"
+        [options]="equipmentsDdlItems"
         formControlName="y"
-        optionLabel="advertiser_name"
+        optionLabel="label"
         [filter]="true"
-        (onChange)="getCheckboxScope($event)"
         selectedItemsLabel="{0} Equipamentos Selecionados"
         defaultLabel="Selecione..."
         #eq
