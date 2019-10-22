@@ -52,7 +52,7 @@
 
         public async Task<ICollection<BusinessEntity>> GetAll()
         {
-            RefreshAll();
+           
             var businessEntities = await _context.Business.ToListAsync();
 
             return businessEntities;
@@ -67,17 +67,17 @@
             }
             return businessEntities;
         }
-        public void RefreshAll()
+        public async Task RefreshAll()
         {
             foreach (var entity in _context.ChangeTracker.Entries())
-            {
-                entity.Reload();
+            {               
+                await entity.ReloadAsync();
             }
         }
 
         public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
         {
-            RefreshAll();
+            
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
             if (type == "Anunciante")
             {
@@ -138,7 +138,7 @@
                 db.Open();
             var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active , " +
                "ExpirationDate = @ExpirationDate WHERE Id = @Id ", new { businessEntity.Active, businessEntity.ExpirationDate, businessEntity.Id, });
-
+            await RefreshAll();
             return businessEntity;
         }
         public async Task<BusinessEntity> UpdateAdvertiserActive(BusinessEntity businessEntity)
@@ -147,7 +147,7 @@
             if (db.State != System.Data.ConnectionState.Open)
                 db.Open();
             var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active  WHERE Id = @Id ", new { businessEntity.Active, businessEntity.Id, });
-
+            await RefreshAll();
             return businessEntity;
         }
         public async Task<List<BusinessEntity>> GetAdvertisers(Guid id)
@@ -162,7 +162,7 @@
                     businessEntities.Add(idAdvertiser);
                 }
             }
-
+           
             return businessEntities;
         }
 
@@ -192,15 +192,15 @@
                 if (businessEntity.ChildrenBusinessEntity != null)
                     foreach (var children in businessEntity.ChildrenBusinessEntity)
                     {
-                        if(children.Id != null)
+                        if (children.Id != null)
                             try
                             {
                                 await db.ExecuteAsync("INSERT INTO AdvertiserEstablishments (IdAdvertiser,IdEstablishment) VALUES (@IdAdvertiser,@IdEstablishment)", new { IdAdvertiser = businessEntity.Id, IdEstablishment = children.Id });
                             }
                             catch (Exception)
                             {
-                               
-                            }                        
+
+                            }
                     }
             }
             else
@@ -224,6 +224,7 @@
                     }
                 }
             }
+           await RefreshAll();
 
             return businessEntity;
 
