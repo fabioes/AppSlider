@@ -35,21 +35,21 @@ export class EquipamentFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.equipamentForm = this.fb.group({
       id: [''],
       nome: ['', Validators.required],
       descricao: [''],
       mac_address: ['', Validators.required],
       id_franquia: [this.franchise.id, Validators.required],
-      id_estabelecimento: [''],
+      id_estabelecimento: ['', Validators.required],
       id_playlist: [''],
       ativo: [true]
     });
 
     forkJoin([this.businessServices.getByFranchiseAndType("Estabelecimento"),
     this.playlistService.getByFranchise()]).subscribe(res => {
-      
+
       this.establishments = res[0];
       this.playlists = res[1];
 
