@@ -4,7 +4,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BusinessService } from '../../services/business/business.service';
 import { FranchiseFormComponent } from './franchise-form/franchise-form.component';
-
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-franchise',
@@ -12,7 +12,7 @@ import { FranchiseFormComponent } from './franchise-form/franchise-form.componen
   styleUrls: ['./franchise.component.scss']
 })
 export class FranchiseComponent implements OnInit {
-
+  @ViewChild(Table) dt: Table;
   franchises: Array<Model.App.Business>;
   franchisesGrid: Array<Model.App.Business>;
   searchTerm: string;
@@ -53,6 +53,7 @@ export class FranchiseComponent implements OnInit {
       this.getFranchises();
 
     this.franchisesGrid = this.franchises.filter((item) => (item.contato_cidade || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 );
+    this.dt.reset();
   }
 
   showDialog(franchise: Model.App.Business) {

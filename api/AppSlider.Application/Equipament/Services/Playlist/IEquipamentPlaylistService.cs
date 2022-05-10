@@ -36,22 +36,34 @@ namespace AppSlider.Application.Equipament.Services.Playlist
             var curiosities = (await businessRepository.GetByType("Curiosidades")).FirstOrDefault();
             var midiafone = (await businessRepository.GetByType("Midiafone")).FirstOrDefault();
 
-            for (int i = 1; i < 60; i++)
+            var advertisers = await businessRepository.GetAdvertisers(equipamentPlaylist.Id);
+            int i = 0;
+            while (playlist.PlaylistFiles.Count <= 60)
             {
                 Guid Id;
 
-                var advertisers = await businessRepository.GetAdvertisers(equipamentPlaylist.Id);
-                int j = 0;
                 foreach (var advertiser in advertisers)
                 {
-                    if (Id == advertiser.Id)
-                    {
+
+                    if (advertiser.Id == Id)
                         break;
+
+                    if (i % 7 == 0 && i > 0)
+                    {
+                        var establishmentFile = equipamentPlaylist.Establishment.Playlists.FirstOrDefault()?.PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                        var curiosity = curiosities.Playlists.FirstOrDefault()?.PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                        var ad = midiafone.Playlists.FirstOrDefault()?.PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
+                        if (establishmentFile != null)
+                            playlist.PlaylistFiles.Add(establishmentFile);
+                        if (curiosity != null)
+                            playlist.PlaylistFiles.Add(curiosity);
+                        if (ad != null)
+                            playlist.PlaylistFiles.Add(ad);
+
                     }
-                    else if (j == 7) { break; }
                     var files = await playlistRepository.GetByBusiness(advertiser.Id);
 
-                    Id = advertiser.Id;
+                    
 
                     if (files?.PlaylistFiles != null)
                     {
@@ -60,23 +72,13 @@ namespace AppSlider.Application.Equipament.Services.Playlist
                             if (file != null)
                                 playlist.PlaylistFiles.Add(file);
                         }
+                        i++;
                     }
-                    j++;
-                }
+                    Id = advertiser.Id;
 
-                var establishmentFile = equipamentPlaylist.Establishment.Playlists.FirstOrDefault()?.PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
-                var curiosity = curiosities.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
-                var ad = midiafone.Playlists.FirstOrDefault().PlaylistFiles.OrderBy(r => Guid.NewGuid()).Take(1).FirstOrDefault();
-                if (establishmentFile != null)
-                    playlist.PlaylistFiles.Add(establishmentFile);
-                if (curiosity != null)
-                    playlist.PlaylistFiles.Add(curiosity);
-                if (ad != null)
-                    playlist.PlaylistFiles.Add(ad);
-                if (playlist.PlaylistFiles.Count >= 60)
-                    break;
+                }
             }
-            
+            playlist.PlaylistFiles = playlist.PlaylistFiles.Where((value, index) => index < 60).ToList();
             return (PlaylistResult)playlist;
 
         }

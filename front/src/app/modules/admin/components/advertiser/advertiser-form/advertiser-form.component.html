@@ -50,6 +50,7 @@
         formControlName="x"
         optionLabel="label"
         [filter]="true" filterBy="label,value.id"
+        (onChange)="setEquipments($event)"
         selectedItemsLabel="{0} Estabelecimentos Selecionados"
         defaultLabel="Selecione..."
         #est

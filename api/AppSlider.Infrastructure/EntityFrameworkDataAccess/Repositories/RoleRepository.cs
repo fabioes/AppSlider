@@ -9,6 +9,7 @@
     using AppSlider.Domain.Entities.Users;
     using System.Linq;
     using AppSlider.Domain.Authentication;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class RoleRepository : IRoleRepository
     {

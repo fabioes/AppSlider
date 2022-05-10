@@ -34,7 +34,7 @@ namespace AppSlider.WebApi.Filters
             AuthorizationPolicy policy, [FromServices]LoggedUser loggedUser)
         {
             //_loggedUser = loggedUser;
-            _userGetService = userGetService;
+            _userGetService = userGetService ?? throw new ArgumentNullException(nameof(userGetService));
             Policy = policy ?? throw new ArgumentNullException(nameof(policy));
             _loggedUser = loggedUser;
         }

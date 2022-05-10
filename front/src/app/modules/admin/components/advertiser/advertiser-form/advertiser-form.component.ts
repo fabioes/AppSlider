@@ -53,6 +53,7 @@ export class AdvertiserFormComponent implements OnInit {
       data_expiracao: [''],
       ativo: [true],
       dateTemp: [null],
+      CNPJ: [null],
       x: [null],
       y: [null],
       z: ['']
@@ -72,7 +73,7 @@ export class AdvertiserFormComponent implements OnInit {
     }
 
     const res = await this.businessTypeService.getAllBusinessTypes().toPromise();
-      this.advertiserForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Anunciante')[0]).id);
+    this.advertiserForm.get('id_tipo').setValue((res.filter(item => item.nome === 'Anunciante')[0]).id);
 
     if ((this.advertiser || <Model.App.Business>{}).data_expiracao) {
       this.advertiserForm.get('dateTemp').setValue(new Date(this.advertiser.data_expiracao));
@@ -87,12 +88,14 @@ export class AdvertiserFormComponent implements OnInit {
     this.advertiser = this.advertiserForm.value;
 
     if (this.advertiser.id) {
-
+    
       this.advertiser.filhos = (this.advertiserForm.get('x').value || []).map(m => this.establishments.find(f => f.id === m.value.id));
       this.advertiser.equipaments = (this.advertiserForm.get('y').value || []).map(m => this.equipaments.find(f => f.id === m.value.id));
 
       this.businessService.updateAdvertiser(this.advertiser).subscribe(res => this.callbackAction('alterado', res));
     } else {
+      this.advertiser.filhos = (this.advertiserForm.get('x').value || []).map(m => this.establishments.find(f => f.id === m.value.id));
+      this.advertiser.equipaments = (this.advertiserForm.get('y').value || []).map(m => this.equipaments.find(f => f.id === m.value.id));
       this.businessService.createBusiness(this.advertiser).subscribe(res => this.callbackAction('criado', res));
     }
   }
@@ -103,13 +106,13 @@ export class AdvertiserFormComponent implements OnInit {
   public callbackAction(action, res) {
 
     this.toastrService.success('<span class="now-ui-icons ui-1_bell-53"></span>O Anunciante <b> ' +
-     res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
-      timeOut: 3500,
-      closeButton: true,
-      enableHtml: true,
-      toastClass: 'alert alert-success alert-with-icon',
-      positionClass: 'toast-top-right'
-    });
+      res.nome + ' </b> foi ' + action + ' com sucesso.', '', {
+        timeOut: 3500,
+        closeButton: true,
+        enableHtml: true,
+        toastClass: 'alert alert-success alert-with-icon',
+        positionClass: 'toast-top-right'
+      });
 
     this.activeModal.close(res);
   }
@@ -131,11 +134,37 @@ export class AdvertiserFormComponent implements OnInit {
           name: m.nome
         }
       };
+      if (this.advertiser)
+        if ((this.advertiser.filhos || []).filter(f => f.id === m.id).length > 0
+          && this.selectedEstablishmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
+          this.selectedEstablishmentsDdlItems.push(newItem);
+        }
 
-      if ((this.advertiser.filhos || []).filter(f => f.id === m.id).length > 0
-      && this.selectedEstablishmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
-        this.selectedEstablishmentsDdlItems.push(newItem);
-      }
+      return newItem;
+    });
+  }
+
+  async setEquipments(event) {
+    this.advertiser = this.advertiserForm.value;
+    this.advertiser.filhos = (this.advertiserForm.get('x').value || []).map(m => this.establishments.find(f => f.id === m.value.id));
+    const equipaments = await this.equipamentService.getByEstablishment(this.advertiser.filhos).toPromise();
+    this.equipaments = equipaments.map(m => {
+      m.advertiser_name = m.nome + '|' + m.establishment.nome;
+      return m;
+    });
+    this.equipmentsDdlItems = this.equipaments.map(m => {
+      const newItem = {
+        label: m.advertiser_name,
+        value: {
+          id: m.id,
+          name: m.advertiser_name
+        }
+      };
+      if (this.advertiser)
+        if ((this.advertiser.equipaments || []).filter(f => f.id === m.id).length > 0
+          && this.selectedEquipmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
+          this.selectedEquipmentsDdlItems.push(newItem);
+        }
 
       return newItem;
     });
@@ -155,11 +184,11 @@ export class AdvertiserFormComponent implements OnInit {
           name: m.advertiser_name
         }
       };
-
-      if ((this.advertiser.equipaments || []).filter(f => f.id === m.id).length > 0
-      && this.selectedEquipmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
-        this.selectedEquipmentsDdlItems.push(newItem);
-      }
+      if (this.advertiser)
+        if ((this.advertiser.equipaments || []).filter(f => f.id === m.id).length > 0
+          && this.selectedEquipmentsDdlItems.filter(f => f.value.id === m.id).length === 0) {
+          this.selectedEquipmentsDdlItems.push(newItem);
+        }
 
       return newItem;
     });

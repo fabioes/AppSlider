@@ -83,6 +83,7 @@ namespace AppSlider.WebApi.Controllers.Playlist.Get
         public async Task<IActionResult> GetByMacAddressEquipament(String macAddress)
         {
             var result = await _equipamentPlaylistService.Process(macAddress);
+            
 
             return Ok(new ApiReturnItem<PlaylistResult> { Item = result, Success = true });
         }

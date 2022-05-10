@@ -1,5 +1,6 @@
 ﻿namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
 {
+    using AppSlider.Infrastructure.DataAccess;
     using Autofac;
     using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@
 
             builder.RegisterType<Context>()
               .WithParameter(new TypedParameter(typeof(DbContextOptions), optionsBuilder.Options))
-              .InstancePerDependency();
+              .InstancePerRequest();
             
             //
             // Register all Types in MongoDataAccess namespace
@@ -25,7 +26,7 @@
             builder.RegisterAssemblyTypes(typeof(InfrastructureException).Assembly)
                 .Where(type => type.Namespace.Contains("EntityFrameworkDataAccess"))
                 .AsImplementedInterfaces()
-                .SingleInstance();
+                .InstancePerRequest();
         }
     }
 }

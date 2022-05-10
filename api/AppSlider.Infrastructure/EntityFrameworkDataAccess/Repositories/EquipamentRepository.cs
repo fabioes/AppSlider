@@ -7,6 +7,7 @@
     using AppSlider.Domain.Repositories;
     using System.Linq;
     using AppSlider.Domain.Entities.Equipaments;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class EquipamentRepository : IEquipamentRepository
     {
@@ -43,7 +44,7 @@
 
         public async Task<Equipament> GetByMacAddress(string macAddress)
         {
-            var equipament = await _context.Equipaments.Include(i => i.Establishment).ThenInclude(x => x.Playlists).FirstOrDefaultAsync(f => f.MacAddress == macAddress);
+            var equipament = await _context.Equipaments.Include(i => i.Establishment).ThenInclude(x => x.Playlists).FirstOrDefaultAsync(f => f.MacAddress == macAddress && f.Active == true);
 
             return equipament;
         }
@@ -59,6 +60,8 @@
         {
             List<Equipament> equipaments = new List<Equipament>();
             var establishments = await _context.Business.Where(x => x.IdFather == franchiseId && x.IdType == 2).ToListAsync();
+
+
             foreach (var establishment in establishments)
             {
                 var equipamentList = await _context.Equipaments.Where(w => w.IdEstablishment == establishment.Id).ToListAsync();
@@ -81,15 +84,12 @@
         }
         public async Task<ICollection<Equipament>> GetSelectedByAdvertiser(Guid business)
         {
-            List<Equipament> equipaments = new List<Equipament>();
-            var advertiserEquipaments = await _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == business).ToListAsync();
-            foreach (var advertiserEquipament in advertiserEquipaments)
-            {
-                var equipament = await _context.Equipaments.FirstOrDefaultAsync(w => w.Id == advertiserEquipament.IdEquipament);
-                equipaments.Add(equipament);
-            }
+            var equipaments = from e in _context.Equipaments
+                              join ae in _context.AdvertiserEquipament on e.Id equals ae.IdEquipament
+                              where ae.IdAdvertiser == business
+                              select e;
 
-            return equipaments;
+            return equipaments.ToList();
         }
 
         public async Task<Equipament> Update(Equipament equipament)

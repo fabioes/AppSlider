@@ -7,6 +7,7 @@
     using AppSlider.Domain.Repositories;
     using AppSlider.Domain.Entities.Users;
     using System.Linq;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class UserRepository : IUserRepository
     {

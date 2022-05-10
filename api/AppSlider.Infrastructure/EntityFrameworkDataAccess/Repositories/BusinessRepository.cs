@@ -10,6 +10,7 @@
     using AppSlider.Domain.Authentication;
     using AppSlider.Domain.Entities.Equipaments;
     using Dapper;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class BusinessRepository : IBusinessRepository
     {
@@ -52,7 +53,7 @@
 
         public async Task<ICollection<BusinessEntity>> GetAll()
         {
-           
+
             var businessEntities = await _context.Business.ToListAsync();
 
             return businessEntities;
@@ -63,21 +64,21 @@
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.Type.Name == type).ToListAsync();
             if (type != "Franquia")
             {
-                return businessEntities.OrderBy(x => x.LegalName).ToList();
+                return businessEntities.OrderBy(x => x.Name).ToList();
             }
             return businessEntities;
         }
         public async Task RefreshAll()
         {
             foreach (var entity in _context.ChangeTracker.Entries())
-            {               
+            {
                 await entity.ReloadAsync();
             }
         }
 
         public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type)
         {
-            
+
             var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
             if (type == "Anunciante")
             {
@@ -85,25 +86,61 @@
 
                 foreach (var item in businessEntities)
                 {
-                    item.ChildrenBusinessEntity = new List<BusinessEntity>();
-                    var ad = await _context.AdvertiserEstablishments.Where(x => x.IdAdvertiser == item.Id).ToListAsync();
-                    var equi = await _context.AdvertiserEquipament.Where(x => x.IdAdvertiser == item.Id).ToListAsync();
-                    foreach (var estab in ad)
-                    {
-                        childBusiness = await _context.Business.FirstOrDefaultAsync(x => x.Id == estab.IdEstablishment);
 
-                        item?.ChildrenBusinessEntity?.Add(childBusiness);
-                    }
+                    var b = from advertisers in _context.Business
+                            join establishment in _context.AdvertiserEstablishments
+                            on advertisers.Id equals establishment.IdEstablishment
+                            where establishment.IdAdvertiser == item.Id
+                            select advertisers;
+                    item.ChildrenBusinessEntity = b.ToList();
 
                 }
+
+
 
             }
             if (type != "Franquia")
             {
-                return businessEntities.OrderBy(x => x.LegalName).ToList();
+                return businessEntities.OrderBy(x => x.Name).ToList();
             }
             else
             {
+                return businessEntities.OrderBy(x => x.ContactCity).ToList();
+            }
+
+        }
+        public async Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type, int page)
+        {
+
+            var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
+            if (type == "Anunciante")
+            {
+                BusinessEntity childBusiness = new BusinessEntity();
+
+                foreach (var item in businessEntities)
+                {
+
+                    var b = from advertisers in _context.Business
+                            join establishment in _context.AdvertiserEstablishments
+                            on advertisers.Id equals establishment.IdEstablishment
+                            where establishment.IdAdvertiser == item.Id
+                            select advertisers;
+                    await b.ForEachAsync(x => x.File = null);
+                    item.ChildrenBusinessEntity = b.ToList();
+
+                }
+
+
+
+            }
+            if (type != "Franquia")
+            {
+                var skip = page * 5;
+                return businessEntities.OrderBy(x => x.Name).Skip(skip).Take(5).ToList();
+            }
+            else
+            {
+
                 return businessEntities.OrderBy(x => x.ContactCity).ToList();
             }
 
@@ -119,16 +156,26 @@
 
         public async Task<BusinessEntity> Update(BusinessEntity businessEntity)
         {
-            //_context.DetachLocalIfExistsGuid(businessEntity);
-
-            var business = _context.Business.FirstOrDefault(x => x.Id == businessEntity.Id);
-
-            if (business != null)
-            {
-                _context.Entry(business).CurrentValues.SetValues(businessEntity);
-                await _context.SaveChangesAsync();
-            }
-
+            var db = _context.Database.GetDbConnection();
+            if (db.State != System.Data.ConnectionState.Open)
+                db.Open();
+            await db.ExecuteAsync(@"UPDATE `midiafone`.`Business`
+                                    SET                                                                                                                                             
+                                    `Name` = @Name,
+                                    `Description` = @Description,
+                                    `IdLogo` = @IdLogo,
+                                    `ContactName` = @ContactName,
+                                    `ContactEmail` = @ContactEmail,
+                                    `ContactPhone` = ContactPhone,
+                                    `ContactAddress` = ContactAddress,
+                                    `ExpirationDate` = @ExpirationDate,
+                                    `Active` = @Active,
+                                    `Blocked` = @Blocked,
+                                    `CNPJ` = @CNPJ,
+                                    `File` = @File,
+                                    `ContactCity` = @ContactCity
+                                    WHERE `Id` = @Id;", businessEntity);
+            _context.DetachLocalIfExistsGuid(businessEntity);
             return businessEntity;
         }
         public async Task<BusinessEntity> UpdateAdvertiserBusiness(BusinessEntity businessEntity)
@@ -138,7 +185,57 @@
                 db.Open();
             var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active , " +
                "ExpirationDate = @ExpirationDate WHERE Id = @Id ", new { businessEntity.Active, businessEntity.ExpirationDate, businessEntity.Id, });
-            await RefreshAll();
+            _context.DetachLocalIfExistsGuid(businessEntity);
+            return businessEntity;
+        }
+        public async Task<BusinessEntity> InsertAdvertiserBusiness(BusinessEntity businessEntity)
+        {
+            var db = _context.Database.GetDbConnection();
+            if (db.State != System.Data.ConnectionState.Open)
+                db.Open();
+            var result = await db.ExecuteAsync(@"INSERT INTO `midiafone`.`Business`
+                        (`Id`,
+                        `DataCreated`,
+                        `IdFather`,
+                        `IdType`,
+                        `IdCategory`,
+                        `Name`,
+                        `Description`,
+                        `IdLogo`,
+                        `ContactName`,
+                        `ContactEmail`,
+                        `ContactPhone`,
+                        `ContactAddress`,
+                        `ExpirationDate`,
+                        `Active`,
+                        `Blocked`,
+                        `CNPJ`,
+                        `File`,
+                        `ContactCity`)
+                        VALUES
+                        (@Id,
+                         @DataCreated,
+                         @IdFather,
+                         @IdType,
+                         @IdCategory,
+                         @Name,
+                         @Description,
+                         @IdLogo,
+                         @ContactName,
+                         @ContactEmail,
+                         @ContactPhone,
+                         @ContactAddress,
+                         @ExpirationDate,
+                         @Active,
+                         @Blocked,
+                         @CNPJ,
+                         @File,
+                         @ContactCity); ",
+                         businessEntity);
+
+            await UpdateAdvertiser(businessEntity);
+
+
             return businessEntity;
         }
         public async Task<BusinessEntity> UpdateAdvertiserActive(BusinessEntity businessEntity)
@@ -147,7 +244,7 @@
             if (db.State != System.Data.ConnectionState.Open)
                 db.Open();
             var result = await db.ExecuteAsync("UPDATE Business SET `Active` = @Active  WHERE Id = @Id ", new { businessEntity.Active, businessEntity.Id, });
-            await RefreshAll();
+            _context.DetachLocalIfExistsGuid(businessEntity);
             return businessEntity;
         }
         public async Task<List<BusinessEntity>> GetAdvertisers(Guid id)
@@ -162,7 +259,7 @@
                     businessEntities.Add(idAdvertiser);
                 }
             }
-           
+
             return businessEntities;
         }
 
@@ -224,16 +321,23 @@
                     }
                 }
             }
-           await RefreshAll();
-
+            _context.DetachLocalIfExistsGuid(businessEntity);
             return businessEntity;
-
         }
 
         public async Task RemoveAllAdvertiserEquipaments(BusinessEntity businessEntity)
         {
             var db = _context.Database.GetDbConnection();
             await db.ExecuteAsync("DELETE FROM AdvertiserEquipament WHERE IdAdvertiser = @Id", new { businessEntity.Id });
+        }
+
+        public async Task<int> CountItems(Guid franchiseId, string type)
+        {
+            var businessEntities = await _context.Business.Include(i => i.Type).Where(w => w.IdFather == franchiseId && w.Type.Name == type).ToListAsync();
+
+
+            return businessEntities.Count;
+
         }
     }
 }

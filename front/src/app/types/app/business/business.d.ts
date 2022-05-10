@@ -20,6 +20,8 @@ declare namespace Model.App {
         file:any,
         pai: Model.App.Business,
         filhos: Array<Model.App.Business>,
-        equipaments: Array<Model.App.Equipament>
+        equipaments: Array<Model.App.Equipament>,
+        
+        
     }
 }

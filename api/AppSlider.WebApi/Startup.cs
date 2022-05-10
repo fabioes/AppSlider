@@ -16,6 +16,44 @@
     using AppSlider.Application.User.Services.Get;
     using Microsoft.AspNetCore.Http;
     using AutoMapper;
+    using AppSlider.Infrastructure.DataAccess;
+    using Microsoft.EntityFrameworkCore;
+    using AppSlider.Domain.Repositories;
+    using AppSlider.Infrastructure.EntityFrameworkDataAccess;
+    using AppSlider.Application.User.Services.Update;
+    using AppSlider.Application.User.Services.Create;
+    using AppSlider.Application.User.Services.Delete;
+    using AppSlider.Application.User.Services.Config;
+    using AppSlider.Application.Business.Services.Get;
+    using AppSlider.Domain.Entities.Users;
+    using AppSlider.Application.Business.Services.Create;
+    using AppSlider.Application.Business.Services.Delete;
+    using AppSlider.Application.Business.Services.Update;
+    using AppSlider.Application.Business.Services.Config;
+    using AppSlider.Application.Equipament.Services.Get;
+    using AppSlider.Application.Login.Services;
+    using AppSlider.Application.Role.Services.Get;
+    using AppSlider.Application.TypeBusiness.Services.Get;
+    using AppSlider.Application.TypeBusiness.Services.Create;
+    using AppSlider.Application.TypeBusiness.Services.Update;
+    using AppSlider.Application.Playlist.Services.Get;
+    using AppSlider.Application.Playlist.Services.Update;
+    using AppSlider.Application.Playlist.Services.Create;
+    using AppSlider.Application.Playlist.Services.Config;
+    using AppSlider.Application.Equipament.Services.Playlist;
+    using AppSlider.Application.Equipament.Services.Update;
+    using AppSlider.Application.Equipament.Services.Config;
+    using AppSlider.Application.Equipament.Services.Delete;
+    using AppSlider.Application.Equipament.Services.Create;
+    using AppSlider.Application.TypeBusiness.Services.Delete;
+    using AppSlider.Application.Playlist.Services.Delete;
+    using AppSlider.Application.PlaylistFile.Services;
+    using AppSlider.Application.Category.Services.Get;
+    using AppSlider.Application.Category.Services.Update;
+    using AppSlider.Application.Category.Services.Create;
+    using AppSlider.Application.Category.Services.Delete;
+    using AppSlider.Application.File.Services;
+    using Microsoft.AspNetCore.Server.Kestrel.Core;
 
     public class Startup
     {
@@ -30,9 +68,9 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            
-            
+
+
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -64,13 +102,71 @@
                 options.OperationFilter<SwaggerAuthorizationHeaderParameterOperationFilter>();
             });
 
+
+            services.AddDbContext<Context>(options =>
+              options.UseMySql(Configuration.GetConnectionString("midiafone")).UseLazyLoadingProxies());
+
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IRoleGetService, RoleGetService>();
+
+
+            services.AddScoped<IUserGetService, UserGetService>();
+            services.AddScoped<IUserUpdateService, UserUpdateService>();
+            services.AddScoped<IUserCreateService, UserCreateService>();
+            services.AddScoped<IUserDeleteService, UserDeleteService>();
+            services.AddScoped<IUserConfigService, UserConfigService>();
+
+            services.AddScoped<IBusinessGetService, BusinessGetService>();
+            services.AddScoped<IBusinessCreateService, BusinessCreateService>();
+            services.AddScoped<IBusinessDeleteService, BusinessDeleteService>();
+            services.AddScoped<IBusinessUpdateService, BusinessUpdateService>();
+            services.AddScoped<IBusinessConfigService, BusinessConfigService>();
+
+            services.AddScoped<ITypeBusinessGetService, TypeBusinessGetService>();
+            services.AddScoped<ITypeBusinessCreateService, TypeBusinessCreateService>();
+            services.AddScoped<ITypeBusinessUpdateService, TypeBusinessUpdateService>();
+            services.AddScoped<ITypeBusinessDeleteService, TypeBusinessDeleteService>();
+
+            services.AddScoped<IPlaylistGetService, PlaylistGetService>();
+            services.AddScoped<IPlaylistUpdateService, PlaylistUpdateService>();
+            services.AddScoped<IPlaylistCreateService, PlaylistCreateService>();
+            services.AddScoped<IPlaylistConfigService, PlaylistConfigService>();
+            services.AddScoped<IPlaylistDeleteService, PlaylistDeleteService>();
+
+            services.AddScoped<IPlaylistFileService, PlaylistFileService>();
+
+            services.AddScoped<IEquipamentGetService, EquipamentGetService>();
+            services.AddScoped<IEquipamentPlaylistService, EquipamentPlaylistService>();
+            services.AddScoped<IEquipamentUpdateService, EquipamentUpdateService>();
+            services.AddScoped<IEquipamentConfigService, EquipamentConfigService>();
+            services.AddScoped<IEquipamentDeleteService, EquipamentDeleteService>();
+            services.AddScoped<IEquipamentCreateService, EquipamentCreateService>();
+
+            services.AddScoped<ICategoryGetService, CategoryGetService>();
+            services.AddScoped<ICategoryUpdateService, CategoryUpdateService>();
+            services.AddScoped<ICategoryCreateService, CategoryCreateService>();
+            services.AddScoped<ICategoryDeleteService, CategoryDeleteService>();
+
+            services.AddScoped<IFileGetService, FileGetService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBusinessRepository, BusinessRepository>();
+            services.AddScoped<IBusinessTypeRepository, BusinessTypeRepository>();
+            services.AddScoped<IEquipamentRepository, EquipamentRepository>();
+            services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
             var loggedUser = new LoggedUser();
             services.AddSingleton(loggedUser);
 
             services.AddMvc(options =>
             {
-                var userGetService = _container?.Resolve<IUserGetService>();
-                
+                var sp = services.BuildServiceProvider();
+
+                var userGetService = sp.GetService<IUserGetService>();
+
                 options.Filters.Add(new CustomAuthorizeFilter(userGetService, new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser()
@@ -122,19 +218,22 @@
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
                     .RequireAuthenticatedUser().Build());
             });
-
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+            });
             //Custom Authentication End's
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterBuildCallback(_builder =>
-            {
-                _container = _builder;
-            });
+        //public void ConfigureContainer(ContainerBuilder builder)
+        //{
+        //    builder.RegisterBuildCallback(_builder =>
+        //    {
+        //        _container = _builder;
+        //    });
 
-            builder.RegisterModule(new ConfigurationModule(Configuration));
-        }
+        //    builder.RegisterModule(new ConfigurationModule(Configuration));
+        //}
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -152,7 +251,7 @@
             app.UseSwagger()
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint($@"{midiafone}/swagger/v1/swagger.json", "Midiafone API V1");            
+                   c.SwaggerEndpoint($@"{midiafone}/swagger/v1/swagger.json", "Midiafone API V1");
                });
         }
     }

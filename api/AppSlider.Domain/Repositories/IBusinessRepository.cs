@@ -14,6 +14,7 @@ namespace AppSlider.Domain.Repositories
         Task<ICollection<BusinessEntity>> GetAll();
         Task<ICollection<BusinessEntity>> GetByType(String type);
         Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type);
+        Task<ICollection<BusinessEntity>> GetByFranchiseAndType(Guid franchiseId, String type, int page);
         Task<List<BusinessEntity>> GetAdvertisers(Guid id);
         Task<BusinessEntity> Add(BusinessEntity businessEntity);
         Task<BusinessEntity> Update(BusinessEntity businessEntity);
@@ -21,9 +22,11 @@ namespace AppSlider.Domain.Repositories
         void DetachBusiness(BusinessEntity businessEntity);
         Task<ICollection<BusinessEntity>> GetForLoggedUser(LoggedUser loggedUser);
         Task<BusinessEntity> UpdateAdvertiser(BusinessEntity businessEntity);
+        Task<BusinessEntity> InsertAdvertiserBusiness(BusinessEntity businessEntity);
         Task<BusinessEntity> UpdateAdvertiserBusiness(BusinessEntity businessEntity);
         Task<BusinessEntity> UpdateAdvertiserActive(BusinessEntity businessEntity);
         Task UpdateEquipaments(AdvertiserEquipament advertiserEquipament);
         Task RemoveAllAdvertiserEquipaments(BusinessEntity businessEntity);
+        Task<int> CountItems(Guid franchiseId, String type);
     }
 }

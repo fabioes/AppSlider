@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using AppSlider.Domain.Repositories;
     using AppSlider.Domain.Entities.Files;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class FileRepository : IFileRepository
     {

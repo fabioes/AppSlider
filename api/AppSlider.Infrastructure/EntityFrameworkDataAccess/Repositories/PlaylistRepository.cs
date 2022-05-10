@@ -7,6 +7,7 @@
     using AppSlider.Domain.Repositories;
     using AppSlider.Domain.Entities.PlayLists;
     using System.Linq;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class PlaylistRepository : IPlaylistRepository
     {

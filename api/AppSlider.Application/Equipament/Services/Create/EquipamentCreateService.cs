@@ -11,10 +11,12 @@ namespace AppSlider.Application.Equipament.Services.Create
     public class EquipamentCreateService : IEquipamentCreateService
     {
         private readonly IEquipamentRepository equipamentRepository;
+        private readonly IBusinessRepository businessRepository;
         
-        public EquipamentCreateService(IEquipamentRepository equipamentRepository)
+        public EquipamentCreateService(IEquipamentRepository equipamentRepository,IBusinessRepository businessRepository)
         {
             this.equipamentRepository = equipamentRepository;
+            this.businessRepository = businessRepository;
         }
 
         public async Task<EquipamentResult> Process(EquipamentCreateCommand command)
@@ -44,10 +46,13 @@ namespace AppSlider.Application.Equipament.Services.Create
                 if (String.IsNullOrWhiteSpace(command.Name))
                     messageValidations.Add("Na criação de um Equipamento o 'Nome' é obrigatorio!");
 
-                //Business Validations
-                if ((await equipamentRepository.GetByMacAddress(command.MacAddress)) != null)
+                //Business Validation
+                var equipament = await equipamentRepository.GetByMacAddress(command.MacAddress);
+                if ((equipament != null))
                 {
-                    messageValidations.Add("Equipamento já Existente!");
+                  
+                    var franchise = await businessRepository.Get(equipament.IdFranchise);
+                    messageValidations.Add($"Equipamento já Existente! Na Franquia {franchise.ContactCity}");
                 }
             }
             

@@ -29,6 +29,8 @@ export const environment = {
         franchise: "/business/franchise",
         switchActive: "/business/switch_active",
         get_by_type: "/business/GetByType",
+        advertisers: "/business/advertisers",
+        count: "/business/count",
         get_for_logged_user: "/business/GetForLoggedUser"
       },
       playlist: {

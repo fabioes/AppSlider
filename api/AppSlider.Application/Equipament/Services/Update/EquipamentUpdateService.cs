@@ -50,9 +50,7 @@ namespace AppSlider.Application.Equipament.Services.Update
                 if (equipamentValidation != null && equipamentValidation.Id != command.Id)
                 {
                     messageValidations.Add("Equipamento já existente!");
-                }
-
-                equipamentRepository.DetachEquipament(equipamentValidation);
+                }              
             }
             
             if (messageValidations.Count > 0)

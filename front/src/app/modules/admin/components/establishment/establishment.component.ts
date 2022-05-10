@@ -6,7 +6,7 @@ import { BusinessService } from '../../services/business/business.service';
 import { EstablishmentFormComponent } from './establishment-form/establishment-form.component';
 import { PlaylistFilesComponent } from '../playlist/playlist-files/playlist-files.component';
 import { PlaylistService } from '../../services/playlist/playlist.service';
-
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-establishment',
@@ -22,7 +22,7 @@ export class EstablishmentComponent implements OnInit {
   playlistsGrid: Array<Model.App.Playlist>;
   file: any;
   @ViewChild('fileUpload') private fileUpload: ElementRef;
-
+  @ViewChild(Table) dt: Table;
 
   constructor(private businessService: BusinessService,
     private confirmationService: ConfirmationService,
@@ -106,6 +106,7 @@ export class EstablishmentComponent implements OnInit {
       this.getEstablishments();
 
     this.establishmentsGrid = this.establishments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.dt.reset();
   }
 
   deleteFranchise(establishment) {

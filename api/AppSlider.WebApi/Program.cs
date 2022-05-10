@@ -33,7 +33,7 @@
                             .Enrich.FromLogContext()
                             .WriteTo.RollingFile(Path.Combine(hostingContext.HostingEnvironment.ContentRootPath, "logs/log-{Date}.log"));
                     })
-                    .ConfigureServices(services => services.AddAutofac())
+                    
                     .UseIISIntegration()
                     .Build();
         }

@@ -161,9 +161,17 @@ export class HttpHelper {
     private httpMapResponseError(error: any): any {
         console.log('Erro ao executar a operação ---> : ${error.message} ' + error.error)
 
-        this.handlingError(error);
+        this.handlingAuth(error);
 
         return error;
+    }
+    private handlingAuth(error: HttpErrorResponse) {
+        if (error.status == 401) {
+            localStorage.removeItem('current_user');
+            this.router.navigate(['/sessao-expirada']);
+            return;
+        }
+
     }
 
     private handlingError(error: HttpErrorResponse) {

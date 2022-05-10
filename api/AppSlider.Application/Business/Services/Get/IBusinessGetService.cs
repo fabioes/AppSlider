@@ -12,12 +12,15 @@ namespace AppSlider.Application.Business.Services.Get
 
         Task<List<BusinessResult>> GetByType(String type);
 
-        Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type);        
+        Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type);
+        Task<List<BusinessResult>> GetByFranchiseAndType(String franchiseId, String type,int page);
 
         Task<List<BusinessResult>> GetAll();
 
         Task<List<BusinessResult>> GetForLoggedUser();
 
         Task<List<BusinessResult>> GetFromUser(LoggedUser user);
+        Task<int> CountItems(String franchiseId, String type);
+
     }
 }

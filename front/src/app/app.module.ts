@@ -27,6 +27,7 @@ import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { PasswordModule } from 'primeng/password';
 
 import {InputTextModule} from 'primeng/inputtext';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {InputTextModule} from 'primeng/inputtext';
     ProgressBarModule,
     NgxPasswordToggleModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    TableModule
   ],
   declarations: [
     AppComponent,

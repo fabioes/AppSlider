@@ -8,14 +8,13 @@ import { EquipamentService } from '../../services/equipament/equipament.service'
 import { PlaylistFilesComponent } from '../playlist/playlist-files/playlist-files.component';
 import { PlaylistComponent } from '../playlist/playlist.component';
 
-
 @Component({
   selector: 'app-equipament',
   templateUrl: './equipament.component.html',
   styleUrls: ['./equipament.component.scss']
 })
 export class EquipamentComponent implements OnInit {
-
+  @ViewChild(Table) dt: Table;
   equipaments: Array<Model.App.Equipament>;
   equipamentsGrid: Array<Model.App.Equipament>;
   searchTerm: string;
@@ -48,6 +47,7 @@ export class EquipamentComponent implements OnInit {
       this.getEquipaments();
 
     this.equipamentsGrid = this.equipaments.filter((item) => (item.nome || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0 || (item.descricao || '').toLowerCase().indexOf(this.searchTerm.toLowerCase()) >= 0);
+    this.dt.reset();
   }
 
   showDialog(equipament: Model.App.BusinessType) {

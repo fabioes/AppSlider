@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FranchiseService } from '../franchise/franchise.service';
 import { HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class BusinessService {
 
-  constructor(private httpHelper: HttpHelper, private franchiseService: FranchiseService) { }
+  constructor(private httpHelper: HttpHelper, private franchiseService: FranchiseService, private http: HttpClient) { }
 
   public getAllBusinesss(): Observable<Array<Model.App.Business>> {
     return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.default)
@@ -27,6 +28,16 @@ export class BusinessService {
   public getByFranchiseAndType(type: string): Observable<Array<Model.App.Business>> {
     return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.get_by_type + '/' + this.franchiseService.Franchise.id + '/' + type)
       .pipe(map(res => res.items));
+  }
+  public getByFranchiseAndTypeEvent(type: string, page: number): Observable<Array<Model.App.Business>> {
+
+    let pageNumber = page / 5;
+    return this.httpHelper.HttpGet<Model.Core.ApiResultList<Model.App.Business>>(environment.apiConfig.apiRoutes.business.advertisers + '/?franchiseId=' + this.franchiseService.Franchise.id + '&type=' + type + '&page=' + pageNumber)
+      .pipe(map(res => res.items));
+  }
+  public getAdvertiserCount(type: string): Observable<number> {
+    return this.http.get<number>(environment.apiConfig.baseUrl + environment.apiConfig.apiRoutes.business.count + '?franchiseId=' + this.franchiseService.Franchise.id + '&type=' + type)
+      .pipe(map(res => res));
   }
 
   public getBusiness(id: string) {
@@ -58,8 +69,8 @@ export class BusinessService {
     headers.append('Accept', 'application/json');
     let form: FormData = new FormData();
     form.append('value', JSON.stringify(Business));
-    if(file){
-    form.append('files', file, file.name);
+    if (file) {
+      form.append('files', file, file.name);
     }
     return this.httpHelper.HttpPost<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.franchise, form)
       .pipe(map(res => res.item));
@@ -70,8 +81,8 @@ export class BusinessService {
 
     form.append('value', JSON.stringify(Business));
 
-    if(file) {
-    form.append('files', file,file.name);
+    if (file) {
+      form.append('files', file, file.name);
     }
     return this.httpHelper.HttpPut<Model.Core.ApiResultItem<Model.App.Business>>(environment.apiConfig.apiRoutes.business.franchise, form,)
       .pipe(map(res => res.item));

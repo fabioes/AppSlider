@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AppSlider.Application.Business.Results;
@@ -18,8 +19,8 @@ namespace AppSlider.WebApi.Controllers.Business.Get
     {
         private readonly IBusinessGetService _businessGetService;
         private readonly IEquipamentGetService _equipamentGetService;
-        
-        public BusinessController(IBusinessGetService businessGetService,IEquipamentGetService equipamentGetService)
+
+        public BusinessController(IBusinessGetService businessGetService, IEquipamentGetService equipamentGetService)
         {
             _businessGetService = businessGetService;
             _equipamentGetService = equipamentGetService;
@@ -72,15 +73,48 @@ namespace AppSlider.WebApi.Controllers.Business.Get
             var results = await _businessGetService.GetByFranchiseAndType(franchiseId, type);
 
             foreach (var item in results)
-            {        
-                
+            {
+
                 item.Equipaments = await _equipamentGetService.GetSelectedByAdvertiser(item.Id);
             }
 
             return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
         }
 
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("advertisers")]
+        [Authorize("Bearer")]
+        [CustomAuthorize(AppSliderRoles.ReadBusiness)]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ApiReturnItem<BusinessResult>))]
+        public async Task<IActionResult> GetByType(String franchiseId, String type, String page)
+        {
+            int pageNumber = Convert.ToInt32(page);
+            var results = await _businessGetService.GetByFranchiseAndType(franchiseId, type, pageNumber);
 
+            foreach (var item in results)
+            {
+
+                item.Equipaments = await _equipamentGetService.GetSelectedByAdvertiser(item.Id);
+            }
+
+            return Ok(new ApiReturnList<BusinessResult> { Items = results, Success = true });
+        }
+        /// <summary>
+        /// Obtem um ou vários Negócios por tipo
+        /// </summary>
+        [HttpGet("count")]
+
+        public async Task<IActionResult> Count([FromQuery] String franchiseId, [FromQuery] String type)
+        {
+
+            var results = await _businessGetService.CountItems(franchiseId, type);
+
+
+
+            return Ok(results);
+        }
         /// <summary>
         /// Obtem um ou vários Negócios por tipo
         /// </summary>

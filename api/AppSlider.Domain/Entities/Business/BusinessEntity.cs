@@ -12,7 +12,7 @@ namespace AppSlider.Domain.Entities.Business
         public virtual Guid? IdFather { get; set; } = Guid.NewGuid();
         public virtual int IdType { get; set; }
         public virtual int? IdCategory { get; set; }
-        public virtual String LegalName { get; protected set; }
+        public virtual String Name { get; protected set; }
         public virtual long? CNPJ { get; protected set; }
         public virtual String Description { get; protected set; }
         public virtual Guid? IdLogo { get; protected set; }
@@ -49,7 +49,7 @@ namespace AppSlider.Domain.Entities.Business
             IdFather = idFather;
             IdType = idType;
             IdCategory = idCategory;
-            LegalName = name;
+            Name = name;
             this.CNPJ = CNPJ;
             Description = description;
             IdLogo = idLogo;
@@ -70,7 +70,7 @@ namespace AppSlider.Domain.Entities.Business
             IdFather = idFather;
             IdType = idType;
             IdCategory = idCategory;
-            LegalName = name;
+            Name = name;
             this.CNPJ = CNPJ;
             Description = description;
             IdLogo = idLogo;

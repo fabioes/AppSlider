@@ -93,13 +93,12 @@ namespace AppSlider.Application.Business.Services.Update
                     catch (Exception)
                     {
 
-
                     }
 
                 }
             }
 
-
+            await businessRepository.Update(business);
             var returnUser = (BusinessResult)business;
 
             return returnUser;

@@ -1,7 +1,8 @@
-﻿namespace AppSlider.Infrastructure.EntityFrameworkDataAccess
+﻿namespace AppSlider.Infrastructure.DataAccess
 {
     using AppSlider.Domain.Entities;
     using AppSlider.Domain.Entities.Business;
+    using AppSlider.Infrastructure.EntityFrameworkDataAccess;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
@@ -31,6 +32,7 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Domain.Entities.Users.User>()
                 .ToTable("Users");
 
@@ -51,7 +53,7 @@
                 .ToTable("Business")
                 .HasMany(m => m.ChildrenBusinessEntity)
                 .WithOne(o => o.BusinessEntityFather)
-                .HasForeignKey(fk => fk.IdFather);
+                .HasForeignKey(fk => fk.IdFather).OnDelete(DeleteBehavior.Cascade); 
 
             modelBuilder.Entity<AdvertiserEstablishments>()
        .HasKey(pc => new { pc.IdAdvertiser, pc.IdEstablishment });

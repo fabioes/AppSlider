@@ -4,6 +4,7 @@ namespace AppSlider.Application.Equipament.Commands
 {
     public class EquipamentCreateCommand
     {
+        public Guid Id { get; set; }
         public String Name { get; set; }
 
         public String Description { get; set; }
@@ -18,8 +19,9 @@ namespace AppSlider.Application.Equipament.Commands
 
         public Boolean Active { get; set; }
 
-        public EquipamentCreateCommand(string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active)
+        public EquipamentCreateCommand(Guid id,string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active)
         {
+            Id = id;
             Name = name;
             Description = description;
             MacAddress = macAddress;
@@ -28,6 +30,16 @@ namespace AppSlider.Application.Equipament.Commands
             IdPlaylist = idPlaylist;
             Active = active;
         }
-
+        public EquipamentCreateCommand(string name, string description, string macAddress, Guid idFranchise, Guid? idEstablishment, Guid? idPlaylist, bool active)
+        {
+            
+            Name = name;
+            Description = description;
+            MacAddress = macAddress;
+            IdFranchise = idFranchise;
+            IdEstablishment = idEstablishment;
+            IdPlaylist = idPlaylist;
+            Active = active;
+        }
     }
 }

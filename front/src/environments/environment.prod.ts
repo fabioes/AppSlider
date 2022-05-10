@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiConfig: {
-    baseUrl: "http://www.midiafone.com.br/midiafoneapi/api",
+    baseUrl: "https://www.midiafone.com.br/midiafoneapi/api",
     apiRoutes: {
       login: {
         default: "/login"
@@ -24,6 +24,8 @@ export const environment = {
         franchise: "/business/franchise",
         switchActive: "/business/switch_active",
         get_by_type: "/business/GetByType",
+        advertisers: "/business/advertisers",
+        count: "/business/count",
         get_for_logged_user: "/business/GetForLoggedUser"
       },
       playlist: {

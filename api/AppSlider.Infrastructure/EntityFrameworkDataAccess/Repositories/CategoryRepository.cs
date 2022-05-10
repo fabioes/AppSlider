@@ -7,6 +7,7 @@
     using AppSlider.Domain.Entities.Categories;
     using AppSlider.Domain.Repositories;
     using System.Linq;
+    using AppSlider.Infrastructure.DataAccess;
 
     public class CategoryRepository : ICategoryRepository
     {

@@ -98,7 +98,7 @@ namespace AppSlider.Application.Business.Results
                 IdFather = b.IdFather,
                 IdLogo = b.IdLogo,
                 IdType = b.IdType,
-                Name = b.LegalName,
+                Name = b.Name,
                 CNPJ = b.CNPJ,
                 Type = (TypeBusinessResult)b.Type,
                 Blocked = b.Blocked,

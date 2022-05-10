@@ -158,7 +158,6 @@ export class PlaylistFilesComponent implements OnInit {
   }
 
   searchSubmit($event) {
-
     if (!this.searchTerm)
       this.getPlaylists();
 

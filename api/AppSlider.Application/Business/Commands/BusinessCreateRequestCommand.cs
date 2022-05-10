@@ -7,6 +7,8 @@ namespace AppSlider.Application.Business.Commands
 {
     public class BusinessCreateRequestCommand
     {
+        public Guid? Id { get; set; }
+
         [JsonProperty("id_pai")]
         public Guid? IdFather { get; set; }
 
@@ -55,6 +57,6 @@ namespace AppSlider.Application.Business.Commands
         [JsonProperty("filhos")]
         public List<BusinessCreateRequestCommand> Children { get; set; }
         [JsonProperty("equipaments")]
-        public virtual List<EquipamentCreateCommand> Equipaments { get; set; }
+        public virtual List<EquipamentUpdateCommand> Equipaments { get; set; }
     }
 }
